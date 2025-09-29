@@ -1,5 +1,7 @@
+
+@import './styles/content/page-sizes.css';
+@import './styles/editor/index.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import './styles/content/page-sizes.css';
