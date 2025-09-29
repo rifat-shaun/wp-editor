@@ -15,6 +15,9 @@
   "dependencies": {
     "@mui/icons-material": "^7.3.1",
     "@tailwindcss/postcss": "^4.1.13",
+    "@tiptap/pm": "^3.6.2",
+    "@tiptap/react": "^3.6.2",
+    "@tiptap/starter-kit": "^3.6.2",
     "antd": "^5.27.0",
     "classnames": "^2.5.1",
     "react-select": "^5.10.2"
