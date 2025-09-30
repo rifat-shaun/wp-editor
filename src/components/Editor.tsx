@@ -1,14 +1,12 @@
 import { useEditor, EditorContent, EditorContext } from "@tiptap/react";
 import { FloatingMenu, BubbleMenu } from "@tiptap/react/menus";
 import StarterKit from "@tiptap/starter-kit";
-import { useMemo, useState } from "react";
-import PageSizeSelector, { type PageConfig } from "./PageSizeSelector";
+import { useMemo } from "react";
+import PageSizeSelector from "./PageSizeSelector";
+import { usePageSize } from "../hooks/usePageSize";
 
 const Editor = () => {
-  const [pageConfig, setPageConfig] = useState<PageConfig>({
-    size: "A4",
-    orientation: "portrait",
-  });
+  const { pageConfig, setPageConfig, pageClass } = usePageSize();
 
   const editor = useEditor({
     extensions: [StarterKit], // define your extension array
@@ -18,14 +16,8 @@ const Editor = () => {
   // Memoize the provider value to avoid unnecessary re-renders
   const providerValue = useMemo(() => ({ editor }), [editor]);
 
-  const getPageClass = (config: PageConfig) => {
-    const { size, orientation } = config;
-    const baseClass = `page-${size.toLowerCase()}`;
-    return orientation === "landscape" ? `${baseClass}-landscape` : baseClass;
-  };
-
   return (
-    <div className="h-full p-5 bg-neutral-100 flex">
+    <div className="h-full flex p-5 bg-neutral-200">
       <div className="flex gap-4 mb-6">
         <PageSizeSelector
           selectedConfig={pageConfig}
@@ -33,14 +25,20 @@ const Editor = () => {
         />
       </div>
 
-      <div className={`flex justify-center items-center w-full overflow-y-auto`}>
-        <div className={`${getPageClass(pageConfig)} h-full`}>
+      <div className="h-full flex justify-center items-start w-full overflow-y-auto py-8">
+        <div className={pageClass}>
           <EditorContext.Provider value={providerValue}>
-            <EditorContent editor={editor} className="h-full" />
+            <EditorContent editor={editor} />
             <FloatingMenu editor={editor}>
-              This is the floating menu
+              <div className="bg-white shadow-lg rounded-lg border border-neutral-200 p-2">
+                This is the floating menu
+              </div>
             </FloatingMenu>
-            <BubbleMenu editor={editor}>This is the bubble menu</BubbleMenu>
+            <BubbleMenu editor={editor}>
+              <div className="bg-white shadow-lg rounded-lg border border-neutral-200 p-2">
+                This is the bubble menu
+              </div>
+            </BubbleMenu>
           </EditorContext.Provider>
         </div>
       </div>
