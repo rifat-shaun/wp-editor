@@ -6,7 +6,7 @@ import PageSizeSelector from "./PageSizeSelector";
 import { usePageSize } from "../hooks/usePageSize";
 
 const Editor = () => {
-  const { pageConfig, setPageConfig, pageClass } = usePageSize();
+  const { pageClass, pageConfig, setPageConfig } = usePageSize();
 
   const editor = useEditor({
     extensions: [StarterKit], // define your extension array

@@ -14,9 +14,8 @@ export const usePageSize = () => {
   };
 
   return {
+    pageClass: getPageClass(pageConfig),
     pageConfig,
     setPageConfig,
-    pageClass: getPageClass(pageConfig),
   };
 };
-
