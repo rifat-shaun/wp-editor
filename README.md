@@ -104,6 +104,25 @@ function App() {
 - **Legal**: 8.5in × 14in (Portrait) / 14in × 8.5in (Landscape)
 - **Tabloid**: 11in × 17in (Portrait) / 17in × 11in (Landscape)
 
+## SVG Icons
+
+The editor uses `vite-plugin-svg-icons` for efficient SVG icon management. All icons are compiled into a single sprite.
+
+### Using Icons
+
+```tsx
+import { SvgIcon } from 'lax-wp-editor';
+
+<SvgIcon name="bold" size={18} />
+<SvgIcon name="italic" color="#333" />
+```
+
+### Adding Custom Icons
+
+1. Place SVG files in `src/assets/icons/`
+2. Icons are automatically registered on build
+3. Use with `SvgIcon` component using the filename as the name
+
 ## Development
 
 ```bash
