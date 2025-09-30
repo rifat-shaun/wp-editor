@@ -1,12 +1,12 @@
 import { useEditor, EditorContent, EditorContext } from "@tiptap/react";
 import { FloatingMenu, BubbleMenu } from "@tiptap/react/menus";
-import StarterKit from "@tiptap/starter-kit";
 import { useMemo } from "react";
 import PageSizeSelector from "./PageSizeSelector";
 import { usePageSize } from "../hooks/usePageSize";
 import BubbleMenuContent from "./menubar/BubbleMenuContent";
 import type { EditorConfig } from "../config/editorConfig";
 import { defaultEditorConfig } from "../config/editorConfig";
+import { EditorExtensions } from "../extensions";
 
 interface EditorProps {
   config?: EditorConfig;
@@ -17,7 +17,7 @@ const Editor = ({ config = {} }: EditorProps) => {
   const { pageClass, pageConfig, setPageConfig } = usePageSize();
 
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: EditorExtensions,
     content: editorConfig.initialContent,
   });
 
@@ -39,7 +39,7 @@ const Editor = ({ config = {} }: EditorProps) => {
         <div className={editorConfig.enablePagination ? pageClass : ""}>
           <EditorContext.Provider value={providerValue}>
             <EditorContent editor={editor} />
-            
+
             {editorConfig.showFloatingMenu && editor && (
               <FloatingMenu editor={editor}>
                 <div className="bg-white shadow-lg rounded-lg border border-neutral-200 p-2">
@@ -47,7 +47,7 @@ const Editor = ({ config = {} }: EditorProps) => {
                 </div>
               </FloatingMenu>
             )}
-            
+
             {editorConfig.showBubbleMenu && editor && (
               <BubbleMenu editor={editor}>
                 <BubbleMenuContent editor={editor} />
