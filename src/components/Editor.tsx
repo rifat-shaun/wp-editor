@@ -4,6 +4,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { useMemo } from "react";
 import PageSizeSelector from "./PageSizeSelector";
 import { usePageSize } from "../hooks/usePageSize";
+import BubbleMenuContent from "./menubar/BubbleMenuContent";
 
 const Editor = () => {
   const { pageClass, pageConfig, setPageConfig } = usePageSize();
@@ -34,11 +35,11 @@ const Editor = () => {
                 This is the floating menu
               </div>
             </FloatingMenu>
-            <BubbleMenu editor={editor}>
-              <div className="bg-white shadow-lg rounded-lg border border-neutral-200 p-2">
-                This is the bubble menu
-              </div>
-            </BubbleMenu>
+            {editor && (
+              <BubbleMenu editor={editor}>
+                <BubbleMenuContent editor={editor} />
+              </BubbleMenu>
+            )}
           </EditorContext.Provider>
         </div>
       </div>
