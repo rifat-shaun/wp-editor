@@ -57,5 +57,3 @@ export const Toolbar = ({
       );
   }
 };
-
-export default Toolbar;

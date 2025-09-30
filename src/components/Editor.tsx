@@ -7,8 +7,8 @@ import BubbleMenuContent from "./menubar/BubbleMenuContent";
 import type { EditorConfig } from "../config/editorConfig";
 import { defaultEditorConfig } from "../config/editorConfig";
 import { EditorExtensions } from "../extensions";
-import Toolbar from "./toolbar";
-import Footer from "./footer";
+import { Toolbar } from "./toolbar";
+import { Footer } from "./footer";
 
 interface EditorProps {
   config?: EditorConfig;
@@ -66,7 +66,7 @@ const Editor = ({ config = {} }: EditorProps) => {
       </div>
 
       {/* Footer */}
-      <Footer />
+      <Footer editor={editor} />
     </div>
   );
 };
