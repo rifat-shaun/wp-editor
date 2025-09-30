@@ -5,13 +5,20 @@ import { useMemo } from "react";
 import PageSizeSelector from "./PageSizeSelector";
 import { usePageSize } from "../hooks/usePageSize";
 import BubbleMenuContent from "./menubar/BubbleMenuContent";
+import type { EditorConfig } from "../config/editorConfig";
+import { defaultEditorConfig } from "../config/editorConfig";
 
-const Editor = () => {
+interface EditorProps {
+  config?: EditorConfig;
+}
+
+const Editor = ({ config = {} }: EditorProps) => {
+  const editorConfig = { ...defaultEditorConfig, ...config };
   const { pageClass, pageConfig, setPageConfig } = usePageSize();
 
   const editor = useEditor({
-    extensions: [StarterKit], // define your extension array
-    content: "<p>Hello World!</p>", // initial content
+    extensions: [StarterKit],
+    content: editorConfig.initialContent,
   });
 
   // Memoize the provider value to avoid unnecessary re-renders
@@ -19,23 +26,29 @@ const Editor = () => {
 
   return (
     <div className="h-full flex p-5 bg-neutral-200">
-      <div className="flex gap-4 mb-6">
-        <PageSizeSelector
-          selectedConfig={pageConfig}
-          onConfigChange={setPageConfig}
-        />
-      </div>
+      {editorConfig.showPageSizeSelector && (
+        <div className="flex gap-4 mb-6">
+          <PageSizeSelector
+            selectedConfig={pageConfig}
+            onConfigChange={setPageConfig}
+          />
+        </div>
+      )}
 
       <div className="h-full flex justify-center items-start w-full overflow-y-auto py-8">
-        <div className={pageClass}>
+        <div className={editorConfig.enablePagination ? pageClass : ""}>
           <EditorContext.Provider value={providerValue}>
             <EditorContent editor={editor} />
-            <FloatingMenu editor={editor}>
-              <div className="bg-white shadow-lg rounded-lg border border-neutral-200 p-2">
-                This is the floating menu
-              </div>
-            </FloatingMenu>
-            {editor && (
+            
+            {editorConfig.showFloatingMenu && editor && (
+              <FloatingMenu editor={editor}>
+                <div className="bg-white shadow-lg rounded-lg border border-neutral-200 p-2">
+                  This is the floating menu
+                </div>
+              </FloatingMenu>
+            )}
+            
+            {editorConfig.showBubbleMenu && editor && (
               <BubbleMenu editor={editor}>
                 <BubbleMenuContent editor={editor} />
               </BubbleMenu>

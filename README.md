@@ -1,73 +1,122 @@
-# React + TypeScript + Vite
+# Lax WP Editor
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A powerful, configurable rich text editor built with TipTap and React, designed for creating paginated documents with support for multiple page sizes.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 📝 Rich text editing with TipTap
+- 📄 Multiple page sizes (A4, A3, Letter, Legal, Tabloid)
+- 🔄 Portrait and landscape orientations
+- 🎨 Bubble menu for text formatting
+- ⚙️ Fully configurable features
+- 📦 Easy to integrate as an npm package
 
-## React Compiler
+## Installation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install lax-wp-editor
+# or
+yarn add lax-wp-editor
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Basic Usage
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```tsx
+import { Editor } from 'lax-wp-editor';
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+function App() {
+  return <Editor />;
+}
 ```
+
+## Configuration
+
+The Editor component accepts a `config` prop to customize its features:
+
+```tsx
+import { Editor, EditorConfig } from 'lax-wp-editor';
+
+const editorConfig: EditorConfig = {
+  showBubbleMenu: true,        // Show formatting menu on text selection
+  showFloatingMenu: true,      // Show menu on empty lines
+  showPageSizeSelector: true,  // Show page size selector
+  enablePagination: true,      // Enable page-based layout
+  initialContent: '<p>Start typing...</p>',
+};
+
+function App() {
+  return <Editor config={editorConfig} />;
+}
+```
+
+## Configuration Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `showBubbleMenu` | `boolean` | `true` | Enable/disable the bubble menu that appears on text selection |
+| `showFloatingMenu` | `boolean` | `true` | Enable/disable the floating menu that appears on empty lines |
+| `showPageSizeSelector` | `boolean` | `true` | Enable/disable the page size selector |
+| `initialContent` | `string` | `"<p>Hello World!</p>"` | Initial HTML content for the editor |
+| `enablePagination` | `boolean` | `true` | Enable/disable pagination with page sizing |
+
+## Examples
+
+### Minimal Editor (No menus or pagination)
+
+```tsx
+<Editor 
+  config={{
+    showBubbleMenu: false,
+    showFloatingMenu: false,
+    showPageSizeSelector: false,
+    enablePagination: false,
+  }}
+/>
+```
+
+### Editor with only Bubble Menu
+
+```tsx
+<Editor 
+  config={{
+    showBubbleMenu: true,
+    showFloatingMenu: false,
+    showPageSizeSelector: false,
+  }}
+/>
+```
+
+### Custom Initial Content
+
+```tsx
+<Editor 
+  config={{
+    initialContent: '<h1>My Document</h1><p>Start writing here...</p>',
+  }}
+/>
+```
+
+## Supported Page Sizes
+
+- **A4**: 210mm × 297mm (Portrait) / 297mm × 210mm (Landscape)
+- **A3**: 297mm × 420mm (Portrait) / 420mm × 297mm (Landscape)
+- **Letter**: 8.5in × 11in (Portrait) / 11in × 8.5in (Landscape)
+- **Legal**: 8.5in × 14in (Portrait) / 14in × 8.5in (Landscape)
+- **Tabloid**: 11in × 17in (Portrait) / 17in × 11in (Landscape)
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+```
+
+## License
+
+MIT
