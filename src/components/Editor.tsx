@@ -8,6 +8,7 @@ import type { EditorConfig } from "../config/editorConfig";
 import { defaultEditorConfig } from "../config/editorConfig";
 import { EditorExtensions } from "../extensions";
 import ClassicToolbar from "./toolbar/ClassicToolbar";
+import Footer from "./footer";
 
 interface EditorProps {
   config?: EditorConfig;
@@ -63,6 +64,9 @@ const Editor = ({ config = {} }: EditorProps) => {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

@@ -2,7 +2,7 @@ export const TOOLBAR_TYPES = {
   CLASSIC: {
     name: "classic",
     label: "Classic",
-    height: 40,
+    height: 36,
   },
   PROFESSIONAL: {
     name: "professional",
