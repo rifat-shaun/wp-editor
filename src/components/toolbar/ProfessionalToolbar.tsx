@@ -2,12 +2,14 @@ import { Dropdown } from "antd";
 import type { MenuProps } from "antd";
 import { TOOLBAR_TYPES, TOOLBAR_MENU_ITEMS } from "../../constants/Toolbar";
 
-interface ClassicToolbarProps {
+interface ProfessionalToolbarProps {
   onToolbarChange?: (toolbarType: string) => void;
 }
 
-export const ClassicToolbar = ({ onToolbarChange }: ClassicToolbarProps) => {
-  const { CLASSIC } = TOOLBAR_TYPES;
+export const ProfessionalToolbar = ({
+  onToolbarChange,
+}: ProfessionalToolbarProps) => {
+  const { PROFESSIONAL } = TOOLBAR_TYPES;
 
   const handleMenuClick: MenuProps["onClick"] = ({ key }) => {
     onToolbarChange?.(key);
@@ -16,7 +18,7 @@ export const ClassicToolbar = ({ onToolbarChange }: ClassicToolbarProps) => {
   return (
     <div
       className="flex items-center gap-2 bg-white w-full justify-between px-4 py-2"
-      style={{ height: `${CLASSIC.height}px` }}
+      style={{ height: `${PROFESSIONAL.height}px` }}
     >
       <div className="flex-1">Hello 2</div>
       <Dropdown

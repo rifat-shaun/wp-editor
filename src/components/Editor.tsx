@@ -7,7 +7,7 @@ import BubbleMenuContent from "./menubar/BubbleMenuContent";
 import type { EditorConfig } from "../config/editorConfig";
 import { defaultEditorConfig } from "../config/editorConfig";
 import { EditorExtensions } from "../extensions";
-import ClassicToolbar from "./toolbar/ClassicToolbar";
+import Toolbar from "./toolbar";
 import Footer from "./footer";
 
 interface EditorProps {
@@ -29,10 +29,10 @@ const Editor = ({ config = {} }: EditorProps) => {
   return (
     <div className="h-full flex flex-col bg-neutral-200">
       {/* Toolbar */}
-      <ClassicToolbar />
+      <Toolbar initialToolbar={editorConfig.defaultToolbar} />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex p-2 overflow-hidden">
+      <div className="flex-1 flex px-2 overflow-hidden">
         {editorConfig.showPageSizeSelector && (
           <div className="flex gap-4 mb-6">
             <PageSizeSelector
@@ -42,7 +42,7 @@ const Editor = ({ config = {} }: EditorProps) => {
           </div>
         )}
 
-        <div className="flex-1 flex justify-center items-start w-full overflow-y-auto">
+        <div className="flex-1 flex justify-center items-start w-full overflow-y-auto py-4">
           <div className={editorConfig.enablePagination ? pageClass : ""}>
             <EditorContext.Provider value={providerValue}>
               <EditorContent editor={editor} />

@@ -1,3 +1,5 @@
+import { TOOLBAR_TYPES_ENUM } from "../constants/Toolbar";
+
 export interface EditorConfig {
   /** Enable/disable the bubble menu that appears on text selection */
   showBubbleMenu?: boolean;
@@ -9,6 +11,8 @@ export interface EditorConfig {
   initialContent?: string;
   /** Enable/disable pagination */
   enablePagination?: boolean;
+  /** Initial toolbar */
+  defaultToolbar?: string;
 }
 
 export const defaultEditorConfig: EditorConfig = {
@@ -17,5 +21,5 @@ export const defaultEditorConfig: EditorConfig = {
   showPageSizeSelector: true,
   initialContent: "",
   enablePagination: true,
+  defaultToolbar: TOOLBAR_TYPES_ENUM.PROFESSIONAL,
 };
-

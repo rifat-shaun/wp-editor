@@ -1,17 +1,40 @@
+import { capitalize } from "../utils/common";
+
+export const TOOLBAR_TYPES_ENUM = {
+  CLASSIC: "classic",
+  PROFESSIONAL: "professional",
+  HIDE_TOOLBAR: "hide toolbar",
+};
+
 export const TOOLBAR_TYPES = {
   CLASSIC: {
-    name: "classic",
-    label: "Classic",
+    name: TOOLBAR_TYPES_ENUM.CLASSIC,
+    label: capitalize(TOOLBAR_TYPES_ENUM.CLASSIC),
     height: 36,
   },
   PROFESSIONAL: {
-    name: "professional",
-    label: "Professional",
+    name: TOOLBAR_TYPES_ENUM.PROFESSIONAL,
+    label: capitalize(TOOLBAR_TYPES_ENUM.PROFESSIONAL),
     height: 80,
   },
   NONE: {
-    name: "none",
-    label: "None",
+    name: TOOLBAR_TYPES_ENUM.HIDE_TOOLBAR,
+    label: capitalize(TOOLBAR_TYPES_ENUM.HIDE_TOOLBAR),
     height: 0,
   },
 };
+
+export const TOOLBAR_MENU_ITEMS = [
+  {
+    key: TOOLBAR_TYPES.CLASSIC.name,
+    label: TOOLBAR_TYPES.CLASSIC.label,
+  },
+  {
+    key: TOOLBAR_TYPES.PROFESSIONAL.name,
+    label: TOOLBAR_TYPES.PROFESSIONAL.label,
+  },
+  {
+    key: TOOLBAR_TYPES.NONE.name,
+    label: TOOLBAR_TYPES.NONE.label,
+  },
+];
