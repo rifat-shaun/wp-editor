@@ -1,0 +1,12 @@
+.ProseMirror {
+  height: 100%;
+}
+
+.ProseMirror-focused {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+}

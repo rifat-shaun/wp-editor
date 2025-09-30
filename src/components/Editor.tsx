@@ -34,9 +34,9 @@ const Editor = () => {
       </div>
 
       <div className={`flex justify-center items-center w-full overflow-y-auto`}>
-        <div className={getPageClass(pageConfig)}>
+        <div className={`${getPageClass(pageConfig)} h-full`}>
           <EditorContext.Provider value={providerValue}>
-            <EditorContent editor={editor} />
+            <EditorContent editor={editor} className="h-full" />
             <FloatingMenu editor={editor}>
               This is the floating menu
             </FloatingMenu>
