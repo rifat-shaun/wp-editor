@@ -1,7 +1,8 @@
 import StarterKit from "@tiptap/starter-kit";
 import CharacterCount from "@tiptap/extension-character-count";
 import { Placeholder } from "@tiptap/extensions";
-import Typography from '@tiptap/extension-typography'
+import Typography from '@tiptap/extension-typography';
+import { TextStyle, FontSize } from '@tiptap/extension-text-style';
 
 export const EditorExtensions = [
   StarterKit,
@@ -14,4 +15,6 @@ export const EditorExtensions = [
     oneQuarter: false,
     threeQuarters: false,
   }),
+  TextStyle,
+  FontSize,
 ];
