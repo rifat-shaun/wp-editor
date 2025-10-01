@@ -1,7 +1,26 @@
-
-@import './styles/content/page-sizes.css';
-@import './styles/editor/index.css';
+@import "./styles/content/page-sizes.css";
+@import "./styles/editor/index.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Chrome, Safari, Edge, Opera */
+.hidden-spin input::-webkit-outer-spin-button,
+.hidden-spin input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.hidden-spin input {
+  -moz-appearance: textfield;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
+}

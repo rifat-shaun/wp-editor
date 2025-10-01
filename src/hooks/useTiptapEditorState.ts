@@ -30,6 +30,7 @@ export const useTiptapEditorState = (editor: Editor) => {
         characterCount: ctx.editor.storage.characterCount?.characters?.() ?? 0,
         wordCount: ctx.editor.storage.characterCount?.words?.() ?? 0,
         isAIAutocompletionEnabled: ctx.editor.storage.aiAutoCompletion.isEnabled ?? false,
+        fontSize: parseInt(ctx.editor.getAttributes("textStyle")?.fontSize?.replace(/px|pt/, "") ?? "12", 10),
       };
     },
   });
