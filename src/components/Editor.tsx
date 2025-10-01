@@ -30,8 +30,6 @@ const Editor = ({ config = {} }: EditorProps) => {
 
   if (!editor) return null;
 
-  console.log("this is the editor", editor.getHTML());
-
   return (
     <div className="h-full flex flex-col bg-neutral-200">
       {/* Toolbar */}
