@@ -15,7 +15,7 @@ interface SvgIconProps {
 
 const SvgIcon: React.FC<SvgIconProps> = ({
   name,
-  size = 12,
+  size = 14,
   color = "currentColor",
   className = "",
   onClick,

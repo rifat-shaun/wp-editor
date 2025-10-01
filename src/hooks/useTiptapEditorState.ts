@@ -29,6 +29,7 @@ export const useTiptapEditorState = (editor: Editor) => {
         canRedo: ctx.editor.can().chain().redo().run() ?? false,
         characterCount: ctx.editor.storage.characterCount?.characters?.() ?? 0,
         wordCount: ctx.editor.storage.characterCount?.words?.() ?? 0,
+        isAIAutocompletionEnabled: ctx.editor.storage.aiAutoCompletion.isEnabled ?? false,
       };
     },
   });
