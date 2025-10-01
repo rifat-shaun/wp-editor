@@ -1091,6 +1091,11 @@
   resolved "https://registry.npmjs.org/@tiptap/extension-text/-/extension-text-3.6.2.tgz"
   integrity sha512-fFSUEv1H3lM92yr6jZdELk0gog8rPTK5hTf08kP8RsY8pA80Br1ADVenejrMV4UNTmT1JWTXGBGhMqfQFHUvAQ==
 
+"@tiptap/extension-typography@^3.6.2":
+  version "3.6.2"
+  resolved "https://registry.npmjs.org/@tiptap/extension-typography/-/extension-typography-3.6.2.tgz"
+  integrity sha512-5Qs/GR1Pd4h7BdQrzciTTsEN4TvIpl8dplhWyQw8GgoWTnzBrRcuTJ5SgONzzV3I1+3eu0fCMozwh3PkGP2C4A==
+
 "@tiptap/extension-underline@^3.6.2":
   version "3.6.2"
   resolved "https://registry.npmjs.org/@tiptap/extension-underline/-/extension-underline-3.6.2.tgz"
