@@ -1,13 +1,11 @@
+import { Editor } from "@tiptap/core";
 import SvgIcon from "../common/SvgIcon";
-import { useEditorContext } from "../../contexts/LaxEditorContext";
 
+interface BubbleMenuContentProps {
+  editor: Editor;
+}
 
-const BubbleMenuContent = () => {
-  const {editor} = useEditorContext();
-
-
-  if (!editor) return null;
-  
+const BubbleMenuContent = ({ editor }: BubbleMenuContentProps) => {
   return (
     <div className="flex items-center gap-1 bg-white shadow-lg rounded-lg border border-neutral-200 p-2">
       <button

@@ -1,14 +1,8 @@
 import { Dropdown } from "antd";
 import type { MenuProps } from "antd";
-import {
-  TOOLBAR_TYPES,
-  TOOLBAR_MENU_ITEMS,
-  TABS,
-  type TTabKey,
-} from "../../constants/Toolbar";
+import { TOOLBAR_TYPES, TOOLBAR_MENU_ITEMS, TABS, type TTabKey } from "../../constants/Toolbar";
 import { useEffect, useRef, useState } from "react";
 import SvgIcon from "../common/SvgIcon";
-import { HomeOptions } from "./HomeOptions";
 
 interface ProfessionalToolbarProps {
   onToolbarChange?: (toolbarType: string) => void;
@@ -53,7 +47,7 @@ export const ProfessionalToolbar = ({
       const newPosition = Math.max(0, scrollPosition - viewportWidth);
       contentScrollerRef.current.scrollTo({
         left: newPosition,
-        behavior: "smooth",
+        behavior: 'smooth',
       });
       setScrollPosition(newPosition);
     }
@@ -66,7 +60,7 @@ export const ProfessionalToolbar = ({
       const newPosition = Math.min(maxScroll, scrollPosition + viewportWidth);
       contentScrollerRef.current.scrollTo({
         left: newPosition,
-        behavior: "smooth",
+        behavior: 'smooth',
       });
       setScrollPosition(newPosition);
     }
@@ -79,21 +73,21 @@ export const ProfessionalToolbar = ({
   useEffect(() => {
     checkContentOverflow();
     const handleResize = () => checkContentOverflow();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case "Home":
-        return <HomeOptions />;
-      case "Insert":
+      case 'Home':
+        return <div>Home</div>;
+      case 'Insert':
         return <div>Insert</div>;
-      case "Table":
+      case 'Table':
         return <div>Table</div>;
-      case "Page":
+      case 'Page':
         return <div>Page</div>;
-      case "Export":
+      case 'Export':
         return <div>Export</div>;
       default:
         return null;
@@ -112,15 +106,11 @@ export const ProfessionalToolbar = ({
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`relative mx-2 pb-0.5 text-xs font-medium text-gray-600 transition-all duration-300 border-b-2 hover:text-primary-400 ${
-                activeTab === tab
-                  ? "border-primary-500 text-primary-600"
-                  : "border-transparent"
+                activeTab === tab ? 'border-primary-500 text-primary-600' : 'border-transparent'
               }`}
             >
               {tab}
-              {activeTab === tab && (
-                <span className="absolute left-0 bottom-0 w-full h-[2px] bg-black transition-all duration-300" />
-              )}
+              {activeTab === tab && <span className='absolute left-0 bottom-0 w-full h-[2px] bg-black transition-all duration-300' />}
             </button>
           ))}
         </div>
@@ -133,46 +123,39 @@ export const ProfessionalToolbar = ({
           </div>
         </Dropdown>
       </div>
-      <div
-        className="relative flex-grow flex items-center"
-        ref={tabsContainerRef}
-      >
+      <div className='relative flex-grow flex items-center' ref={tabsContainerRef}>
         {showScrollButtons && (
           <button
             onClick={handleScrollLeft}
-            className="absolute left-0 top-1/2 -translate-y-1/2 bottom-0 z-10 bg-gray-100 px-0.5 rounded-sm shadow-sm hover:bg-primary-500 hover:text-white h-15 flex items-center"
-            aria-label="Scroll left"
+            className='absolute left-0 top-1/2 -translate-y-1/2 bottom-0 z-10 bg-gray-100 px-0.5 rounded-sm shadow-sm hover:bg-primary-500 hover:text-white h-15 flex items-center'
+            aria-label='Scroll left'
             disabled={scrollPosition <= 0}
           >
-            <SvgIcon name="arrow-down" className="rotate-90" />
+            <SvgIcon name='arrow-down' className='rotate-90' />
           </button>
         )}
         <div
           ref={contentScrollerRef}
-          className="overflow-x-auto hide-scrollbar scroll-smooth"
+          className='overflow-x-auto hide-scrollbar scroll-smooth'
           style={{
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-            marginLeft: showScrollButtons ? "1.5rem" : "0",
-            marginRight: showScrollButtons ? "1.5rem" : "0",
-            scrollBehavior: "smooth",
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            marginLeft: showScrollButtons ? '1.5rem' : '0',
+            marginRight: showScrollButtons ? '1.5rem' : '0',
+            scrollBehavior: 'smooth',
           }}
           onScroll={handleScroll}
         >
-          <div className="w-full flex items-center space-x-2">
-            {renderTabContent()}
-          </div>
+          <div className='w-full flex items-center space-x-2'>{renderTabContent()}</div>
         </div>
         {showScrollButtons && (
           <button
             onClick={handleScrollRight}
-            className="absolute right-0 top-1/2 -translate-y-1/2 bottom-0 z-10 bg-gray-100 px-0.5 rounded-sm shadow-sm hover:bg-primary-500 hover:text-white h-15 flex items-center"
-            aria-label="Scroll right"
-            disabled={
-              scrollPosition >= totalContentWidth - contentContainerWidth
-            }
+            className='absolute right-0 top-1/2 -translate-y-1/2 bottom-0 z-10 bg-gray-100 px-0.5 rounded-sm shadow-sm hover:bg-primary-500 hover:text-white h-15 flex items-center'
+            aria-label='Scroll right'
+            disabled={scrollPosition >= totalContentWidth - contentContainerWidth}
           >
-            <SvgIcon name="arrow-down" className="rotate-[-90deg]" />
+            <SvgIcon name='arrow-down' className='rotate-[-90deg]' />
           </button>
         )}
       </div>
