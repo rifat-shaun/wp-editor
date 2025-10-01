@@ -1,9 +1,9 @@
 import { FOOTER_HEIGHT } from "../../constants";
 import { Editor } from "@tiptap/react";
-import { useCharacterCount } from "../../hooks/useCharacterCount";
+import { useTiptapEditorState } from "../../hooks/useTiptapEditorState";
 
-export const Footer = ({ editor }: { editor: Editor | null }) => {
-  const { words, characters } = useCharacterCount(editor);
+export const Footer = ({ editor }: { editor: Editor }) => {
+  const { characterCount, wordCount } = useTiptapEditorState(editor);
 
   return (
     <div
@@ -11,8 +11,8 @@ export const Footer = ({ editor }: { editor: Editor | null }) => {
       style={{ height: `${FOOTER_HEIGHT}px` }}
     >
       <div className="flex gap-4 text-sm text-neutral-600">
-        <span>Characters: {characters}</span>
-        <span>Words: {words}</span>
+        <span>Characters: {characterCount}</span>
+        <span>Words: {wordCount}</span>
       </div>
       <div>Toolbar</div>
     </div>

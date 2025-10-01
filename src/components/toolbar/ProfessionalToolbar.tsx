@@ -3,12 +3,16 @@ import type { MenuProps } from "antd";
 import { TOOLBAR_TYPES, TOOLBAR_MENU_ITEMS, TABS, type TTabKey } from "../../constants/Toolbar";
 import { useEffect, useRef, useState } from "react";
 import SvgIcon from "../common/SvgIcon";
+import { Editor } from "@tiptap/react";
+import { HomeOptions } from "./HomeOptions";
 
 interface ProfessionalToolbarProps {
+  editor: Editor;
   onToolbarChange?: (toolbarType: string) => void;
 }
 
 export const ProfessionalToolbar = ({
+  editor,
   onToolbarChange,
 }: ProfessionalToolbarProps) => {
   const { PROFESSIONAL } = TOOLBAR_TYPES;
@@ -80,7 +84,7 @@ export const ProfessionalToolbar = ({
   const renderTabContent = () => {
     switch (activeTab) {
       case 'Home':
-        return <div>Home</div>;
+        return <HomeOptions editor={editor} />;
       case 'Insert':
         return <div>Insert</div>;
       case 'Table':

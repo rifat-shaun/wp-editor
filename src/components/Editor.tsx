@@ -17,18 +17,25 @@ const Editor = ({ config = {} }: EditorProps) => {
   const editorConfig = { ...defaultEditorConfig, ...config };
   const { pageClass } = usePageSize();
 
-  const editor = useEditor({
-    extensions: EditorExtensions,
-    content: editorConfig.initialContent,
-  });
+  const editor = useEditor(
+    {
+      extensions: EditorExtensions,
+      content: editorConfig.initialContent,
+    },
+    []
+  );
 
   // Memoize the provider value to avoid unnecessary re-renders
   const providerValue = useMemo(() => ({ editor }), [editor]);
 
+  if (!editor) return null;
+
+  console.log("this is the editor", editor.getHTML());
+
   return (
     <div className="h-full flex flex-col bg-neutral-200">
       {/* Toolbar */}
-      <Toolbar initialToolbar={editorConfig.defaultToolbar} />
+      <Toolbar initialToolbar={editorConfig.defaultToolbar} editor={editor} />
 
       {/* Main Content Area */}
       <div className="flex-1 flex justify-center items-start w-full overflow-auto py-4">

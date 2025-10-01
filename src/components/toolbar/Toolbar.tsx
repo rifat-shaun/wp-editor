@@ -4,13 +4,16 @@ import Button from "../base/Button";
 import SvgIcon from "../common/SvgIcon";
 import { ProfessionalToolbar } from "./ProfessionalToolbar";
 import { TOOLBAR_TYPES_ENUM } from "../../constants/Toolbar";
+import { Editor } from "@tiptap/react";
 
 interface ToolbarProps {
   initialToolbar?: string;
+  editor: Editor;
 }
 
 export const Toolbar = ({
   initialToolbar = TOOLBAR_TYPES_ENUM.PROFESSIONAL,
+  editor,
 }: ToolbarProps) => {
   const { CLASSIC, PROFESSIONAL, HIDE_TOOLBAR } = TOOLBAR_TYPES_ENUM;
   const [currentToolbar, setCurrentToolbar] = useState<string>(initialToolbar);
@@ -39,7 +42,7 @@ export const Toolbar = ({
     case CLASSIC:
       return <ClassicToolbar onToolbarChange={handleToolbarChange} />;
     case PROFESSIONAL:
-      return <ProfessionalToolbar onToolbarChange={handleToolbarChange} />;
+      return <ProfessionalToolbar onToolbarChange={handleToolbarChange} editor={editor} />;
     case HIDE_TOOLBAR:
     default:
       return (
