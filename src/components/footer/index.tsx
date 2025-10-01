@@ -11,8 +11,8 @@ export const Footer = ({ editor }: { editor: Editor | null }) => {
       style={{ height: `${FOOTER_HEIGHT}px` }}
     >
       <div className="flex gap-4 text-sm text-neutral-600">
-        <span>Words: {words}</span>
         <span>Characters: {characters}</span>
+        <span>Words: {words}</span>
       </div>
       <div>Toolbar</div>
     </div>
