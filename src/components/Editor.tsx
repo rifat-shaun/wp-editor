@@ -1,13 +1,13 @@
 import { useEditor, EditorContent, EditorContext } from "@tiptap/react";
 import { FloatingMenu, BubbleMenu } from "@tiptap/react/menus";
 import { useMemo } from "react";
-import { usePageSize } from "../hooks/usePageSize";
+import { usePageSize } from "@/hooks/usePageSize";
 import BubbleMenuContent from "./menubar/BubbleMenuContent";
-import type { EditorConfig } from "../config/editorConfig";
-import { defaultEditorConfig } from "../config/editorConfig";
-import { EditorExtensions } from "../extensions";
-import { Toolbar } from "./toolbar/Toolbar";
-import { Footer } from "./footer";
+import type { EditorConfig } from "@/config/editorConfig";
+import { defaultEditorConfig } from "@/config/editorConfig";
+import { EditorExtensions } from "@/extensions";
+import { Toolbar } from "@/components/toolbar/Toolbar";
+import { Footer } from "@/components/footer";
 
 interface EditorProps {
   config?: EditorConfig;
