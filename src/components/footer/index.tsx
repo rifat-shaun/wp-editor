@@ -7,7 +7,7 @@ export const Footer = ({ editor }: { editor: Editor | null }) => {
 
   return (
     <div
-      className="flex items-center gap-2 bg-white w-full justify-between px-4 py-2"
+      className="flex items-center gap-2 bg-white w-full justify-between px-4 py-0.5"
       style={{ height: `${FOOTER_HEIGHT}px` }}
     >
       <div className="flex gap-4 text-sm text-neutral-600">
