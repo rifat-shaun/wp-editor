@@ -17,7 +17,7 @@ export interface EditorConfig {
 
 export const defaultEditorConfig: EditorConfig = {
   showBubbleMenu: true,
-  showFloatingMenu: true,
+  showFloatingMenu: false,
   showPageSizeSelector: true,
   initialContent: "",
   enablePagination: true,
