@@ -46,15 +46,15 @@ export const Toolbar = ({
     case HIDE_TOOLBAR:
     default:
       return (
-        <div className="fixed top-1 right-10 z-50">
+        <div className="fixed top-1 right-6 z-50">
           <Button
             id="show-toolbar"
             status="secondary-neutral"
             appearance="outline"
             onClick={handleShowToolbar}
-            className="px-1"
+            className="px-[4px] py-[3px]"
           >
-            <SvgIcon name="arrow-down" size={20} />
+            <SvgIcon name="toolbar" size={16} />
           </Button>
         </div>
       );

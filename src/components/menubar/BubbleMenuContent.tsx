@@ -41,7 +41,7 @@ const BubbleMenuContent = ({ editor }: BubbleMenuContentProps) => {
         }`}
         title="Strikethrough"
       >
-        <SvgIcon name="strike"  />
+        <SvgIcon name="strikethrough" />
       </button>
 
       <div className="w-px h-6 bg-neutral-300 mx-1" />
