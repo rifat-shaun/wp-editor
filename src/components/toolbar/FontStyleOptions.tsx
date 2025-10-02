@@ -3,10 +3,10 @@ import { ItemGroup } from "./ItemGroup";
 import { FONT_FAMILY_OPTIONS, FONT_SIZE_OPTIONS } from "@/constants/Fonts";
 import {
   ChevronRight,
+  EditOutlined,
   FormatBoldRounded,
   FormatItalicRounded,
   FormatUnderlinedRounded,
-  StrikethroughSRounded,
   SubscriptRounded,
   SuperscriptRounded,
   TextDecreaseOutlined,
@@ -38,6 +38,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
     isSubscript,
     selectionColor,
     selectionBackgroundColor,
+    highlightColor,
   } = useTiptapEditorState(editor);
 
   const {
@@ -55,6 +56,8 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
     handleUnsetColor,
     handleSetBackgroundColor,
     handleUnsetBackgroundColor,
+    handleSetHighlightColor,
+    handleUnsetHighlightColor,
   } = useFontStyleMethods(editor);
 
   return (
@@ -198,10 +201,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
           active={isStrike}
           size="small"
         >
-          <StrikethroughSRounded
-            className="text-gray-700"
-            sx={{ fontSize: "18px" }}
-          />
+          <SvgIcon name="strikethrough" />
         </ToolbarButtonItem>
 
         <ToolbarButtonItem
@@ -259,6 +259,22 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
             icon={<SvgIcon name="color-fill" />}
             onColorSelect={(color) => handleSetBackgroundColor(color)}
             onResetColor={handleUnsetBackgroundColor}
+          />
+        </ToolbarButtonItem>
+
+        <ToolbarButtonItem
+          tooltip="Highlight"
+          active={false}
+          size="small"
+          className="w-6"
+        >
+          <HorizontalLayoutColorPicker
+            id="selectionColor"
+            showNone={false}
+            value={highlightColor}
+            icon={<EditOutlined sx={{ fontSize: "14px", padding: "0" }} />}
+            onColorSelect={(color) => handleSetHighlightColor(color)}
+            onResetColor={handleUnsetHighlightColor}
           />
         </ToolbarButtonItem>
       </div>

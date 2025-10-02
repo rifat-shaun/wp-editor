@@ -77,6 +77,10 @@ export const HomeOptions = ({ editor }: HomeOptionsProps) => {
       <Divider />
 
       <FontStyleOptions editor={editor} />
+
+      <Divider />
+
+      
     </>
   );
 };

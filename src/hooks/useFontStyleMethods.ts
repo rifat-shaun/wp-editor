@@ -20,6 +20,8 @@ export const useFontStyleMethods = (editor: Editor) => {
       handleUnsetColor: () => {},
       handleSetBackgroundColor: (_color: string) => {},
       handleUnsetBackgroundColor: () => {},
+      handleSetHighlightColor: (_color: string) => {},
+      handleUnsetHighlightColor: () => {},
     };
   }
 
@@ -121,6 +123,14 @@ export const useFontStyleMethods = (editor: Editor) => {
     editor.chain().focus().unsetBackgroundColor().run();
   };
 
+  const handleSetHighlightColor = (color: string) => {
+    editor.chain().focus().toggleHighlight({ color }).run()
+  };
+
+  const handleUnsetHighlightColor = () => {
+    editor.chain().focus().unsetHighlight().run();
+  };
+
   return {
     handleFontFamilyChange,
     handleFontSizeChange,
@@ -136,5 +146,7 @@ export const useFontStyleMethods = (editor: Editor) => {
     handleUnsetColor,
     handleSetBackgroundColor,
     handleUnsetBackgroundColor,
+    handleSetHighlightColor,
+    handleUnsetHighlightColor,
   };
 };

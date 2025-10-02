@@ -1,4 +1,4 @@
-import { Editor, useEditorState } from "@tiptap/react";
+import { Editor, getMarkAttributes, useEditorState } from "@tiptap/react";
 
 export const useTiptapEditorState = (editor: Editor) => {
   if (!editor) {
@@ -19,6 +19,7 @@ export const useTiptapEditorState = (editor: Editor) => {
       canSubscript: false,
       selectionColor: "#000000",
       selectionBackgroundColor: "#FFFFFF",
+      highlightColor: "#FFFFFF",
       fontSize: 12,
       fontFamily: "Arial, sans-serif",
       characterCount: 0,
@@ -63,6 +64,10 @@ export const useTiptapEditorState = (editor: Editor) => {
           ctx.editor.getAttributes("textStyle")?.color ?? "#000000",
         selectionBackgroundColor:
           ctx.editor.getAttributes("textStyle")?.backgroundColor ?? "#FFFFFF",
+
+        // Highlight Color
+        highlightColor:
+          getMarkAttributes(ctx.editor.state, "highlight")?.color ?? "#FFFFFF",
 
         // Font Size and Family
         fontSize: parseInt(
