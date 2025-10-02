@@ -1,3 +1,4 @@
+import Document from "@tiptap/extension-document";
 import StarterKit from "@tiptap/starter-kit";
 import CharacterCount from "@tiptap/extension-character-count";
 import { Placeholder } from "@tiptap/extensions";
@@ -9,6 +10,8 @@ import {
   Color,
   BackgroundColor,
 } from "@tiptap/extension-text-style";
+import TaskList from "@tiptap/extension-task-list";
+import TaskItem from "@tiptap/extension-task-item";
 import { AIAutocompletion } from "@/extensions/AIAutoCompletion";
 import { OnBlurHighlight } from "./OnBlurHighlight";
 import Subscript from "@tiptap/extension-subscript";
@@ -17,6 +20,7 @@ import Highlight from "@tiptap/extension-highlight";
 
 export const EditorExtensions = [
   StarterKit,
+  Document,
   CharacterCount,
   Placeholder.configure({
     placeholder: "Write something …",
@@ -37,5 +41,9 @@ export const EditorExtensions = [
   BackgroundColor,
   Highlight.configure({
     multicolor: true,
+  }),
+  TaskList,
+  TaskItem.configure({
+    nested: true,
   }),
 ];

@@ -1,22 +1,33 @@
-import { Editor } from '@tiptap/react';
-import { ItemGroup } from './ItemGroup';
-import { ToolbarButtonItem } from './ToolbarButtonItem';
-import SvgIcon from '@/components/common/SvgIcon';
+import { Editor } from "@tiptap/react";
+import { ItemGroup } from "./ItemGroup";
+import { ToolbarButtonItem } from "./ToolbarButtonItem";
+import SvgIcon from "@/components/common/SvgIcon";
+import { useParagraphStyleMethods } from "@/hooks/useParagraphStyleMethods";
+import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
 
 type TParagraphStyleOptionsProps = {
   editor: Editor;
 };
 
-export const ParagraphStyleOptions = ({ editor }: TParagraphStyleOptionsProps) => {
-  const handleLineHeightChange = (lineHeight: string | number) => {
-    if (editor.commands.setLineHeight as unknown as (_lineHeight: string | number) => void) {
-      editor.chain().focus().setLineHeight(String(lineHeight)).run();
-    }
-  };
+export const ParagraphStyleOptions = ({
+  editor,
+}: TParagraphStyleOptionsProps) => {
+  // const handleLineHeightChange = (lineHeight: string | number) => {
+  //   if (
+  //     editor.commands.setLineHeight as unknown as (
+  //       _lineHeight: string | number
+  //     ) => void
+  //   ) {
+  //     editor.chain().focus().setLineHeight(String(lineHeight)).run();
+  //   }
+  // };
+
+  const { isTaskList } = useTiptapEditorState(editor);
+  const { handleToggleTaskList } = useParagraphStyleMethods(editor);
 
   return (
     <ItemGroup>
-      <div className='flex items-center space-x-2'>
+      <div className="flex items-center space-x-2">
         {/* <ToolbarSelectItem
           options={lineHeightOptions}
           value={getSelectionLineHeight(editor)}
@@ -49,15 +60,15 @@ export const ParagraphStyleOptions = ({ editor }: TParagraphStyleOptionsProps) =
           <SvgIcon name='ordered-list' />
         </ToolbarButtonItem> */}
 
-        {/* <ToolbarButtonItem
-          tooltip={'Checklist'}
-          onClick={() => editor.chain().focus().toggleList('taskList', 'taskItem').run()}
+        <ToolbarButtonItem
+          tooltip={"Checklist"}
+          onClick={handleToggleTaskList}
           disabled={false}
-          active={editor.isActive('taskList')}
-          size='small'
+          active={isTaskList}
+          size="small"
         >
-          <SvgIcon name='task-list' />
-        </ToolbarButtonItem> */}
+          <SvgIcon name="task-list" />
+        </ToolbarButtonItem>
 
         {/* <ToolbarButtonItem
           tooltip={'Increase Indent'}
@@ -80,7 +91,7 @@ export const ParagraphStyleOptions = ({ editor }: TParagraphStyleOptionsProps) =
         </ToolbarButtonItem> */}
       </div>
 
-      <div className='flex items-center space-x-2'>
+      <div className="flex items-center space-x-2">
         {/* <ToolbarButtonItem
           tooltip={'Align Left'}
           onClick={() => editor.chain().focus().unsetTextAlign().run()}

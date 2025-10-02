@@ -25,6 +25,7 @@ export const useTiptapEditorState = (editor: Editor) => {
       characterCount: 0,
       wordCount: 0,
       isAIAutocompletionEnabled: false,
+      isTaskList: false,
     };
   }
 
@@ -87,6 +88,9 @@ export const useTiptapEditorState = (editor: Editor) => {
         // AI Autocompletion
         isAIAutocompletionEnabled:
           ctx.editor.storage.aiAutoCompletion.isEnabled ?? false,
+
+        // Task List
+        isTaskList: ctx.editor.isActive("taskList") ?? false,
       };
     },
   });
