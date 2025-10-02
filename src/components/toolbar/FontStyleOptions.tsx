@@ -18,6 +18,7 @@ import { ToolbarButtonItem } from "./ToolbarButtonItem";
 import { HorizontalLayoutColorPicker } from "../base/ColorPicker";
 import { SvgIcon } from "@/index";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
+import { useFontStyleMethods } from "@/hooks/useFontStyleMethods";
 
 export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
   const {
@@ -39,69 +40,22 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
     selectionBackgroundColor,
   } = useTiptapEditorState(editor);
 
-  const handleFontFamilyChange = (fontFamily: string) => {
-    if (
-      editor?.commands?.setFontFamily as unknown as (
-        _fontFamily: string
-      ) => void
-    ) {
-      editor.chain().focus().setFontFamily(fontFamily).run();
-    }
-  };
-
-  const handleFontSizeChange = (size: number | null) => {
-    if (!size) return;
-
-    editor
-      .chain()
-      .focus()
-      .setFontSize(String(size + "pt"))
-      .run();
-  };
-
-  const increaseFontSize = () => {
-    const currentSize = fontSize;
-    if (currentSize) {
-      if (!isNaN(currentSize)) {
-        const newSize = currentSize + 1;
-        editor
-          .chain()
-          .focus()
-          .setFontSize(newSize + "pt")
-          .run();
-      }
-    }
-  };
-
-  const decreaseFontSize = () => {
-    const currentSize = fontSize;
-    if (currentSize) {
-      if (!isNaN(currentSize) && currentSize > 1) {
-        const newSize = currentSize - 1;
-        editor
-          .chain()
-          .focus()
-          .setFontSize(newSize + "pt")
-          .run();
-      }
-    }
-  };
-
-  const handleSuperscriptToggle = () => {
-    if (editor.isActive("subscript")) {
-      editor.chain().focus().unsetSubscript().run();
-    }
-
-    editor.chain().focus().toggleSuperscript().run();
-  };
-
-  const handleSubscriptToggle = () => {
-    if (editor.isActive("superscript")) {
-      editor.chain().focus().unsetSuperscript().run();
-    }
-
-    editor.chain().focus().toggleSubscript().run();
-  };
+  const {
+    handleFontFamilyChange,
+    handleFontSizeChange,
+    increaseFontSize,
+    decreaseFontSize,
+    handleSuperscriptToggle,
+    handleSubscriptToggle,
+    handleToggleBold,
+    handleToggleItalic,
+    handleToggleUnderline,
+    handleToggleStrike,
+    handleSetColor,
+    handleUnsetColor,
+    handleSetBackgroundColor,
+    handleUnsetBackgroundColor,
+  } = useFontStyleMethods(editor);
 
   return (
     <ItemGroup>
@@ -200,7 +154,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
       <div className="flex items-center space-x-2">
         <ToolbarButtonItem
           tooltip={"Bold"}
-          onClick={() => editor.chain().focus().toggleBold().run()}
+          onClick={handleToggleBold}
           disabled={!canBold}
           active={isBold}
           size="small"
@@ -213,7 +167,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
 
         <ToolbarButtonItem
           tooltip={"Italic"}
-          onClick={() => editor.chain().focus().toggleItalic().run()}
+          onClick={handleToggleItalic}
           disabled={!canItalic}
           active={isItalic}
           size="small"
@@ -226,7 +180,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
 
         <ToolbarButtonItem
           tooltip={"Underline"}
-          onClick={() => editor.chain().focus().toggleUnderline().run()}
+          onClick={handleToggleUnderline}
           disabled={!canUnderline}
           active={isUnderline}
           size="small"
@@ -239,7 +193,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
 
         <ToolbarButtonItem
           tooltip={"Strikethrough"}
-          onClick={() => editor.chain().focus().toggleStrike().run()}
+          onClick={handleToggleStrike}
           disabled={!canStrike}
           active={isStrike}
           size="small"
@@ -287,10 +241,8 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
             showNone={false}
             value={selectionColor}
             icon={<TitleOutlined sx={{ fontSize: "14px", padding: "0" }} />}
-            onColorSelect={(color) =>
-              editor.chain().focus().setColor(color).run()
-            }
-            onResetColor={() => editor.chain().focus().unsetColor().run()}
+            onColorSelect={(color) => handleSetColor(color)}
+            onResetColor={handleUnsetColor}
           />
         </ToolbarButtonItem>
 
@@ -305,12 +257,8 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
             showNone={false}
             value={selectionBackgroundColor}
             icon={<SvgIcon name="color-fill" />}
-            onColorSelect={(color) =>
-              editor.chain().focus().setBackgroundColor(color).run()
-            }
-            onResetColor={() =>
-              editor.chain().focus().unsetBackgroundColor().run()
-            }
+            onColorSelect={(color) => handleSetBackgroundColor(color)}
+            onResetColor={handleUnsetBackgroundColor}
           />
         </ToolbarButtonItem>
       </div>
