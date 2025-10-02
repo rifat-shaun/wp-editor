@@ -22,8 +22,12 @@ export const ParagraphStyleOptions = ({
   //   }
   // };
 
-  const { isTaskList } = useTiptapEditorState(editor);
-  const { handleToggleTaskList } = useParagraphStyleMethods(editor);
+  const { isTaskList, canIndentTaskItem, canOutdentTaskItem } = useTiptapEditorState(editor);
+  const { 
+    handleToggleTaskList,
+    handleIndentTaskItem,
+    handleOutdentTaskItem,
+  } = useParagraphStyleMethods(editor);
 
   return (
     <ItemGroup>
@@ -70,25 +74,25 @@ export const ParagraphStyleOptions = ({
           <SvgIcon name="task-list" />
         </ToolbarButtonItem>
 
-        {/* <ToolbarButtonItem
+        <ToolbarButtonItem
           tooltip={'Increase Indent'}
-          onClick={() => editor.chain().focus().indent().run()}
-          disabled={!editor.can().chain().focus().indent().run()}
+          onClick={handleIndentTaskItem}
+          disabled={!canIndentTaskItem}
           active={false}
           size='small'
         >
           <SvgIcon name='indent' />
-        </ToolbarButtonItem> */}
+        </ToolbarButtonItem>
 
-        {/* <ToolbarButtonItem
+        <ToolbarButtonItem
           tooltip={'Decrease Indent'}
-          onClick={() => editor.chain().focus().outdent().run()}
-          disabled={!editor.can().chain().focus().outdent().run()}
+          onClick={handleOutdentTaskItem}
+          disabled={!canOutdentTaskItem}
           active={false}
           size='small'
         >
           <SvgIcon name='indent' className='rotate-180' />
-        </ToolbarButtonItem> */}
+        </ToolbarButtonItem>
       </div>
 
       <div className="flex items-center space-x-2">

@@ -26,6 +26,8 @@ export const useTiptapEditorState = (editor: Editor) => {
       wordCount: 0,
       isAIAutocompletionEnabled: false,
       isTaskList: false,
+      canIndentTaskItem: false,
+      canOutdentTaskItem: false,
     };
   }
 
@@ -91,6 +93,8 @@ export const useTiptapEditorState = (editor: Editor) => {
 
         // Task List
         isTaskList: ctx.editor.isActive("taskList") ?? false,
+        canIndentTaskItem: ctx.editor.can().sinkListItem('taskItem') ?? false,
+        canOutdentTaskItem: ctx.editor.can().liftListItem('taskItem') ?? false,
       };
     },
   });
