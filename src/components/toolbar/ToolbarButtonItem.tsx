@@ -4,7 +4,7 @@ import React from 'react';
 type TToolbarButtonItemProps = {
   children: React.ReactNode;
   tooltip?: string;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
   active: boolean;
   className?: string;
@@ -37,7 +37,7 @@ export const ToolbarButtonItem = ({
           ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
           ${className}
         `}
-        onClick={onClick}
+        onClick={onClick ? onClick : undefined}
         disabled={disabled}
       >
         <div className={`flex items-center justify-between ${showChildrenInline ? 'flex-row gap-1' : 'flex-col gap-0.5'}`}>

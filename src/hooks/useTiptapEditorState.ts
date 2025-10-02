@@ -29,10 +29,15 @@ export const useTiptapEditorState = (editor: Editor) => {
         canRedo: ctx.editor.can().chain().redo().run() ?? false,
         canUnderline: ctx.editor.can().chain().toggleUnderline().run() ?? false,
         isUnderline: ctx.editor.isActive("underline") ?? false,
-        canSuperscript: ctx.editor.can().chain().toggleSuperscript().run() ?? false,
+        canSuperscript:
+          ctx.editor.can().chain().toggleSuperscript().run() ?? false,
         isSuperscript: ctx.editor.isActive("superscript") ?? false,
         canSubscript: ctx.editor.can().chain().toggleSubscript().run() ?? false,
         isSubscript: ctx.editor.isActive("subscript") ?? false,
+        selectionColor:
+          ctx.editor.getAttributes("textStyle")?.color ?? "#000000",
+        selectionBackgroundColor:
+          ctx.editor.getAttributes("textStyle")?.backgroundColor ?? "#FFFFFF",
         characterCount: ctx.editor.storage.characterCount?.characters?.() ?? 0,
         wordCount: ctx.editor.storage.characterCount?.words?.() ?? 0,
         isAIAutocompletionEnabled:

@@ -4,6 +4,8 @@ import { FONT_FAMILY_OPTIONS, FONT_SIZE_OPTIONS } from "@/constants/Fonts";
 import {
   ChevronRight,
   FormatBoldRounded,
+  FormatColorFillOutlined,
+  FormatColorTextOutlined,
   FormatItalicRounded,
   FormatUnderlinedRounded,
   StrikethroughSRounded,
@@ -11,11 +13,13 @@ import {
   SuperscriptRounded,
   TextDecreaseOutlined,
   TextIncreaseOutlined,
+  TitleOutlined,
 } from "@mui/icons-material";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
 import { Editor } from "@tiptap/react";
 import { ToolbarButtonItem } from "./ToolbarButtonItem";
 import { HorizontalLayoutColorPicker } from "../base/ColorPicker";
+import { SvgIcon } from "@/index";
 
 export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
   const {
@@ -33,6 +37,8 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
     isSuperscript,
     canSubscript,
     isSubscript,
+    selectionColor,
+    selectionBackgroundColor,
   } = useTiptapEditorState(editor);
 
   const handleFontFamilyChange = (fontFamily: string) => {
@@ -83,8 +89,8 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
     }
   };
 
-	const handleSuperscriptToggle = () => {
-    if (editor.isActive('subscript')) {
+  const handleSuperscriptToggle = () => {
+    if (editor.isActive("subscript")) {
       editor.chain().focus().unsetSubscript().run();
     }
 
@@ -92,7 +98,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
   };
 
   const handleSubscriptToggle = () => {
-    if (editor.isActive('superscript')) {
+    if (editor.isActive("superscript")) {
       editor.chain().focus().unsetSuperscript().run();
     }
 
@@ -246,29 +252,69 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
           />
         </ToolbarButtonItem>
 
-         <ToolbarButtonItem
-          tooltip={'Superscript'}
+        <ToolbarButtonItem
+          tooltip={"Superscript"}
           onClick={handleSuperscriptToggle}
           disabled={!canSuperscript}
           active={isSuperscript}
-          size='small'
+          size="small"
         >
-          <SuperscriptRounded className='text-gray-700' sx={{ fontSize: '18px' }} />
+          <SuperscriptRounded
+            className="text-gray-700"
+            sx={{ fontSize: "18px" }}
+          />
         </ToolbarButtonItem>
 
         <ToolbarButtonItem
-          tooltip={'Subscript'}
+          tooltip={"Subscript"}
           onClick={handleSubscriptToggle}
           disabled={!canSubscript}
           active={isSubscript}
-          size='small'
+          size="small"
         >
-          <SubscriptRounded className='text-gray-700' sx={{ fontSize: '18px' }} />
+          <SubscriptRounded
+            className="text-gray-700"
+            sx={{ fontSize: "18px" }}
+          />
         </ToolbarButtonItem>
 
-				<HorizontalLayoutColorPicker />
+        <ToolbarButtonItem
+          tooltip="Background Color"
+          active={false}
+          size="small"
+        >
+          <HorizontalLayoutColorPicker
+            id="selectionColor"
+            showNone={false}
+            value={selectionColor}
+            icon={<TitleOutlined sx={{ fontSize: "14px", padding: "0" }} />}
+            onColorSelect={(color) =>
+              editor.chain().focus().setColor(color).run()
+            }
+            onResetColor={() => editor.chain().focus().unsetColor().run()}
+          />
+        </ToolbarButtonItem>
 
-{/*
+        <ToolbarButtonItem
+          tooltip="Background Color"
+          active={false}
+          size="small"
+        >
+          <HorizontalLayoutColorPicker
+            id="selectionBackgroundColor"
+            showNone={false}
+            value={selectionBackgroundColor}
+            icon={<SvgIcon name="color-fill" />}
+            onColorSelect={(color) =>
+              editor.chain().focus().setBackgroundColor(color).run()
+            }
+            onResetColor={() =>
+              editor.chain().focus().unsetBackgroundColor().run()
+            }
+          />
+        </ToolbarButtonItem>
+
+        {/*
         <ToolbarDropdownItem
           tooltip={'Text Color'}
           tooltipPlacement='bottom'
