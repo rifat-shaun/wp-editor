@@ -199,7 +199,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
         </ToolbarButtonItem>
       </div>
 
-      <div className="flex items-center space-x-1">
+      <div className="flex items-center space-x-2">
         <ToolbarButtonItem
           tooltip={"Bold"}
           onClick={() => editor.chain().focus().toggleBold().run()}
@@ -282,6 +282,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
           tooltip="Background Color"
           active={false}
           size="small"
+          className="w-6"
         >
           <HorizontalLayoutColorPicker
             id="selectionColor"
@@ -299,6 +300,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
           tooltip="Background Color"
           active={false}
           size="small"
+          className="w-6"
         >
           <HorizontalLayoutColorPicker
             id="selectionBackgroundColor"
