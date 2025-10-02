@@ -14,6 +14,7 @@ import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
 import { AIAutocompletion } from "@/extensions/AIAutoCompletion";
 import { OnBlurHighlight } from "./OnBlurHighlight";
+import { Indent } from "./Indent";
 import Subscript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
 import Highlight from "@tiptap/extension-highlight";
@@ -45,5 +46,10 @@ export const EditorExtensions = [
   TaskList,
   TaskItem.configure({
     nested: true,
+  }),
+  Indent.configure({
+    types: ["paragraph", "heading", "blockquote"],
+    minLevel: 0,
+    maxLevel: 8,
   }),
 ];

@@ -26,8 +26,8 @@ export const useTiptapEditorState = (editor: Editor) => {
       wordCount: 0,
       isAIAutocompletionEnabled: false,
       isTaskList: false,
-      canIndentTaskItem: false,
-      canOutdentTaskItem: false,
+      canIndent: false,
+      canOutdent: false,
     };
   }
 
@@ -93,8 +93,16 @@ export const useTiptapEditorState = (editor: Editor) => {
 
         // Task List
         isTaskList: ctx.editor.isActive("taskList") ?? false,
-        canIndentTaskItem: ctx.editor.can().sinkListItem('taskItem') ?? false,
-        canOutdentTaskItem: ctx.editor.can().liftListItem('taskItem') ?? false,
+        
+        // Indentation (works for lists and paragraphs)
+        canIndent: 
+          ctx.editor.can().sinkListItem('taskItem') || 
+          ctx.editor.can().sinkListItem('listItem') ||
+          ctx.editor.can().indent(),
+        canOutdent: 
+          ctx.editor.can().liftListItem('taskItem') || 
+          ctx.editor.can().liftListItem('listItem') ||
+          ctx.editor.can().outdent(),
       };
     },
   });

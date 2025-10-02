@@ -22,11 +22,11 @@ export const ParagraphStyleOptions = ({
   //   }
   // };
 
-  const { isTaskList, canIndentTaskItem, canOutdentTaskItem } = useTiptapEditorState(editor);
+  const { isTaskList, canIndent, canOutdent } = useTiptapEditorState(editor);
   const { 
     handleToggleTaskList,
-    handleIndentTaskItem,
-    handleOutdentTaskItem,
+    handleIndent,
+    handleOutdent,
   } = useParagraphStyleMethods(editor);
 
   return (
@@ -46,23 +46,23 @@ export const ParagraphStyleOptions = ({
           }
         /> */}
 
-        {/* <ToolbarButtonItem
+        <ToolbarButtonItem
           tooltip={'Bullet List'}
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           active={editor.isActive('bulletList')}
           size='small'
         >
           <SvgIcon name='bullet-list' />
-        </ToolbarButtonItem> */}
+        </ToolbarButtonItem>
 
-        {/* <ToolbarButtonItem
+        <ToolbarButtonItem
           tooltip={'Numbered List'}
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
           active={editor.isActive('orderedList')}
           size='small'
         >
           <SvgIcon name='ordered-list' />
-        </ToolbarButtonItem> */}
+        </ToolbarButtonItem>
 
         <ToolbarButtonItem
           tooltip={"Checklist"}
@@ -76,8 +76,8 @@ export const ParagraphStyleOptions = ({
 
         <ToolbarButtonItem
           tooltip={'Increase Indent'}
-          onClick={handleIndentTaskItem}
-          disabled={!canIndentTaskItem}
+          onClick={handleIndent}
+          disabled={!canIndent}
           active={false}
           size='small'
         >
@@ -86,8 +86,8 @@ export const ParagraphStyleOptions = ({
 
         <ToolbarButtonItem
           tooltip={'Decrease Indent'}
-          onClick={handleOutdentTaskItem}
-          disabled={!canOutdentTaskItem}
+          onClick={handleOutdent}
+          disabled={!canOutdent}
           active={false}
           size='small'
         >
