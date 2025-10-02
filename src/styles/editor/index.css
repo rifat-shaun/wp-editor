@@ -19,3 +19,9 @@
   pointer-events: none;
   height: 0;
 }
+
+.blur-highlight {
+  background-color: rgba(212, 212, 212, 0.8);
+  padding: 2px 0;
+}
+

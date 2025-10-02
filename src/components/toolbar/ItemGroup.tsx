@@ -5,5 +5,5 @@ type ItemGroupProps = {
 };
 
 export const ItemGroup = ({ children }: ItemGroupProps) => {
-  return <div className="flex flex-col items-start gap-0.5">{children}</div>;
+  return <div className="flex flex-col items-start gap-1">{children}</div>;
 };

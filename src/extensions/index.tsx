@@ -2,8 +2,11 @@ import StarterKit from "@tiptap/starter-kit";
 import CharacterCount from "@tiptap/extension-character-count";
 import { Placeholder } from "@tiptap/extensions";
 import Typography from '@tiptap/extension-typography';
-import { TextStyle, FontSize } from '@tiptap/extension-text-style';
+import { TextStyle, FontSize, FontFamily } from '@tiptap/extension-text-style';
 import { AIAutocompletion } from "@/extensions/AIAutoCompletion";
+import { OnBlurHighlight } from "./OnBlurHighlight";
+import Subscript from '@tiptap/extension-subscript'
+import Superscript from '@tiptap/extension-superscript'
 
 export const EditorExtensions = [
   StarterKit,
@@ -18,5 +21,9 @@ export const EditorExtensions = [
   }),
   TextStyle,
   FontSize,
+  FontFamily,
   AIAutocompletion,
+  OnBlurHighlight,
+  Superscript,
+  Subscript,
 ];

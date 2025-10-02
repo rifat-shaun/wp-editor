@@ -27,10 +27,25 @@ export const useTiptapEditorState = (editor: Editor) => {
         isBlockquote: ctx.editor.isActive("blockquote") ?? false,
         canUndo: ctx.editor.can().chain().undo().run() ?? false,
         canRedo: ctx.editor.can().chain().redo().run() ?? false,
+        canUnderline: ctx.editor.can().chain().toggleUnderline().run() ?? false,
+        isUnderline: ctx.editor.isActive("underline") ?? false,
+        canSuperscript: ctx.editor.can().chain().toggleSuperscript().run() ?? false,
+        isSuperscript: ctx.editor.isActive("superscript") ?? false,
+        canSubscript: ctx.editor.can().chain().toggleSubscript().run() ?? false,
+        isSubscript: ctx.editor.isActive("subscript") ?? false,
         characterCount: ctx.editor.storage.characterCount?.characters?.() ?? 0,
         wordCount: ctx.editor.storage.characterCount?.words?.() ?? 0,
-        isAIAutocompletionEnabled: ctx.editor.storage.aiAutoCompletion.isEnabled ?? false,
-        fontSize: parseInt(ctx.editor.getAttributes("textStyle")?.fontSize?.replace(/px|pt/, "") ?? "12", 10),
+        isAIAutocompletionEnabled:
+          ctx.editor.storage.aiAutoCompletion.isEnabled ?? false,
+        fontSize: parseInt(
+          ctx.editor
+            .getAttributes("textStyle")
+            ?.fontSize?.replace(/px|pt/, "") ?? "12",
+          10
+        ),
+        fontFamily:
+          ctx.editor.getAttributes("textStyle")?.fontFamily ??
+          "Arial, sans-serif",
       };
     },
   });
