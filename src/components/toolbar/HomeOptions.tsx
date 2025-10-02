@@ -3,6 +3,7 @@ import { Editor } from "@tiptap/react";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
 import { Divider, ToolbarButtonItem, ItemGroup } from "@/components/toolbar";
 import { FontStyleOptions } from "./FontStyleOptions";
+import { useHomeOptionMethods } from "@/hooks/useHomeOptionMethods";
 
 interface HomeOptionsProps {
   editor: Editor;
@@ -12,13 +13,20 @@ export const HomeOptions = ({ editor }: HomeOptionsProps) => {
   const { canUndo, canRedo, isAIAutocompletionEnabled } =
     useTiptapEditorState(editor);
 
+  const {
+    handleUndo,
+    handleRedo,
+    handleToggleAIAutocompletion,
+    handleClearFormatting,
+  } = useHomeOptionMethods(editor);
+
   return (
     <>
       <ItemGroup>
         <div className="flex items-center space-x-1">
           <ToolbarButtonItem
             tooltip="Undo"
-            onClick={() => editor?.chain().focus().undo().run()}
+            onClick={handleUndo}
             disabled={!canUndo}
             active={false}
             size="small"
@@ -28,7 +36,7 @@ export const HomeOptions = ({ editor }: HomeOptionsProps) => {
 
           <ToolbarButtonItem
             tooltip="Redo"
-            onClick={() => editor?.chain().focus().redo().run()}
+            onClick={handleRedo}
             disabled={!canRedo}
             active={false}
             size="small"
@@ -44,11 +52,7 @@ export const HomeOptions = ({ editor }: HomeOptionsProps) => {
                 ? "Disable AI Autocompletion"
                 : "Enable AI Autocompletion"
             }
-            onClick={() => {
-              isAIAutocompletionEnabled
-                ? editor.commands.disableAutocompletion()
-                : editor.commands.enableAutocompletion();
-            }}
+            onClick={handleToggleAIAutocompletion}
             active={false}
             size="small"
           >
@@ -61,7 +65,7 @@ export const HomeOptions = ({ editor }: HomeOptionsProps) => {
 
           <ToolbarButtonItem
             tooltip="Clear Formatting"
-            onClick={() => editor.chain().focus().unsetAllMarks().run()}
+            onClick={handleClearFormatting}
             active={false}
             size="small"
           >
