@@ -1,47 +1,70 @@
 import { Editor, useEditorState } from "@tiptap/react";
 
 export const useTiptapEditorState = (editor: Editor) => {
+  if (!editor) {
+    return {
+      canUndo: false,
+      canRedo: false,
+      isBold: false,
+      canBold: false,
+      isItalic: false,
+      canItalic: false,
+      isStrike: false,
+      canStrike: false,
+      isUnderline: false,
+      canUnderline: false,
+      isSuperscript: false,
+      canSuperscript: false,
+      isSubscript: false,
+      canSubscript: false,
+      selectionColor: "#000000",
+      selectionBackgroundColor: "#FFFFFF",
+      fontSize: 12,
+      fontFamily: "Arial, sans-serif",
+      characterCount: 0,
+      wordCount: 0,
+      isAIAutocompletionEnabled: false,
+    };
+  }
+
   const editorState = useEditorState({
     editor,
     selector: (ctx) => {
       return {
-        isBold: ctx.editor.isActive("bold") ?? false,
-        canBold: ctx.editor.can().chain().toggleBold().run() ?? false,
-        isItalic: ctx.editor.isActive("italic") ?? false,
-        canItalic: ctx.editor.can().chain().toggleItalic().run() ?? false,
-        isStrike: ctx.editor.isActive("strike") ?? false,
-        canStrike: ctx.editor.can().chain().toggleStrike().run() ?? false,
-        isCode: ctx.editor.isActive("code") ?? false,
-        canCode: ctx.editor.can().chain().toggleCode().run() ?? false,
-        canClearMarks: ctx.editor.can().chain().unsetAllMarks().run() ?? false,
-        isParagraph: ctx.editor.isActive("paragraph") ?? false,
-        isHeading1: ctx.editor.isActive("heading", { level: 1 }) ?? false,
-        isHeading2: ctx.editor.isActive("heading", { level: 2 }) ?? false,
-        isHeading3: ctx.editor.isActive("heading", { level: 3 }) ?? false,
-        isHeading4: ctx.editor.isActive("heading", { level: 4 }) ?? false,
-        isHeading5: ctx.editor.isActive("heading", { level: 5 }) ?? false,
-        isHeading6: ctx.editor.isActive("heading", { level: 6 }) ?? false,
-        isBulletList: ctx.editor.isActive("bulletList") ?? false,
-        isOrderedList: ctx.editor.isActive("orderedList") ?? false,
-        isCodeBlock: ctx.editor.isActive("codeBlock") ?? false,
-        isBlockquote: ctx.editor.isActive("blockquote") ?? false,
+        // Undo and Redo
         canUndo: ctx.editor.can().chain().undo().run() ?? false,
         canRedo: ctx.editor.can().chain().redo().run() ?? false,
-        canUnderline: ctx.editor.can().chain().toggleUnderline().run() ?? false,
+
+        // Bold
+        isBold: ctx.editor.isActive("bold") ?? false,
+        canBold: ctx.editor.can().chain().toggleBold().run() ?? false,
+
+        // Italic
+        isItalic: ctx.editor.isActive("italic") ?? false,
+        canItalic: ctx.editor.can().chain().toggleItalic().run() ?? false,
+
+        // Strike
+        isStrike: ctx.editor.isActive("strike") ?? false,
+        canStrike: ctx.editor.can().chain().toggleStrike().run() ?? false,
+
+        // Underline
         isUnderline: ctx.editor.isActive("underline") ?? false,
+        canUnderline: ctx.editor.can().chain().toggleUnderline().run() ?? false,
+
+        // Superscript and Subscript
+        isSuperscript: ctx.editor.isActive("superscript") ?? false,
         canSuperscript:
           ctx.editor.can().chain().toggleSuperscript().run() ?? false,
-        isSuperscript: ctx.editor.isActive("superscript") ?? false,
-        canSubscript: ctx.editor.can().chain().toggleSubscript().run() ?? false,
         isSubscript: ctx.editor.isActive("subscript") ?? false,
+        canSubscript: ctx.editor.can().chain().toggleSubscript().run() ?? false,
+
+        // Selection Color
         selectionColor:
           ctx.editor.getAttributes("textStyle")?.color ?? "#000000",
         selectionBackgroundColor:
           ctx.editor.getAttributes("textStyle")?.backgroundColor ?? "#FFFFFF",
-        characterCount: ctx.editor.storage.characterCount?.characters?.() ?? 0,
-        wordCount: ctx.editor.storage.characterCount?.words?.() ?? 0,
-        isAIAutocompletionEnabled:
-          ctx.editor.storage.aiAutoCompletion.isEnabled ?? false,
+
+        // Font Size and Family
         fontSize: parseInt(
           ctx.editor
             .getAttributes("textStyle")
@@ -51,6 +74,14 @@ export const useTiptapEditorState = (editor: Editor) => {
         fontFamily:
           ctx.editor.getAttributes("textStyle")?.fontFamily ??
           "Arial, sans-serif",
+
+        // Character and Word Count
+        characterCount: ctx.editor.storage.characterCount?.characters?.() ?? 0,
+        wordCount: ctx.editor.storage.characterCount?.words?.() ?? 0,
+
+        // AI Autocompletion
+        isAIAutocompletionEnabled:
+          ctx.editor.storage.aiAutoCompletion.isEnabled ?? false,
       };
     },
   });

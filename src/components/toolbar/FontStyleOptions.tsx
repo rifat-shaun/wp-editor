@@ -4,8 +4,6 @@ import { FONT_FAMILY_OPTIONS, FONT_SIZE_OPTIONS } from "@/constants/Fonts";
 import {
   ChevronRight,
   FormatBoldRounded,
-  FormatColorFillOutlined,
-  FormatColorTextOutlined,
   FormatItalicRounded,
   FormatUnderlinedRounded,
   StrikethroughSRounded,
@@ -15,11 +13,11 @@ import {
   TextIncreaseOutlined,
   TitleOutlined,
 } from "@mui/icons-material";
-import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
 import { Editor } from "@tiptap/react";
 import { ToolbarButtonItem } from "./ToolbarButtonItem";
 import { HorizontalLayoutColorPicker } from "../base/ColorPicker";
 import { SvgIcon } from "@/index";
+import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
 
 export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
   const {
@@ -315,57 +313,6 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
             }
           />
         </ToolbarButtonItem>
-
-        {/*
-        <ToolbarDropdownItem
-          tooltip={'Text Color'}
-          tooltipPlacement='bottom'
-          size='small'
-          buttonContent={
-            <button className='relative flex items-center' style={{ color: getSelectionTextColor(editor) || 'inherit' }}>
-              <FormatColorTextRounded className='text-gray-700' sx={{ fontSize: '18px' }} />
-              <div className='absolute bottom-0 left-0 right-0 h-1' style={{ backgroundColor: getSelectionTextColor(editor) || 'transparent' }}></div>
-            </button>
-          }
-        >
-          <ColorPicker
-            onChange={(color) => editor.chain().focus().setColor(color).run()}
-            currentColor={getSelectionTextColor(editor)}
-            includeTransparent={false}
-          />
-        </ToolbarDropdownItem>
-
-        <ToolbarDropdownItem
-          tooltip={'Background Color'}
-          tooltipPlacement='bottom'
-          size='small'
-          buttonContent={
-            <button className='relative flex items-center'>
-              <FormatColorFillOutlined className='text-gray-700' sx={{ fontSize: '18px' }} />
-              <div
-                className='absolute bottom-0 left-0 right-0 h-1'
-                style={{
-                  backgroundColor: getSelectionBackgroundColor(editor) === 'transparent' ? 'white' : getSelectionBackgroundColor(editor),
-                }}
-              ></div>
-            </button>
-          }
-        >
-          <ColorPicker
-            onChange={(color) => editor.chain().focus().setBackgroundColor(color).run()}
-            currentColor={getSelectionBackgroundColor(editor)}
-          />
-        </ToolbarDropdownItem>
-
-        <ToolbarButtonItem
-          tooltip={'Highlight'}
-          onClick={() => editor.chain().focus().toggleHighlight().run()}
-          disabled={!editor.can().chain().focus().toggleHighlight().run()}
-          active={editor.isActive('highlight')}
-          size='small'
-        >
-          <BorderColorRounded className='text-gray-700' sx={{ fontSize: '18px' }} />
-        </ToolbarButtonItem> */}
       </div>
     </ItemGroup>
   );
