@@ -1,16 +1,10 @@
-import { Dropdown } from "antd";
-import type { MenuProps } from "antd";
-import {
-  TOOLBAR_TYPES,
-  TOOLBAR_MENU_ITEMS,
-  TABS,
-  type TTabKey,
-} from "../../constants/Toolbar";
-import { useEffect, useRef, useState } from "react";
-import SvgIcon from "../common/SvgIcon";
+import { TOOLBAR_TYPES, TABS, type TTabKey } from "@/constants/Toolbar";
+import { useState } from "react";
 import { Editor } from "@tiptap/react";
-import { HomeOptions } from "./HomeOptions";
-
+import { useHorizontalScroll } from "@/hooks/useHorizontalScroll";
+import { ScrollableContent } from "./ScrollableContent";
+import { ToolbarDropdown } from "./ToolbarDropdown";
+import { RenderToolbarTabContent } from "./RenderToolbarTabContent";
 interface ProfessionalToolbarProps {
   editor: Editor;
   onToolbarChange?: (toolbarType: string) => void;
@@ -21,86 +15,17 @@ export const ProfessionalToolbar = ({
   onToolbarChange,
 }: ProfessionalToolbarProps) => {
   const { PROFESSIONAL } = TOOLBAR_TYPES;
-  const tabsContainerRef = useRef<HTMLDivElement>(null);
-  const contentScrollerRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<TTabKey>(TABS[0]);
-  const [showScrollButtons, setShowScrollButtons] = useState(false);
-  const [contentContainerWidth, setContentContainerWidth] = useState(0);
-  const [totalContentWidth, setTotalContentWidth] = useState(0);
-  const [scrollPosition, setScrollPosition] = useState(0);
 
-  const handleMenuClick: MenuProps["onClick"] = ({ key }) => {
-    onToolbarChange?.(key);
-  };
-
-  const checkContentOverflow = () => {
-    if (contentScrollerRef.current) {
-      const scrollWidth = contentScrollerRef.current.scrollWidth;
-      const clientWidth = contentScrollerRef.current.clientWidth;
-      setTotalContentWidth(scrollWidth);
-      setContentContainerWidth(clientWidth);
-      setShowScrollButtons(scrollWidth > clientWidth);
-    }
-  };
-
-  const handleScroll = () => {
-    if (contentScrollerRef.current) {
-      setScrollPosition(contentScrollerRef.current.scrollLeft);
-    }
-  };
-
-  const handleScrollLeft = () => {
-    if (contentScrollerRef.current) {
-      const viewportWidth = contentScrollerRef.current.clientWidth;
-      const newPosition = Math.max(0, scrollPosition - viewportWidth);
-      contentScrollerRef.current.scrollTo({
-        left: newPosition,
-        behavior: "smooth",
-      });
-      setScrollPosition(newPosition);
-    }
-  };
-
-  const handleScrollRight = () => {
-    if (contentScrollerRef.current) {
-      const viewportWidth = contentScrollerRef.current.clientWidth;
-      const maxScroll = totalContentWidth - contentContainerWidth;
-      const newPosition = Math.min(maxScroll, scrollPosition + viewportWidth);
-      contentScrollerRef.current.scrollTo({
-        left: newPosition,
-        behavior: "smooth",
-      });
-      setScrollPosition(newPosition);
-    }
-  };
-
-  useEffect(() => {
-    setTimeout(checkContentOverflow, 100);
-  }, [activeTab]);
-
-  useEffect(() => {
-    checkContentOverflow();
-    const handleResize = () => checkContentOverflow();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case "Home":
-        return <HomeOptions editor={editor} />;
-      case "Insert":
-        return <div>Insert</div>;
-      case "Table":
-        return <div>Table</div>;
-      case "Page":
-        return <div>Page</div>;
-      case "Export":
-        return <div>Export</div>;
-      default:
-        return null;
-    }
-  };
+  const {
+    contentScrollerRef,
+    showScrollButtons,
+    canScrollLeft,
+    canScrollRight,
+    handleScroll,
+    handleScrollLeft,
+    handleScrollRight,
+  } = useHorizontalScroll(activeTab);
 
   return (
     <div
@@ -126,56 +51,19 @@ export const ProfessionalToolbar = ({
             </button>
           ))}
         </div>
-        <Dropdown
-          menu={{ items: TOOLBAR_MENU_ITEMS, onClick: handleMenuClick }}
-          placement="bottomRight"
-        >
-          <div className="flex items-center gap-1 px-3 py-1 text-sm hover:bg-neutral-50 transition-colors cursor-pointer">
-            <SvgIcon name="toolbar" size={16} />
-            Toolbar
-          </div>
-        </Dropdown>
+        <ToolbarDropdown onToolbarChange={onToolbarChange} />
       </div>
-      <div
-        className="relative flex-grow flex items-center"
-        ref={tabsContainerRef}
+      <ScrollableContent
+        contentScrollerRef={contentScrollerRef}
+        showScrollButtons={showScrollButtons}
+        canScrollLeft={canScrollLeft}
+        canScrollRight={canScrollRight}
+        onScroll={handleScroll}
+        onScrollLeft={handleScrollLeft}
+        onScrollRight={handleScrollRight}
       >
-        {showScrollButtons && scrollPosition > 0 && (
-          <button
-            onClick={handleScrollLeft}
-            className="absolute left-0 bottom-0 z-10 bg-gray-100 px-0.5 rounded-sm shadow-sm hover:bg-primary-500 hover:text-white h-full flex items-center"
-            aria-label="Scroll left"
-          >
-            <SvgIcon name="arrow-down" className="rotate-90" />
-          </button>
-        )}
-        <div
-          ref={contentScrollerRef}
-          className="overflow-x-auto hide-scrollbar scroll-smooth"
-          style={{
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-            marginLeft: showScrollButtons ? "1.5rem" : "0",
-            marginRight: showScrollButtons ? "1.5rem" : "0",
-            scrollBehavior: "smooth",
-          }}
-          onScroll={handleScroll}
-        >
-          <div className="w-full flex items-center space-x-2">
-            {renderTabContent()}
-          </div>
-        </div>
-        {showScrollButtons &&
-          scrollPosition < totalContentWidth - contentContainerWidth && (
-            <button
-              onClick={handleScrollRight}
-              className="absolute right-0 bottom-0 z-10 bg-gray-100 px-0.5 rounded-sm shadow-sm hover:bg-primary-500 hover:text-white h-full flex items-center"
-              aria-label="Scroll right"
-            >
-              <SvgIcon name="arrow-down" className="rotate-[-90deg]" />
-            </button>
-          )}
-      </div>
+        <RenderToolbarTabContent activeTab={activeTab} editor={editor} />
+      </ScrollableContent>
     </div>
   );
 };
