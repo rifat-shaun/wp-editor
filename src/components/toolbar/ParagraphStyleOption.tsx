@@ -37,6 +37,8 @@ export const ParagraphStyleOptions = ({
     isTextAlignCenter,
     isTextAlignRight,
     isTextAlignLeft,
+    isBlockquote,
+    canBlockquote,
   } = useTiptapEditorState(editor);
 
   const {
@@ -49,6 +51,7 @@ export const ParagraphStyleOptions = ({
     handleTextAlignCenter,
     handleTextAlignRight,
     handleTextAlignJustify,
+    handleToggleBlockquote,
   } = useParagraphStyleMethods(editor);
 
   const [orderedListDropdownOpen, setOrderedListDropdownOpen] = useState(false);
@@ -218,15 +221,15 @@ export const ParagraphStyleOptions = ({
           <SvgIcon name="align-justify" />
         </ToolbarButtonItem>
 
-        {/* <ToolbarButtonItem
-          tooltip={'Blockquote'}
-          onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          disabled={!editor.can().chain().focus().toggleBlockquote().run()}
-          active={editor.isActive('blockquote')}
-          size='small'
+        <ToolbarButtonItem
+          tooltip={"Blockquote"}
+          onClick={handleToggleBlockquote}
+          disabled={!canBlockquote}
+          active={isBlockquote}
+          size="small"
         >
-          <SvgIcon name='quote' />
-        </ToolbarButtonItem> */}
+          <SvgIcon name="quote" />
+        </ToolbarButtonItem>
 
         {/* <ToolbarButtonItem
           tooltip={'Code'}

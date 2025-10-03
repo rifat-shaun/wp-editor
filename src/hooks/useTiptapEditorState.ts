@@ -36,6 +36,8 @@ export const useTiptapEditorState = (editor: Editor) => {
       isTextAlignCenter: false,
       isTextAlignRight: false,
       isTextAlignLeft: false,
+      isBlockquote: false,
+      canBlockquote: false,
     };
   }
 
@@ -127,6 +129,10 @@ export const useTiptapEditorState = (editor: Editor) => {
           ctx.editor.isActive({ textAlign: "center" }) ?? false,
         isTextAlignRight: ctx.editor.isActive({ textAlign: "right" }) ?? false,
         isTextAlignLeft: ctx.editor.isActive({ textAlign: "left" }) ?? false,
+
+        // Blockquote
+        isBlockquote: ctx.editor.isActive("blockquote") ?? false,
+        canBlockquote: ctx.editor.can().chain().focus().toggleBlockquote().run() ?? false,
       };
     },
   });

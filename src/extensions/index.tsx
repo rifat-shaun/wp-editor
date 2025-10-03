@@ -21,6 +21,7 @@ import Subscript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
 import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
+import Blockquote from "@tiptap/extension-blockquote";
 
 export const EditorExtensions = [
   StarterKit.configure({
@@ -64,7 +65,16 @@ export const EditorExtensions = [
     maxLevel: 12,
   }),
   TextAlign.configure({
-    types: ['heading', 'paragraph', 'blockquote', 'listItem', 'tableCell', 'tableHeader', 'image'],
-    defaultAlignment: 'left',
+    types: [
+      "heading",
+      "paragraph",
+      "blockquote",
+      "listItem",
+      "tableCell",
+      "tableHeader",
+      "image",
+    ],
+    defaultAlignment: "left",
   }),
+  Blockquote,
 ];

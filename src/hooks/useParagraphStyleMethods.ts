@@ -82,6 +82,11 @@ export const useParagraphStyleMethods = (editor: Editor) => {
     editor.chain().focus().setTextAlign("justify").run();
   };
 
+  const handleToggleBlockquote = () => {
+    if (!editor) return;
+    editor.chain().focus().toggleBlockquote().run();
+  };
+
   return {
     handleToggleTaskList,
     handleIndent,
@@ -94,5 +99,6 @@ export const useParagraphStyleMethods = (editor: Editor) => {
     handleTextAlignCenter,
     handleTextAlignRight,
     handleTextAlignJustify,
+    handleToggleBlockquote,
   };
 };
