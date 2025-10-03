@@ -13,7 +13,7 @@ export const TOOLBAR_TYPES = {
   CLASSIC: {
     name: TOOLBAR_TYPES_ENUM.CLASSIC,
     label: capitalize(TOOLBAR_TYPES_ENUM.CLASSIC),
-    height: 36,
+    height: 40,
   },
   PROFESSIONAL: {
     name: TOOLBAR_TYPES_ENUM.PROFESSIONAL,

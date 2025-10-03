@@ -34,40 +34,46 @@ export const ClassicToolbar = ({
       className="flex items-center gap-2 bg-white w-full justify-between px-4 py-2"
       style={{ height: `${CLASSIC.height}px` }}
     >
-      <Dropdown
-        menu={{
-          items: TABS.map((tab) => ({
-            key: tab.toLowerCase(),
-            label: capitalize(tab),
-          })),
-          onClick: ({ key }) => setActiveTab(capitalize(key)),
-          defaultOpenKeys: [activeTab],
-          selectedKeys: [activeTab],
-        }}
-        placement="bottomLeft"
-        onOpenChange={(open) => setIsDropdownOpen(open)}
+      <div className="flex items-center gap-2">
+        <Dropdown
+          menu={{
+            items: TABS.map((tab) => ({
+              key: tab.toLowerCase(),
+              label: capitalize(tab),
+            })),
+            onClick: ({ key }) => setActiveTab(capitalize(key)),
+            defaultOpenKeys: [activeTab],
+            selectedKeys: [activeTab],
+          }}
+          placement="bottomLeft"
+          onOpenChange={(open) => setIsDropdownOpen(open)}
         >
-        <div 
-          className="flex items-center gap-1 px-3 py-1 text-sm hover:bg-neutral-50 transition-colors cursor-pointer"
-        >
-          <Typography.Link>
-            <Space>
-              <div className="flex items-center justify-center gap-1">
-                <MenuIcon fontSize="small" />
-                <div className="w-10">{activeTab}</div>
-                <div className="transition-all duration-200 ease-in-out">
-                  {(isDropdownOpen) ? (
-                    <ExpandLess fontSize="small" className="transition-transform duration-3000 ease-in-out" />
-                  ) : (
-                    <ExpandMore fontSize="small" className="transition-transform duration-3000 ease-in-out" />
-                  )}
+          <div className="flex items-center gap-1 px-3 py-1 text-sm hover:bg-neutral-50 transition-colors cursor-pointer">
+            <Typography.Link>
+              <Space>
+                <div className="flex items-center justify-center gap-1">
+                  <MenuIcon fontSize="small" />
+                  <div className="w-10">{activeTab}</div>
+                  <div className="transition-all duration-200 ease-in-out">
+                    {isDropdownOpen ? (
+                      <ExpandLess
+                        fontSize="small"
+                        className="transition-transform duration-3000 ease-in-out"
+                      />
+                    ) : (
+                      <ExpandMore
+                        fontSize="small"
+                        className="transition-transform duration-3000 ease-in-out"
+                      />
+                    )}
+                  </div>
                 </div>
-              </div>
-            </Space>
-          </Typography.Link>
-        </div>
-      </Dropdown>
-      <HomeOptions editor={editor} />
+              </Space>
+            </Typography.Link>
+          </div>
+        </Dropdown>
+        <HomeOptions editor={editor} />
+      </div>
       <Dropdown
         menu={{ items: TOOLBAR_MENU_ITEMS, onClick: handleMenuClick }}
         placement="bottomRight"
