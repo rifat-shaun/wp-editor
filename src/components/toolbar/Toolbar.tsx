@@ -40,7 +40,7 @@ export const Toolbar = ({
   // Render toolbar based on current selection
   switch (currentToolbar) {
     case CLASSIC:
-      return <ClassicToolbar onToolbarChange={handleToolbarChange} />;
+      return <ClassicToolbar onToolbarChange={handleToolbarChange} editor={editor} />;
     case PROFESSIONAL:
       return <ProfessionalToolbar onToolbarChange={handleToolbarChange} editor={editor} />;
     case HIDE_TOOLBAR:
