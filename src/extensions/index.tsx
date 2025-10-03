@@ -12,11 +12,11 @@ import {
   BackgroundColor,
 } from "@tiptap/extension-text-style";
 import TaskList from "@tiptap/extension-task-list";
+import TaskItem from "@tiptap/extension-task-item";
 import { AIAutocompletion } from "@/extensions/AIAutoCompletion";
 import { OnBlurHighlight } from "./OnBlurHighlight";
 import { Indent } from "./Indent";
 import { ListItemWithDepthLimit } from "./ListItemWithDepthLimit";
-import { TaskItemWithDepthLimit } from "./TaskItemWithDepthLimit";
 import Subscript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
 import Highlight from "@tiptap/extension-highlight";
@@ -54,9 +54,8 @@ export const EditorExtensions = [
     multicolor: true,
   }),
   TaskList,
-  TaskItemWithDepthLimit.configure({
+  TaskItem.configure({
     nested: true,
-    maxDepth: 9, // Maximum nesting depth (0-9)
   }),
   Indent.configure({
     types: ["paragraph", "heading", "blockquote"],
