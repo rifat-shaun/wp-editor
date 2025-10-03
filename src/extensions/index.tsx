@@ -12,10 +12,11 @@ import {
   BackgroundColor,
 } from "@tiptap/extension-text-style";
 import TaskList from "@tiptap/extension-task-list";
-import TaskItem from "@tiptap/extension-task-item";
 import { AIAutocompletion } from "@/extensions/AIAutoCompletion";
 import { OnBlurHighlight } from "./OnBlurHighlight";
 import { Indent } from "./Indent";
+import { ListItemWithDepthLimit } from "./ListItemWithDepthLimit";
+import { TaskItemWithDepthLimit } from "./TaskItemWithDepthLimit";
 import Subscript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
 import Highlight from "@tiptap/extension-highlight";
@@ -23,8 +24,12 @@ import Highlight from "@tiptap/extension-highlight";
 export const EditorExtensions = [
   StarterKit.configure({
     orderedList: false, // Disable default to use our custom one
+    listItem: false, // Disable default to use our custom one with depth limit
   }),
   OrderedListWithType,
+  ListItemWithDepthLimit.configure({
+    maxDepth: 9, // Maximum nesting depth (0-9)
+  }),
   Document,
   CharacterCount,
   Placeholder.configure({
@@ -48,8 +53,9 @@ export const EditorExtensions = [
     multicolor: true,
   }),
   TaskList,
-  TaskItem.configure({
+  TaskItemWithDepthLimit.configure({
     nested: true,
+    maxDepth: 9, // Maximum nesting depth (0-9)
   }),
   Indent.configure({
     types: ["paragraph", "heading", "blockquote"],
