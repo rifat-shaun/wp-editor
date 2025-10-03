@@ -5,16 +5,16 @@ import { LIST_TYPE_OPTIONS } from "@/utils/Paragraphs";
 import { Editor } from "@tiptap/react";
 import { SkeletonLine } from "@/components/common/SkeletonLine";
 
-type ListTypeDropdownContentProps = {
+type OrderedListTypeDropdownContentProps = {
   editor: Editor;
   onClose: () => void;
 };
 
-export const ListTypeDropdownContent = ({
+export const OrderedListTypeDropdownContent = ({
   editor,
   onClose,
-}: ListTypeDropdownContentProps) => {
-  const { currentOrderedListType } = useTiptapEditorState(editor);
+}: OrderedListTypeDropdownContentProps) => {
+  const { isOrderedList, currentOrderedListType } = useTiptapEditorState(editor);
   const { handleListTypeChange } = useParagraphStyleMethods(editor);
 
   return (
@@ -32,7 +32,7 @@ export const ListTypeDropdownContent = ({
                 onClose();
               }}
               className={`flex-1 p-2 border rounded hover:border-primary-400 hover:bg-gray-50 transition-all ${
-                editor.isActive("orderedList") &&
+                isOrderedList &&
                 currentOrderedListType === option.key
                   ? "border-primary-500 bg-primary-50 ring-1 ring-primary-200"
                   : "border-gray-300 bg-white"

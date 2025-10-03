@@ -1,4 +1,5 @@
 import type { OrderedListType } from "@/extensions/OrderedListWithType";
+import type { UnorderedListType } from "@/extensions/UnorderedListWithType";
 import { Editor } from "@tiptap/react";
 
 export const useParagraphStyleMethods = (editor: Editor) => {
@@ -51,11 +52,23 @@ export const useParagraphStyleMethods = (editor: Editor) => {
     editor.chain().focus().updateAttributes("orderedList", { listType }).run();
   };
 
+  const handleToggleUnorderedList = () => {
+    if (!editor) return;
+    editor.chain().focus().toggleList("bulletList", "listItem").run();
+  };
+
+  const handleUnorderedListTypeChange = (listType: UnorderedListType) => {
+    if (!editor) return;
+    editor.chain().focus().updateAttributes("bulletList", { listType }).run();
+  };
+
   return {
     handleToggleTaskList,
     handleIndent,
     handleOutdent,
     handleToggleOrderedList,
     handleListTypeChange,
+    handleToggleUnorderedList,
+    handleUnorderedListTypeChange,
   };
 };

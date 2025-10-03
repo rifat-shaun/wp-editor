@@ -4,6 +4,7 @@ import CharacterCount from "@tiptap/extension-character-count";
 import { Placeholder } from "@tiptap/extensions";
 import Typography from "@tiptap/extension-typography";
 import { OrderedListWithType } from "./OrderedListWithType";
+import { UnorderedListWithType } from "./UnorderedListWithType";
 import {
   TextStyle,
   FontSize,
@@ -24,9 +25,11 @@ import Highlight from "@tiptap/extension-highlight";
 export const EditorExtensions = [
   StarterKit.configure({
     orderedList: false, // Disable default to use our custom one
+    bulletList: false, // Disable default to use our custom one
     listItem: false, // Disable default to use our custom one with depth limit
   }),
   OrderedListWithType,
+  UnorderedListWithType,
   ListItemWithDepthLimit.configure({
     maxDepth: 9, // Maximum nesting depth (0-9)
   }),

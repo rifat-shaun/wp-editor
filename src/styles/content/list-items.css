@@ -21,7 +21,7 @@
     }
   }
 
-  /* Bullet list */
+  /* Bullet list - default */
   ul:not([data-type="taskList"]) {
     list-style-type: disc;
 
@@ -30,6 +30,89 @@
 
       ul {
         list-style-type: square;
+      }
+    }
+  }
+
+  /* Bullet list types with data-list-type attribute */
+  ul[data-list-type="disc"]:not([data-type="taskList"]) {
+    list-style-type: disc;
+
+    ul {
+      list-style-type: circle;
+
+      ul {
+        list-style-type: square;
+      }
+    }
+  }
+
+  ul[data-list-type="circle"]:not([data-type="taskList"]) {
+    list-style-type: circle;
+
+    ul {
+      list-style-type: square;
+
+      ul {
+        list-style-type: disc;
+      }
+    }
+  }
+
+  ul[data-list-type="square"]:not([data-type="taskList"]) {
+    list-style-type: square;
+
+    ul {
+      list-style-type: disc;
+
+      ul {
+        list-style-type: circle;
+      }
+    }
+  }
+
+  ul[data-list-type="dash"]:not([data-type="taskList"]) {
+    li::marker {
+      content: "– ";
+    }
+
+    ul {
+      list-style-type: disc;
+
+      ul {
+        list-style-type: circle;
+      }
+    }
+  }
+
+  ul[data-list-type="arrow"]:not([data-type="taskList"]) {
+    li::marker {
+      content: "→ ";
+    }
+
+    ul {
+      li::marker {
+        content: "➔ ";
+      }
+
+      ul {
+        list-style-type: disc;
+      }
+    }
+  }
+
+  ul[data-list-type="checkmark"]:not([data-type="taskList"]) {
+    li::marker {
+      content: "✓ ";
+    }
+
+    ul {
+      li::marker {
+        content: "✔ ";
+      }
+
+      ul {
+        list-style-type: disc;
       }
     }
   }

@@ -30,6 +30,8 @@ export const useTiptapEditorState = (editor: Editor) => {
       canOutdent: false,
       isOrderedList: false,
       currentOrderedListType: "decimal",
+      isUnorderedList: false,
+      currentUnorderedListType: "disc",
     };
   }
 
@@ -110,6 +112,9 @@ export const useTiptapEditorState = (editor: Editor) => {
         isOrderedList: ctx.editor.isActive("orderedList") ?? false,
         currentOrderedListType:
           ctx.editor.getAttributes("orderedList")?.listType ?? "decimal",
+        isUnorderedList: ctx.editor.isActive("bulletList") ?? false,
+        currentUnorderedListType:
+          ctx.editor.getAttributes("bulletList")?.listType ?? "disc",
       };
     },
   });

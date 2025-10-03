@@ -6,8 +6,9 @@ import { useParagraphStyleMethods } from "@/hooks/useParagraphStyleMethods";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
 import { Dropdown, Space, Tooltip } from "antd";
 import { useState } from "react";
-import { ListTypeDropdownContent } from "./ListTypeDropdownContent";
 import { ArrowDropDownOutlined } from "@mui/icons-material";
+import { OrderedListTypeDropdownContent } from "./OrderedListTypeDropdownContent";
+import { UnorderedListTypeDropdownContent } from "./UnorderedListTypeDropdownContent";
 
 type TParagraphStyleOptionsProps = {
   editor: Editor;
@@ -26,16 +27,20 @@ export const ParagraphStyleOptions = ({
   //   }
   // };
 
-  const { isTaskList, canIndent, canOutdent, isOrderedList } =
+  const { isTaskList, canIndent, canOutdent, isOrderedList, isUnorderedList } =
     useTiptapEditorState(editor);
+
   const {
     handleToggleTaskList,
     handleIndent,
     handleOutdent,
     handleToggleOrderedList,
+    handleToggleUnorderedList,
   } = useParagraphStyleMethods(editor);
 
   const [orderedListDropdownOpen, setOrderedListDropdownOpen] = useState(false);
+  const [unorderedListDropdownOpen, setUnorderedListDropdownOpen] =
+    useState(false);
 
   return (
     <ItemGroup>
@@ -54,20 +59,51 @@ export const ParagraphStyleOptions = ({
           }
         /> */}
 
-        <ToolbarButtonItem
-          tooltip={"Bullet List"}
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
-          active={editor.isActive("bulletList")}
-          size="small"
+        <Space.Compact
+          className={`flex items-center ${
+            isUnorderedList ? "bg-black-100" : ""
+          }`}
         >
-          <SvgIcon name="bullet-list" />
-        </ToolbarButtonItem>
+          <ToolbarButtonItem
+            tooltip={"Bullet list"}
+            onClick={handleToggleUnorderedList}
+            active={false}
+            size="small"
+          >
+            <SvgIcon name="bullet-list" />
+          </ToolbarButtonItem>
+
+          <Tooltip
+            title="Bullet list menu"
+            placement="top"
+            arrow={false}
+            color="black"
+            mouseEnterDelay={0.3}
+          >
+            <Dropdown
+              popupRender={() => (
+                <UnorderedListTypeDropdownContent
+                  editor={editor}
+                  onClose={() => setUnorderedListDropdownOpen(false)}
+                />
+              )}
+              trigger={["click"]}
+              open={unorderedListDropdownOpen}
+              onOpenChange={setUnorderedListDropdownOpen}
+            >
+              <ArrowDropDownOutlined
+                className="text-neutral-600 hover:opacity-75 hover:bg-black-100 cursor-pointer"
+                sx={{ fontSize: "18px" }}
+              />
+            </Dropdown>
+          </Tooltip>
+        </Space.Compact>
 
         <Space.Compact
           className={`flex items-center ${isOrderedList ? "bg-black-100" : ""}`}
         >
           <ToolbarButtonItem
-            tooltip={"Numbered List"}
+            tooltip={"Numbered list"}
             onClick={handleToggleOrderedList}
             active={false}
             size="small"
@@ -84,7 +120,7 @@ export const ParagraphStyleOptions = ({
           >
             <Dropdown
               popupRender={() => (
-                <ListTypeDropdownContent
+                <OrderedListTypeDropdownContent
                   editor={editor}
                   onClose={() => setOrderedListDropdownOpen(false)}
                 />
