@@ -23,7 +23,6 @@ export const ProfessionalToolbar = ({
   const { PROFESSIONAL } = TOOLBAR_TYPES;
   const tabsContainerRef = useRef<HTMLDivElement>(null);
   const contentScrollerRef = useRef<HTMLDivElement>(null);
-  const editorToolbarWrapperRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<TTabKey>(TABS[0]);
   const [showScrollButtons, setShowScrollButtons] = useState(false);
   const [contentContainerWidth, setContentContainerWidth] = useState(0);
@@ -35,11 +34,11 @@ export const ProfessionalToolbar = ({
   };
 
   const checkContentOverflow = () => {
-    if (contentScrollerRef.current && editorToolbarWrapperRef.current) {
+    if (contentScrollerRef.current) {
       const scrollWidth = contentScrollerRef.current.scrollWidth;
-      const clientWidth = editorToolbarWrapperRef.current.clientWidth;
+      const clientWidth = contentScrollerRef.current.clientWidth;
       setTotalContentWidth(scrollWidth);
-      setContentContainerWidth(clientWidth - 120);
+      setContentContainerWidth(clientWidth);
       setShowScrollButtons(scrollWidth > clientWidth);
     }
   };
@@ -141,12 +140,11 @@ export const ProfessionalToolbar = ({
         className="relative flex-grow flex items-center"
         ref={tabsContainerRef}
       >
-        {showScrollButtons && (
+        {showScrollButtons && scrollPosition > 0 && (
           <button
             onClick={handleScrollLeft}
-            className="absolute left-0 top-1/2 -translate-y-1/2 bottom-0 z-10 bg-gray-100 px-0.5 rounded-sm shadow-sm hover:bg-primary-500 hover:text-white h-15 flex items-center"
+            className="absolute left-0 bottom-0 z-10 bg-gray-100 px-0.5 rounded-sm shadow-sm hover:bg-primary-500 hover:text-white h-full flex items-center"
             aria-label="Scroll left"
-            disabled={scrollPosition <= 0}
           >
             <SvgIcon name="arrow-down" className="rotate-90" />
           </button>
@@ -167,18 +165,16 @@ export const ProfessionalToolbar = ({
             {renderTabContent()}
           </div>
         </div>
-        {showScrollButtons && (
-          <button
-            onClick={handleScrollRight}
-            className="absolute right-0 top-1/2 -translate-y-1/2 bottom-0 z-10 bg-gray-100 px-0.5 rounded-sm shadow-sm hover:bg-primary-500 hover:text-white h-15 flex items-center"
-            aria-label="Scroll right"
-            disabled={
-              scrollPosition >= totalContentWidth - contentContainerWidth
-            }
-          >
-            <SvgIcon name="arrow-down" className="rotate-[-90deg]" />
-          </button>
-        )}
+        {showScrollButtons &&
+          scrollPosition < totalContentWidth - contentContainerWidth && (
+            <button
+              onClick={handleScrollRight}
+              className="absolute right-0 bottom-0 z-10 bg-gray-100 px-0.5 rounded-sm shadow-sm hover:bg-primary-500 hover:text-white h-full flex items-center"
+              aria-label="Scroll right"
+            >
+              <SvgIcon name="arrow-down" className="rotate-[-90deg]" />
+            </button>
+          )}
       </div>
     </div>
   );
