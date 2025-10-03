@@ -1,4 +1,5 @@
 @import "./styles/content/page-sizes.css";
+@import "./styles/content/list-items.css";
 @import "./styles/editor/index.css";
 
 @tailwind base;

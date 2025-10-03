@@ -4,6 +4,10 @@ import { ToolbarButtonItem } from "./ToolbarButtonItem";
 import SvgIcon from "@/components/common/SvgIcon";
 import { useParagraphStyleMethods } from "@/hooks/useParagraphStyleMethods";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
+import { Dropdown, Space, Tooltip } from "antd";
+import { useState } from "react";
+import { ListTypeDropdownContent } from "./ListTypeDropdownContent";
+import { ArrowDropDownOutlined } from "@mui/icons-material";
 
 type TParagraphStyleOptionsProps = {
   editor: Editor;
@@ -22,12 +26,16 @@ export const ParagraphStyleOptions = ({
   //   }
   // };
 
-  const { isTaskList, canIndent, canOutdent } = useTiptapEditorState(editor);
-  const { 
+  const { isTaskList, canIndent, canOutdent, isOrderedList } =
+    useTiptapEditorState(editor);
+  const {
     handleToggleTaskList,
     handleIndent,
     handleOutdent,
+    handleToggleOrderedList,
   } = useParagraphStyleMethods(editor);
+
+  const [orderedListDropdownOpen, setOrderedListDropdownOpen] = useState(false);
 
   return (
     <ItemGroup>
@@ -47,22 +55,51 @@ export const ParagraphStyleOptions = ({
         /> */}
 
         <ToolbarButtonItem
-          tooltip={'Bullet List'}
+          tooltip={"Bullet List"}
           onClick={() => editor.chain().focus().toggleBulletList().run()}
-          active={editor.isActive('bulletList')}
-          size='small'
+          active={editor.isActive("bulletList")}
+          size="small"
         >
-          <SvgIcon name='bullet-list' />
+          <SvgIcon name="bullet-list" />
         </ToolbarButtonItem>
 
-        <ToolbarButtonItem
-          tooltip={'Numbered List'}
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          active={editor.isActive('orderedList')}
-          size='small'
+        <Space.Compact
+          className={`flex items-center ${isOrderedList ? "bg-black-100" : ""}`}
         >
-          <SvgIcon name='ordered-list' />
-        </ToolbarButtonItem>
+          <ToolbarButtonItem
+            tooltip={"Numbered List"}
+            onClick={handleToggleOrderedList}
+            active={false}
+            size="small"
+          >
+            <SvgIcon name="ordered-list" />
+          </ToolbarButtonItem>
+
+          <Tooltip
+            title="Numbered list menu"
+            placement="top"
+            arrow={false}
+            color="black"
+            mouseEnterDelay={0.3}
+          >
+            <Dropdown
+              popupRender={() => (
+                <ListTypeDropdownContent
+                  editor={editor}
+                  onClose={() => setOrderedListDropdownOpen(false)}
+                />
+              )}
+              trigger={["click"]}
+              open={orderedListDropdownOpen}
+              onOpenChange={setOrderedListDropdownOpen}
+            >
+              <ArrowDropDownOutlined
+                className="text-neutral-600 hover:opacity-75 hover:bg-black-100 cursor-pointer"
+                sx={{ fontSize: "18px" }}
+              />
+            </Dropdown>
+          </Tooltip>
+        </Space.Compact>
 
         <ToolbarButtonItem
           tooltip={"Checklist"}
@@ -75,23 +112,23 @@ export const ParagraphStyleOptions = ({
         </ToolbarButtonItem>
 
         <ToolbarButtonItem
-          tooltip={'Increase Indent'}
+          tooltip={"Increase Indent"}
           onClick={handleIndent}
           disabled={!canIndent}
           active={false}
-          size='small'
+          size="small"
         >
-          <SvgIcon name='indent' />
+          <SvgIcon name="indent" />
         </ToolbarButtonItem>
 
         <ToolbarButtonItem
-          tooltip={'Decrease Indent'}
+          tooltip={"Decrease Indent"}
           onClick={handleOutdent}
           disabled={!canOutdent}
           active={false}
-          size='small'
+          size="small"
         >
-          <SvgIcon name='indent' className='rotate-180' />
+          <SvgIcon name="indent" className="rotate-180" />
         </ToolbarButtonItem>
       </div>
 

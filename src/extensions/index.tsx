@@ -3,6 +3,7 @@ import StarterKit from "@tiptap/starter-kit";
 import CharacterCount from "@tiptap/extension-character-count";
 import { Placeholder } from "@tiptap/extensions";
 import Typography from "@tiptap/extension-typography";
+import { OrderedListWithType } from "./OrderedListWithType";
 import {
   TextStyle,
   FontSize,
@@ -20,7 +21,10 @@ import Superscript from "@tiptap/extension-superscript";
 import Highlight from "@tiptap/extension-highlight";
 
 export const EditorExtensions = [
-  StarterKit,
+  StarterKit.configure({
+    orderedList: false, // Disable default to use our custom one
+  }),
+  OrderedListWithType,
   Document,
   CharacterCount,
   Placeholder.configure({

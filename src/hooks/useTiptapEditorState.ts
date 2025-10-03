@@ -28,6 +28,8 @@ export const useTiptapEditorState = (editor: Editor) => {
       isTaskList: false,
       canIndent: false,
       canOutdent: false,
+      isOrderedList: false,
+      currentOrderedListType: "decimal",
     };
   }
 
@@ -93,16 +95,21 @@ export const useTiptapEditorState = (editor: Editor) => {
 
         // Task List
         isTaskList: ctx.editor.isActive("taskList") ?? false,
-        
+
         // Indentation (works for lists and paragraphs)
-        canIndent: 
-          ctx.editor.can().sinkListItem('taskItem') || 
-          ctx.editor.can().sinkListItem('listItem') ||
+        canIndent:
+          ctx.editor.can().sinkListItem("taskItem") ||
+          ctx.editor.can().sinkListItem("listItem") ||
           ctx.editor.can().indent(),
-        canOutdent: 
-          ctx.editor.can().liftListItem('taskItem') || 
-          ctx.editor.can().liftListItem('listItem') ||
+        canOutdent:
+          ctx.editor.can().liftListItem("taskItem") ||
+          ctx.editor.can().liftListItem("listItem") ||
           ctx.editor.can().outdent(),
+
+        //List
+        isOrderedList: ctx.editor.isActive("orderedList") ?? false,
+        currentOrderedListType:
+          ctx.editor.getAttributes("orderedList")?.listType ?? "decimal",
       };
     },
   });

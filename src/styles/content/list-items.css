@@ -1,0 +1,410 @@
+.tiptap {
+  /* List styles */
+  ul,
+  ol {
+    padding: 0 !important;
+    margin: 0 0 0 0.35in !important;
+
+    li {
+      list-style-position: outside;
+      padding-left: 0.15in;
+      margin-left: 0;
+    }
+
+    li p {
+      display: inline;
+      margin: 0;
+    }
+
+    li::marker {
+      margin-right: 0.1in;
+    }
+  }
+
+  /* Bullet list */
+  ul:not([data-type="taskList"]) {
+    list-style-type: disc;
+
+    ul {
+      list-style-type: circle;
+
+      ul {
+        list-style-type: square;
+      }
+    }
+  }
+
+  /* Ordered list with automatic nested patterns */
+  /* Default pattern: 1 → a → i → 1 */
+  ol {
+    list-style-type: decimal;
+
+    ol {
+      list-style-type: lower-alpha;
+
+      ol {
+        list-style-type: lower-roman;
+
+        ol {
+          list-style-type: decimal;
+
+          ol {
+            list-style-type: lower-alpha;
+
+            ol {
+              list-style-type: lower-roman;
+
+              ol {
+                list-style-type: decimal;
+
+                ol {
+                  list-style-type: lower-alpha;
+
+                  ol {
+                    list-style-type: lower-roman;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Pattern: closing parenthesis - 1) → a) → i) → cycles up to 9 levels */
+  ol[data-list-type="decimal-parenthesis"] {
+    list-style-type: decimal;
+
+    li::marker {
+      content: counter(list-item) ") ";
+    }
+
+    ol {
+      list-style-type: lower-alpha;
+
+      li::marker {
+        content: counter(list-item, lower-alpha) ") ";
+      }
+
+      ol {
+        list-style-type: lower-roman;
+
+        li::marker {
+          content: counter(list-item, lower-roman) ") ";
+        }
+
+        ol {
+          list-style-type: decimal;
+
+          li::marker {
+            content: counter(list-item) ") ";
+          }
+
+          ol {
+            list-style-type: lower-alpha;
+
+            li::marker {
+              content: counter(list-item, lower-alpha) ") ";
+            }
+
+            ol {
+              list-style-type: lower-roman;
+
+              li::marker {
+                content: counter(list-item, lower-roman) ") ";
+              }
+
+              ol {
+                list-style-type: decimal;
+
+                li::marker {
+                  content: counter(list-item) ") ";
+                }
+
+                ol {
+                  list-style-type: lower-alpha;
+
+                  li::marker {
+                    content: counter(list-item, lower-alpha) ") ";
+                  }
+
+                  ol {
+                    list-style-type: lower-roman;
+
+                    li::marker {
+                      content: counter(list-item, lower-roman) ") ";
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Pattern: multi-level decimal - 1. → 1.1 → 1.1.1 → up to 9 levels */
+  ol[data-list-type="decimal-nested"] {
+    counter-reset: level1;
+
+    > li {
+      counter-increment: level1;
+
+      &::marker {
+        content: counter(level1) ". ";
+      }
+    }
+
+    ol {
+      counter-reset: level2;
+
+      > li {
+        counter-increment: level2;
+
+        &::marker {
+          content: counter(level1) "." counter(level2) " ";
+        }
+      }
+
+      ol {
+        counter-reset: level3;
+
+        > li {
+          counter-increment: level3;
+
+          &::marker {
+            content: counter(level1) "." counter(level2) "." counter(level3) " ";
+          }
+        }
+
+        ol {
+          counter-reset: level4;
+
+          > li {
+            counter-increment: level4;
+
+            &::marker {
+              content: counter(level1) "." counter(level2) "." counter(level3)
+                "." counter(level4) " ";
+            }
+          }
+
+          ol {
+            counter-reset: level5;
+
+            > li {
+              counter-increment: level5;
+
+              &::marker {
+                content: counter(level1) "." counter(level2) "." counter(level3)
+                  "." counter(level4) "." counter(level5) " ";
+              }
+            }
+
+            ol {
+              counter-reset: level6;
+
+              > li {
+                counter-increment: level6;
+
+                &::marker {
+                  content: counter(level1) "." counter(level2) "."
+                    counter(level3) "." counter(level4) "." counter(level5) "."
+                    counter(level6) " ";
+                }
+              }
+
+              ol {
+                counter-reset: level7;
+
+                > li {
+                  counter-increment: level7;
+
+                  &::marker {
+                    content: counter(level1) "." counter(level2) "."
+                      counter(level3) "." counter(level4) "." counter(level5)
+                      "." counter(level6) "." counter(level7) " ";
+                  }
+                }
+
+                ol {
+                  counter-reset: level8;
+
+                  > li {
+                    counter-increment: level8;
+
+                    &::marker {
+                      content: counter(level1) "." counter(level2) "."
+                        counter(level3) "." counter(level4) "." counter(level5)
+                        "." counter(level6) "." counter(level7) "."
+                        counter(level8) " ";
+                    }
+                  }
+
+                  ol {
+                    counter-reset: level9;
+
+                    > li {
+                      counter-increment: level9;
+
+                      &::marker {
+                        content: counter(level1) "." counter(level2) "."
+                          counter(level3) "." counter(level4) "."
+                          counter(level5) "." counter(level6) "."
+                          counter(level7) "." counter(level8) "."
+                          counter(level9) " ";
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Pattern: upper-alpha-mixed - A. → a. → i. → A. → cycles up to 9 levels */
+  ol[data-list-type="upper-alpha-mixed"] {
+    list-style-type: upper-alpha;
+
+    ol {
+      list-style-type: lower-alpha;
+
+      ol {
+        list-style-type: lower-roman;
+
+        ol {
+          list-style-type: upper-alpha;
+
+          ol {
+            list-style-type: lower-alpha;
+
+            ol {
+              list-style-type: lower-roman;
+
+              ol {
+                list-style-type: upper-alpha;
+
+                ol {
+                  list-style-type: lower-alpha;
+
+                  ol {
+                    list-style-type: lower-roman;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Pattern: upper-roman-mixed - I. → A. → 1. → I. → cycles up to 9 levels */
+  ol[data-list-type="upper-roman-mixed"] {
+    list-style-type: upper-roman;
+
+    ol {
+      list-style-type: upper-alpha;
+
+      ol {
+        list-style-type: decimal;
+
+        ol {
+          list-style-type: upper-roman;
+
+          ol {
+            list-style-type: upper-alpha;
+
+            ol {
+              list-style-type: decimal;
+
+              ol {
+                list-style-type: upper-roman;
+
+                ol {
+                  list-style-type: upper-alpha;
+
+                  ol {
+                    list-style-type: decimal;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Pattern: decimal-leading-zero-mixed - 01. → a. → i. → 01. → cycles up to 9 levels */
+  ol[data-list-type="decimal-leading-zero-mixed"] {
+    list-style-type: decimal-leading-zero;
+
+    ol {
+      list-style-type: lower-alpha;
+
+      ol {
+        list-style-type: lower-roman;
+
+        ol {
+          list-style-type: decimal-leading-zero;
+
+          ol {
+            list-style-type: lower-alpha;
+
+            ol {
+              list-style-type: lower-roman;
+
+              ol {
+                list-style-type: decimal-leading-zero;
+
+                ol {
+                  list-style-type: lower-alpha;
+
+                  ol {
+                    list-style-type: lower-roman;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Task list specific styles */
+  ul[data-type="taskList"] {
+    list-style: none;
+    margin-left: 0;
+    padding: 0;
+
+    li {
+      align-items: flex-start;
+      display: flex;
+
+      > label {
+        flex: 0 0 auto;
+        margin-right: 0.5rem;
+        user-select: none;
+      }
+
+      > div {
+        flex: 1 1 auto;
+      }
+    }
+
+    input[type="checkbox"] {
+      cursor: pointer;
+    }
+
+    ul[data-type="taskList"] {
+      margin: 0;
+    }
+  }
+}
