@@ -37,7 +37,7 @@ export const ScrollableContent = ({
       )}
       <div
         ref={contentScrollerRef}
-        className="overflow-x-auto hide-scrollbar scroll-smooth"
+        className="overflow-x-auto overflow-y-hidden hide-scrollbar scroll-smooth"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
