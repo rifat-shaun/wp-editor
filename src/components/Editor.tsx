@@ -1,6 +1,6 @@
 import { useEditor, EditorContent, EditorContext } from "@tiptap/react";
 import { FloatingMenu, BubbleMenu } from "@tiptap/react/menus";
-import { useMemo } from "react";
+import { useMemo, useEffect, useRef } from "react";
 import { usePageSize } from "@/hooks/usePageSize";
 import BubbleMenuContent from "./menubar/BubbleMenuContent";
 import type { EditorConfig } from "@/config/editorConfig";
@@ -14,16 +14,35 @@ interface EditorProps {
 }
 
 const Editor = ({ config = {} }: EditorProps) => {
+  const editorPageRef = useRef<HTMLDivElement>(null);
   const editorConfig = { ...defaultEditorConfig, ...config };
   const { pageClass } = usePageSize();
 
-  const editor = useEditor(
-    {
-      extensions: EditorExtensions,
-      content: editorConfig.initialContent,
-    },
-    []
-  );
+  const editor = useEditor({
+    extensions: EditorExtensions,
+    content: editorConfig.initialContent,
+  });
+
+  // Keep editor focused - refocus if focus is lost
+  useEffect(() => {
+    if (!editor || !editorPageRef.current) return;
+
+    const handleClick = (e: MouseEvent) => {
+      // Only handle clicks within the editor page area
+      if (editorPageRef.current?.contains(e.target as Node)) {
+        editor.commands.focus();
+
+        return;
+      }
+    };
+
+    // Add click listener to maintain focus
+    document.addEventListener("click", handleClick);
+
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, [editor]);
 
   // Memoize the provider value to avoid unnecessary re-renders
   const providerValue = useMemo(() => ({ editor }), [editor]);
@@ -37,7 +56,10 @@ const Editor = ({ config = {} }: EditorProps) => {
 
       {/* Main Content Area */}
       <div className="flex-1 flex justify-center items-start w-full overflow-auto py-4">
-        <div className={editorConfig.enablePagination ? pageClass : ""}>
+        <div
+          className={editorConfig.enablePagination ? pageClass : ""}
+          ref={editorPageRef}
+        >
           <EditorContext.Provider value={providerValue}>
             <EditorContent editor={editor} />
 

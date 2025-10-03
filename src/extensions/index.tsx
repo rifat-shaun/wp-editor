@@ -60,6 +60,6 @@ export const EditorExtensions = [
   Indent.configure({
     types: ["paragraph", "heading", "blockquote"],
     minLevel: 0,
-    maxLevel: 8,
+    maxLevel: 12,
   }),
 ];

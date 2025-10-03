@@ -22,7 +22,7 @@ export const Indent = Extension.create<IndentOptions>({
     return {
       types: ["paragraph", "heading", "blockquote"],
       minLevel: 0,
-      maxLevel: 8,
+      maxLevel: 12,
     };
   },
 
@@ -36,7 +36,11 @@ export const Indent = Extension.create<IndentOptions>({
             parseHTML: (element) => {
               const marginLeft = element.style.marginLeft;
               if (marginLeft) {
-                return parseInt(marginLeft) / 30 || 0;
+                // Parse both inches and pixels
+                if (marginLeft.includes('in')) {
+                  return parseFloat(marginLeft) / 0.5 || 0;
+                }
+                return parseInt(marginLeft) / 48 || 0; // Fallback for px
               }
               return 0;
             },
@@ -45,7 +49,7 @@ export const Indent = Extension.create<IndentOptions>({
                 return {};
               }
               return {
-                style: `margin-left: ${attributes.indent * 30}px`,
+                style: `margin-left: ${attributes.indent * 0.5}in`, // 0.5 inch per level
               };
             },
           },
@@ -65,6 +69,11 @@ export const Indent = Extension.create<IndentOptions>({
           state.doc.nodesBetween(from, to, (node, pos) => {
             if (this.options.types.includes(node.type.name)) {
               const currentIndent = node.attrs.indent || 0;
+              
+              // Calculate max indent to prevent overflow
+              // Assuming editor width is around 8.5 inches (standard page width)
+              // Each indent is 0.5 inches, so max ~12 levels before issues
+              // We keep the maxLevel as configured, but ensure content wraps
               if (currentIndent < this.options.maxLevel) {
                 tr.setNodeMarkup(pos, undefined, {
                   ...node.attrs,
@@ -122,7 +131,8 @@ export const Indent = Extension.create<IndentOptions>({
             return this.editor.chain().focus().sinkListItem("listItem").run();
           }
         }
-        // Otherwise, indent paragraph
+        
+        // For regular paragraphs, always indent (Google Docs behavior)
         return this.editor.commands.indent();
       },
       "Shift-Tab": () => {
@@ -137,7 +147,8 @@ export const Indent = Extension.create<IndentOptions>({
             return this.editor.chain().focus().liftListItem("listItem").run();
           }
         }
-        // Otherwise, outdent paragraph
+        
+        // For regular paragraphs, always outdent (Google Docs behavior)
         return this.editor.commands.outdent();
       },
     };
