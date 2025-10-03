@@ -16,7 +16,7 @@ export const LIST_TYPE_OPTIONS = [
       key: "decimal-nested",
       main: ["1.", "2."],
       nested: ["1.1", "1.2"],
-      deepNested: ["1.1.1", "1.1.2"],
+      deepNested: ["1.2.1", "1.2.2"],
     },
   ],
   [
