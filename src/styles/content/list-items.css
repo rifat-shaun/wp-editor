@@ -1,4 +1,15 @@
 .tiptap {
+  :first-child {
+    margin-top: 0;
+  }
+  
+  /* Prevent indented content from overflowing page width */
+  p, h1, h2, h3, h4, h5, h6, blockquote {
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
   /* List styles */
   ul,
   ol {

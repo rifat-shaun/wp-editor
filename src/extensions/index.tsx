@@ -1,4 +1,3 @@
-import Document from "@tiptap/extension-document";
 import StarterKit from "@tiptap/starter-kit";
 import CharacterCount from "@tiptap/extension-character-count";
 import { Placeholder } from "@tiptap/extensions";
@@ -33,7 +32,6 @@ export const EditorExtensions = [
   ListItemWithDepthLimit.configure({
     maxDepth: 9, // Maximum nesting depth (0-9)
   }),
-  Document,
   CharacterCount,
   Placeholder.configure({
     placeholder: "Write something …",
