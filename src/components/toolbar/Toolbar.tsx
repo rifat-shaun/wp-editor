@@ -18,7 +18,7 @@ const ToolbarContent = ({ editor }: ToolbarProps) => {
 
   switch (currentToolbar) {
     case CLASSIC:
-      return <ClassicToolbar onToolbarChange={handleToolbarChange} />;
+      return <ClassicToolbar onToolbarChange={handleToolbarChange} editor={editor} />;
     case PROFESSIONAL:
       return (
         <ProfessionalToolbar
