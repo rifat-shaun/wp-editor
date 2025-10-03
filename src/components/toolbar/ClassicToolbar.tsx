@@ -83,7 +83,7 @@ export const ClassicToolbar = ({
           onScroll={handleScroll}
           onScrollLeft={handleScrollLeft}
           onScrollRight={handleScrollRight}
-          className="w-[1px]"
+          className="w-0"
         >
           <RenderToolbarTabContent activeTab={activeTab} editor={editor} />
         </ScrollableContent>

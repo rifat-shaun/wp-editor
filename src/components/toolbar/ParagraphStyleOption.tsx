@@ -27,8 +27,17 @@ export const ParagraphStyleOptions = ({
   //   }
   // };
 
-  const { isTaskList, canIndent, canOutdent, isOrderedList, isUnorderedList } =
-    useTiptapEditorState(editor);
+  const {
+    isTaskList,
+    canIndent,
+    canOutdent,
+    isOrderedList,
+    isUnorderedList,
+    isTextAlignJustify,
+    isTextAlignCenter,
+    isTextAlignRight,
+    isTextAlignLeft,
+  } = useTiptapEditorState(editor);
 
   const {
     handleToggleTaskList,
@@ -36,6 +45,10 @@ export const ParagraphStyleOptions = ({
     handleOutdent,
     handleToggleOrderedList,
     handleToggleUnorderedList,
+    handleTextAlignLeft,
+    handleTextAlignCenter,
+    handleTextAlignRight,
+    handleTextAlignJustify,
   } = useParagraphStyleMethods(editor);
 
   const [orderedListDropdownOpen, setOrderedListDropdownOpen] = useState(false);
@@ -169,41 +182,41 @@ export const ParagraphStyleOptions = ({
       </div>
 
       <div className="flex items-center space-x-2">
-        {/* <ToolbarButtonItem
-          tooltip={'Align Left'}
-          onClick={() => editor.chain().focus().unsetTextAlign().run()}
-          active={!editor.isActive({ textAlign: 'center' }) && !editor.isActive({ textAlign: 'right' }) && !editor.isActive({ textAlign: 'justify' })}
-          size='small'
+        <ToolbarButtonItem
+          tooltip={"Align Left"}
+          onClick={handleTextAlignLeft}
+          active={isTextAlignLeft}
+          size="small"
         >
-          <SvgIcon name='align-left' />
-        </ToolbarButtonItem> */}
+          <SvgIcon name="align-left" />
+        </ToolbarButtonItem>
 
-        {/* <ToolbarButtonItem
-          tooltip={'Align Center'}
-          onClick={() => editor.chain().focus().setTextAlign('center').run()}
-          active={editor.isActive({ textAlign: 'center' })}
-          size='small'
+        <ToolbarButtonItem
+          tooltip={"Align Center"}
+          onClick={handleTextAlignCenter}
+          active={isTextAlignCenter}
+          size="small"
         >
-          <SvgIcon name='align-center' />
-        </ToolbarButtonItem> */}
+          <SvgIcon name="align-center" />
+        </ToolbarButtonItem>
 
-        {/* <ToolbarButtonItem
-          tooltip={'Align Right'}
-          onClick={() => editor.chain().focus().setTextAlign('right').run()}
-          active={editor.isActive({ textAlign: 'right' })}
-          size='small'
+        <ToolbarButtonItem
+          tooltip={"Align Right"}
+          onClick={handleTextAlignRight}
+          active={isTextAlignRight}
+          size="small"
         >
-          <SvgIcon name='align-right' />
-        </ToolbarButtonItem> */}
+          <SvgIcon name="align-right" />
+        </ToolbarButtonItem>
 
-        {/* <ToolbarButtonItem
-          tooltip={'Justify'}
-          onClick={() => editor.chain().focus().setTextAlign('justify').run()}
-          active={editor.isActive({ textAlign: 'justify' })}
-          size='small'
+        <ToolbarButtonItem
+          tooltip={"Justify"}
+          onClick={handleTextAlignJustify}
+          active={isTextAlignJustify}
+          size="small"
         >
-          <SvgIcon name='align-justify' />
-        </ToolbarButtonItem> */}
+          <SvgIcon name="align-justify" />
+        </ToolbarButtonItem>
 
         {/* <ToolbarButtonItem
           tooltip={'Blockquote'}

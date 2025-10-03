@@ -32,6 +32,10 @@ export const useTiptapEditorState = (editor: Editor) => {
       currentOrderedListType: "decimal",
       isUnorderedList: false,
       currentUnorderedListType: "disc",
+      isTextAlignJustify: false,
+      isTextAlignCenter: false,
+      isTextAlignRight: false,
+      isTextAlignLeft: false,
     };
   }
 
@@ -115,6 +119,14 @@ export const useTiptapEditorState = (editor: Editor) => {
         isUnorderedList: ctx.editor.isActive("bulletList") ?? false,
         currentUnorderedListType:
           ctx.editor.getAttributes("bulletList")?.listType ?? "disc",
+
+        // Text Align
+        isTextAlignJustify:
+          ctx.editor.isActive({ textAlign: "justify" }) ?? false,
+        isTextAlignCenter:
+          ctx.editor.isActive({ textAlign: "center" }) ?? false,
+        isTextAlignRight: ctx.editor.isActive({ textAlign: "right" }) ?? false,
+        isTextAlignLeft: ctx.editor.isActive({ textAlign: "left" }) ?? false,
       };
     },
   });

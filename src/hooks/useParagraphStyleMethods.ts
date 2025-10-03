@@ -62,6 +62,26 @@ export const useParagraphStyleMethods = (editor: Editor) => {
     editor.chain().focus().updateAttributes("bulletList", { listType }).run();
   };
 
+  const handleTextAlignLeft = () => {
+    if (!editor) return;
+    editor.chain().focus().setTextAlign("left").run();
+  };
+
+  const handleTextAlignCenter = () => {
+    if (!editor) return;
+    editor.chain().focus().setTextAlign("center").run();
+  };
+
+  const handleTextAlignRight = () => {
+    if (!editor) return;
+    editor.chain().focus().setTextAlign("right").run();
+  };
+
+  const handleTextAlignJustify = () => {
+    if (!editor) return;
+    editor.chain().focus().setTextAlign("justify").run();
+  };
+
   return {
     handleToggleTaskList,
     handleIndent,
@@ -70,5 +90,9 @@ export const useParagraphStyleMethods = (editor: Editor) => {
     handleListTypeChange,
     handleToggleUnorderedList,
     handleUnorderedListTypeChange,
+    handleTextAlignLeft,
+    handleTextAlignCenter,
+    handleTextAlignRight,
+    handleTextAlignJustify,
   };
 };
