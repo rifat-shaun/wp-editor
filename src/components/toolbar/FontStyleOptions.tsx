@@ -1,8 +1,8 @@
-import { Dropdown, InputNumber, Select, Space, Tooltip } from "antd";
+import { Dropdown, InputNumber, Space, Tooltip } from "antd";
 import { ItemGroup } from "./ItemGroup";
 import { FONT_FAMILY_OPTIONS, FONT_SIZE_OPTIONS } from "@/constants/Fonts";
 import {
-  ChevronRight,
+  ArrowDropDownOutlined,
   EditOutlined,
   FormatBoldRounded,
   FormatItalicRounded,
@@ -62,7 +62,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
 
   return (
     <ItemGroup>
-      <div className="flex items-center space-x-1">
+      <div className="flex items-center space-x-2">
         <Tooltip
           title="Font Family"
           placement="top"
@@ -70,22 +70,22 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
           color="black"
           mouseEnterDelay={0.3}
         >
-          <Space.Compact className="border border-neutral-300 focus-within:border focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 rounded hidden-spin">
-            <Select
-              value={fontFamily}
-              placeholder="Select Font Family"
-              optionFilterProp="label"
-              className={"w-48 h-6"}
-              variant="borderless"
-              options={FONT_FAMILY_OPTIONS.map((font) => ({
-                value: font.value,
-                label: (
-                  <span style={{ fontFamily: font.value }}>{font.label}</span>
-                ),
-              }))}
-              onChange={(value) => handleFontFamilyChange(value)}
-            />
-          </Space.Compact>
+          <Dropdown
+            menu={{
+              items: FONT_FAMILY_OPTIONS.map((item) => ({
+                label: <span style={{ fontFamily: item.value }}>{item.label}</span>,
+                key: item.value,
+                onClick: () => handleFontFamilyChange(item.value),
+              })),
+              style: { maxHeight: '256px', overflow: 'auto' },
+            }}
+            className='border border-gray-300 rounded px-2 w-36 cursor-pointer'
+          >
+            <div className="flex items-center gap-1 justify-between">
+              <span className="text-xs truncate">{FONT_FAMILY_OPTIONS.find(item => item.value === fontFamily)?.label}</span>
+              <ArrowDropDownOutlined className='text-gray-500 hover:opacity-50' />
+            </div>
+          </Dropdown>
         </Tooltip>
 
         <Tooltip
@@ -95,7 +95,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
           color="black"
           mouseEnterDelay={0.3}
         >
-          <Space.Compact className="border border-neutral-300 focus-within:border focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 rounded hidden-spin">
+          <Space.Compact className="border cursor-pointer border-neutral-300 rounded hidden-spin">
             <InputNumber
               value={fontSize}
               onChange={(value) => handleFontSizeChange(value)}
@@ -104,7 +104,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
               variant="borderless"
               controls={false}
               size="small"
-              rootClassName="w-12 h-5 flex items-center"
+              rootClassName="w-11 h-5 flex items-center pt-1"
             />
             <div className="w-1 h-6 border-l border-neutral-300"></div>
             <Dropdown
@@ -117,12 +117,12 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
               }}
               placement="bottomRight"
               popupRender={(menu) => (
-                <div className="w-12 max-h-64 rounded-md overflow-auto bg-white scrollbar-none">
+                <div className="w-14 max-h-64 rounded-md overflow-auto bg-white">
                   {menu}
                 </div>
               )}
             >
-              <ChevronRight className="text-neutral-400 hover:opacity-75 rotate-90" />
+              <ArrowDropDownOutlined className='text-gray-500 hover:opacity-50' />
             </Dropdown>
           </Space.Compact>
         </Tooltip>
