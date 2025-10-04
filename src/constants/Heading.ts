@@ -20,5 +20,5 @@ export const HEADING_STYLES = {
 	h4: { fontSize: '0.75rem', fontWeight: 'bold', lineHeight: '1.2' },
 	h5: { fontSize: '0.7rem', fontWeight: 'bold', lineHeight: '1.2' },
 	h6: { fontSize: '0.65rem', fontWeight: 'bold', lineHeight: '1.2' },
-	paragraph: { fontSize: '0.6rem', lineHeight: '1.2' },
+	paragraph: { fontSize: '0.7rem', lineHeight: '1.2' },
 } as const;

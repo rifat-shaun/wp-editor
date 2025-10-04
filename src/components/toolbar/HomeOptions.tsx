@@ -6,12 +6,17 @@ import { FontStyleOptions } from "./FontStyleOptions";
 import { useHomeOptionMethods } from "@/hooks/useHomeOptionMethods";
 import { ParagraphStyleOptions } from "./ParagraphStyleOption";
 import { HeadingOptions } from "./HeadingOptions";
+import { useToolbar } from "@/contexts/ToolbarContext";
+import { TOOLBAR_TYPES_ENUM } from "@/constants/Toolbar";
 
 interface HomeOptionsProps {
   editor: Editor;
 }
 
 export const HomeOptions = ({ editor }: HomeOptionsProps) => {
+  const { currentToolbar } = useToolbar();
+  const isClassicToolbar = currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC;
+
   const { canUndo, canRedo, isAIAutocompletionEnabled } =
     useTiptapEditorState(editor);
 
@@ -78,6 +83,8 @@ export const HomeOptions = ({ editor }: HomeOptionsProps) => {
 
       <Divider />
 
+      {isClassicToolbar && <HeadingOptions editor={editor} />}
+
       <FontStyleOptions editor={editor} />
 
       <Divider />
@@ -86,7 +93,7 @@ export const HomeOptions = ({ editor }: HomeOptionsProps) => {
 
       <Divider />
 
-      <HeadingOptions editor={editor} />
+      {!isClassicToolbar && <HeadingOptions editor={editor} />}
     </>
   );
 };

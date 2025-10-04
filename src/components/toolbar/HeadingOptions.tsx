@@ -7,12 +7,18 @@ import SvgIcon from '../common/SvgIcon';
 import { DROPDOWN_OFFSET, HEADING_OPTIONS, HEADING_STYLES, VIEWPORT_BUFFER } from '@/constants/Heading';
 import { useTiptapEditorState } from '@/hooks/useTiptapEditorState';
 import { useHeadingStyleMethods } from '@/hooks/useHeadingStyleMethods';
+import { useToolbar } from '@/contexts/ToolbarContext';
+import { TOOLBAR_TYPES_ENUM } from '@/constants/Toolbar';
+import { Dropdown } from 'antd';
+import { ArrowDropDownOutlined } from '@mui/icons-material';
 
 type HeadingOptionsProps = {
 	editor: Editor;
 };
 
 export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
+	const { currentToolbar } = useToolbar();
+
 	const { selectionHeadingLevel } = useTiptapEditorState(editor);
 	const { handleHeadingChange } = useHeadingStyleMethods(editor);
 
@@ -75,6 +81,28 @@ export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
 		const style = HEADING_STYLES[option.value as keyof typeof HEADING_STYLES] || HEADING_STYLES.paragraph;
 		return <span style={style}>{option.label}</span>;
 	}, []);
+
+	if (currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC) {
+		const selectedHeadingTag = selectionHeadingLevel === 'paragraph' ? selectionHeadingLevel : `h${selectionHeadingLevel}`;
+
+		return (
+			<Dropdown
+				menu={{
+					items: HEADING_OPTIONS?.map((option) => ({
+						key: option.value,
+						label: headingRenderer(option),
+						onClick: () => handleHeadingChange(option.value),
+					})),
+				}}
+				className='border border-gray-300 rounded-md px-2 min-w-[100px]'
+			>
+				<div className='flex items-center gap-1 justify-between'>
+					<span className='text-xs truncate'>{HEADING_OPTIONS.find(option => option.value === selectedHeadingTag)?.label}</span>
+					<ArrowDropDownOutlined className='text-gray-500' />
+				</div>
+			</Dropdown>
+		);
+	}
 
 	return (
 		<div className={`flex items-center relative h-12 min-w-fit bg-gray-100`}>
