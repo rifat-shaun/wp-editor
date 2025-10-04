@@ -3,6 +3,7 @@
 @import "./styles/content/quote.css";
 @import "./styles/content/heading.css";
 @import "./styles/editor/index.css";
+@import "./styles/content/table.css";
 
 @tailwind base;
 @tailwind components;

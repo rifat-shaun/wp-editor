@@ -7,7 +7,7 @@ import { useHorizontalScroll } from "@/hooks/useHorizontalScroll";
 import { ScrollableContent } from "./ScrollableContent";
 import { ToolbarDropdown } from "./ToolbarDropdown";
 import { RenderToolbarTabContent } from "./RenderToolbarTabContent";
-import { capitalize } from "@/utils/common";
+import { capitalize } from "@/utils/Common";
 
 interface ClassicToolbarProps {
   onToolbarChange?: (toolbarType: string) => void;

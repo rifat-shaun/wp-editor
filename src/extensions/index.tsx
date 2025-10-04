@@ -23,6 +23,7 @@ import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
 import Blockquote from "@tiptap/extension-blockquote";
 import Heading from "@tiptap/extension-heading";
+import { VariableTable, VariableTableCell, VariableTableHeader, VariableTableRow } from "./VariableTable";
 
 export const EditorExtensions = [
   StarterKit.configure({
@@ -81,4 +82,12 @@ export const EditorExtensions = [
   Heading.configure({
     levels: [1, 2, 3, 4, 5, 6],
   }),
+  VariableTable.configure({
+    resizable: true,
+    allowTableNodeSelection: true,
+    lastColumnResizable: true,
+  }),
+  VariableTableCell,
+  VariableTableHeader,
+  VariableTableRow,
 ];

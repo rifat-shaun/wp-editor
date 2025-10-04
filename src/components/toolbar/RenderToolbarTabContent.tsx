@@ -1,6 +1,7 @@
 import { Editor } from "@tiptap/react";
 import { HomeOptions } from "./HomeOptions";
 import type { TTabKey } from "@/constants/Toolbar";
+import { TableOptions } from "./table";
 
 interface RenderToolbarTabContentProps {
   activeTab: TTabKey;
@@ -17,7 +18,7 @@ export const RenderToolbarTabContent = ({
     case "Insert":
       return <div>Insert</div>;
     case "Table":
-      return <div>Table</div>;
+      return <TableOptions editor={editor} />;
     case "Page":
       return <div>Page</div>;
     case "Export":

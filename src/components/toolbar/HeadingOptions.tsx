@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 
 import { ToolbarButtonItem } from './ToolbarButtonItem';
 import SvgIcon from '../common/SvgIcon';
-import { DROPDOWN_OFFSET, HEADING_OPTIONS, HEADING_STYLES, VIEWPORT_BUFFER } from '@/constants/Heading';
+import { DROPDOWN_OFFSET, HEADING_OPTIONS, HEADING_STYLES } from '@/constants/Heading';
 import { useTiptapEditorState } from '@/hooks/useTiptapEditorState';
 import { useHeadingStyleMethods } from '@/hooks/useHeadingStyleMethods';
 import { useToolbar } from '@/contexts/ToolbarContext';
@@ -33,32 +33,55 @@ export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
 		setIsOpen(false);
 	}, [handleHeadingChange]);
 
-	useEffect(() => {
-		if (!isOpen || !headingsContainerRef.current) return;
+	const updatePosition = useCallback(() => {
+		if (isOpen && headingsContainerRef.current) {
+			const rect = headingsContainerRef.current.getBoundingClientRect();
+			const windowWidth = window.innerWidth;
 
-		const rect = headingsContainerRef.current.getBoundingClientRect();
-		const windowWidth = window.innerWidth;
-		const top = rect.bottom + window.scrollY - DROPDOWN_OFFSET;
+			if (rect.right + (Math.min(rect.left, 0) - 100) >= rect.width) {
+				setShouldUseContentWidth(false);
+				setPosition({
+					top: rect.bottom + window.scrollY - DROPDOWN_OFFSET,
+					left: rect.left + window.scrollX,
+				});
 
-		// Check if dropdown fits in viewport width
-		const hasEnoughSpace = rect.width <= windowWidth - VIEWPORT_BUFFER;
+				return;
+			}
 
-		if (hasEnoughSpace) {
-			// Center the dropdown
-			setPosition({
-				top,
-				left: (windowWidth - rect.width) / 2,
-			});
-			setShouldUseContentWidth(true);
-		} else {
-			// Position to the right with buffer
-			setPosition({
-				top,
-				left: Math.max(windowWidth - rect.width - VIEWPORT_BUFFER, 0) + window.scrollX,
-			});
-			setShouldUseContentWidth(true);
+			// Check if there's enough space on the left
+			const hasEnoughSpaceOnLeft = rect.width <= windowWidth - 20; // 20px buffer
+
+			if (hasEnoughSpaceOnLeft) {
+				setPosition({
+					top: rect.bottom + window.scrollY - DROPDOWN_OFFSET,
+					left: (windowWidth - rect.width) / 2,
+				});
+				setShouldUseContentWidth(true);
+			} else {
+				// Position to the right if not enough space on left
+				setPosition({
+					top: rect.bottom + window.scrollY - DROPDOWN_OFFSET,
+					left: Math.max(windowWidth - rect.width - 20, 0) + window.scrollX, // Ensure it stays within viewport
+				});
+				setShouldUseContentWidth(true);
+			}
 		}
 	}, [isOpen]);
+
+	useEffect(() => {
+		updatePosition();
+	}, [updatePosition]);
+
+	useEffect(() => {
+		if (!isOpen) return;
+
+		const handleResize = () => {
+			updatePosition();
+		};
+
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, [isOpen, updatePosition]);
 
 	useEffect(() => {
 		if (!isOpen) return;

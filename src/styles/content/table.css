@@ -1,0 +1,136 @@
+.tiptap {
+	table {
+		border-collapse: collapse;
+		table-layout: fixed;
+		width: 100%;
+		margin: 0;
+		overflow: hidden;
+		page-break-inside: auto;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	table tr {
+		page-break-inside: avoid;
+		page-break-after: auto;
+	}
+
+	table td,
+	table th {
+		min-width: 1em;
+		border: 1px solid #626262;
+		padding: 3px 5px;
+		vertical-align: middle;
+		box-sizing: border-box;
+		position: relative;
+	}
+
+	table td>*,
+	table th>* {
+		margin-bottom: 0;
+	}
+
+	table td[align='left-top'],
+	table th[align='left-top'] {
+		vertical-align: top;
+		text-align: left;
+	}
+
+	table td[align='center-top'],
+	table th[align='center-top'] {
+		vertical-align: top;
+		text-align: center;
+	}
+
+	table td[align='right-top'],
+	table th[align='right-top'] {
+		vertical-align: middle;
+		text-align: right;
+	}
+
+	table td[align='justify-top'],
+	table th[align='justify-top'] {
+		vertical-align: middle;
+		text-align: justify;
+	}
+
+	table td[align='left-middle'],
+	table th[align='left-middle'] {
+		vertical-align: middle;
+		text-align: left;
+	}
+
+	table td[align='center-middle'],
+	table th[align='center-middle'] {
+		vertical-align: middle;
+		text-align: center;
+	}
+
+	table td[align='right-middle'],
+	table th[align='right-middle'] {
+		vertical-align: middle;
+		text-align: right;
+	}
+
+	table td[align='justify-middle'],
+	table th[align='justify-middle'] {
+		vertical-align: middle;
+		text-align: justify;
+	}
+
+	table td[align='left-bottom'],
+	table th[align='left-bottom'] {
+		vertical-align: bottom;
+		text-align: left;
+	}
+
+	table td[align='center-bottom'],
+	table th[align='center-bottom'] {
+		vertical-align: middle;
+		text-align: center;
+	}
+
+	table td[align='right-bottom'],
+	table th[align='right-bottom'] {
+		vertical-align: bottom;
+		text-align: right;
+	}
+
+	table td[align='justify-bottom'],
+	table th[align='justify-bottom'] {
+		vertical-align: bottom;
+		text-align: justify;
+	}
+
+	table th {
+		font-weight: bold;
+		text-align: left;
+		background-color: #e1e1e1;
+	}
+
+	table .selectedCell:after {
+		z-index: 2;
+		position: absolute;
+		content: '';
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		background: #56a2ff5e;
+		pointer-events: none;
+	}
+
+	table .column-resize-handle {
+		position: absolute;
+		right: -1px;
+		top: 0;
+		bottom: -1px;
+		width: 3px;
+		background-color: #3757fb;
+		pointer-events: none;
+	}
+
+	table p {
+		margin: 0;
+	}
+}
