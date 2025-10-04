@@ -24,3 +24,15 @@
   background-color: rgba(212, 212, 212, 0.8);
   padding: 2px 0;
 }
+
+/* Link styles */
+.editor-link {
+  color: #3b82f6;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.editor-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}

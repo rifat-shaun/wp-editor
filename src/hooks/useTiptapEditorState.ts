@@ -1,50 +1,52 @@
 import { Editor, getMarkAttributes, useEditorState } from "@tiptap/react";
 
 export const useTiptapEditorState = (editor: Editor) => {
-  if (!editor) {
-    return {
-      canUndo: false,
-      canRedo: false,
-      isBold: false,
-      canBold: false,
-      isItalic: false,
-      canItalic: false,
-      isStrike: false,
-      canStrike: false,
-      isUnderline: false,
-      canUnderline: false,
-      isSuperscript: false,
-      canSuperscript: false,
-      isSubscript: false,
-      canSubscript: false,
-      selectionColor: "#000000",
-      selectionBackgroundColor: "#FFFFFF",
-      highlightColor: "#FFFFFF",
-      fontSize: 12,
-      fontFamily: "Arial, sans-serif",
-      characterCount: 0,
-      wordCount: 0,
-      isAIAutocompletionEnabled: false,
-      isTaskList: false,
-      canIndent: false,
-      canOutdent: false,
-      isOrderedList: false,
-      currentOrderedListType: "decimal",
-      isUnorderedList: false,
-      currentUnorderedListType: "disc",
-      isTextAlignJustify: false,
-      isTextAlignCenter: false,
-      isTextAlignRight: false,
-      isTextAlignLeft: false,
-      isBlockquote: false,
-      canBlockquote: false,
-      selectionHeadingLevel: "paragraph",
-    };
-  }
-
   const editorState = useEditorState({
     editor,
     selector: (ctx) => {
+      if (!ctx.editor) {
+        return {
+          canUndo: false,
+          canRedo: false,
+          isBold: false,
+          canBold: false,
+          isItalic: false,
+          canItalic: false,
+          isStrike: false,
+          canStrike: false,
+          isUnderline: false,
+          canUnderline: false,
+          isSuperscript: false,
+          canSuperscript: false,
+          isSubscript: false,
+          canSubscript: false,
+          selectionColor: "#000000",
+          selectionBackgroundColor: "#FFFFFF",
+          highlightColor: "#FFFFFF",
+          fontSize: 12,
+          fontFamily: "Arial, sans-serif",
+          characterCount: 0,
+          wordCount: 0,
+          isAIAutocompletionEnabled: false,
+          isTaskList: false,
+          canIndent: false,
+          canOutdent: false,
+          isOrderedList: false,
+          currentOrderedListType: "decimal",
+          isUnorderedList: false,
+          currentUnorderedListType: "disc",
+          isTextAlignJustify: false,
+          isTextAlignCenter: false,
+          isTextAlignRight: false,
+          isTextAlignLeft: false,
+          isBlockquote: false,
+          canBlockquote: false,
+          selectionHeadingLevel: "paragraph",
+          isLinkActive: false,
+          hasTextSelected: false,
+          currentLinkUrl: "",
+        };
+      }
       return {
         // Undo and Redo
         canUndo: ctx.editor.can().chain().undo().run() ?? false,
@@ -137,6 +139,14 @@ export const useTiptapEditorState = (editor: Editor) => {
 
         // Heading
         selectionHeadingLevel: ctx.editor.getAttributes("heading")?.level ?? "paragraph",
+
+        // Link
+        isLinkActive: ctx.editor.isActive("link") ?? false,
+        hasTextSelected: (() => {
+          const { from, to } = ctx.editor.state.selection;
+          return from !== to;
+        })(),
+        currentLinkUrl: ctx.editor.isActive("link") ? ctx.editor.getAttributes("link").href : "",
       };
     },
   });

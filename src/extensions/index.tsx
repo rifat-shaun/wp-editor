@@ -23,6 +23,7 @@ import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
 import Blockquote from "@tiptap/extension-blockquote";
 import Heading from "@tiptap/extension-heading";
+import Link from "@tiptap/extension-link";
 import { VariableTable, VariableTableCell, VariableTableHeader, VariableTableRow } from "./VariableTable";
 
 export const EditorExtensions = [
@@ -81,6 +82,16 @@ export const EditorExtensions = [
   Blockquote,
   Heading.configure({
     levels: [1, 2, 3, 4, 5, 6],
+  }),
+  Link.configure({
+    openOnClick: false,
+    autolink: true,
+    defaultProtocol: 'https',
+    protocols: ['http', 'https'],
+    HTMLAttributes: {
+      class: 'editor-link',
+    },
+    
   }),
   VariableTable.configure({
     resizable: true,
