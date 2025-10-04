@@ -3,7 +3,7 @@ import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
 import { Editor } from "@tiptap/react";
 import { SkeletonLine } from "@/components/common/SkeletonLine";
 import { useParagraphStyleMethods } from "@/hooks/useParagraphStyleMethods";
-import { BULLET_TYPE_OPTIONS } from "@/utils/Paragraphs";
+import { BULLET_TYPE_OPTIONS } from "@/constants/Paragraphs";
 
 type UnorderedListTypeDropdownContentProps = {
   editor: Editor;

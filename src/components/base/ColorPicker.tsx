@@ -1,7 +1,7 @@
 import {
   COLOR_PICKER_PALETTE,
   COLOR_PICKER_STANDARD_COLORS,
-} from "@/utils/common";
+} from "@/constants/Common";
 import { FormatColorResetOutlined } from "@mui/icons-material";
 import { Col, ColorPicker, Divider, Row, theme } from "antd";
 import type { ColorPickerProps } from "antd";

@@ -1,7 +1,7 @@
 import { Dropdown, Space, Typography } from "antd";
 import { TOOLBAR_TYPES, TABS, type TTabKey } from "@/constants/Toolbar";
 import { Editor } from "@tiptap/react";
-import { capitalize } from "@/utils/common";
+import { capitalize } from "@/utils/Tommon";
 import { useState } from "react";
 import { ExpandLess, ExpandMore, Menu as MenuIcon } from "@mui/icons-material";
 import { useHorizontalScroll } from "@/hooks/useHorizontalScroll";
