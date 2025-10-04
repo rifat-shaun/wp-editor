@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 // import { deleteTableRowsWithIdUpdate } from '../../utilities';
 // import { ToolbarDropdownItem } from './ToolbarDropdownItem';
-import { SvgIcon } from '@/index';
+import SvgIcon from '../../common/SvgIcon';
 import { TableSelector } from './TableSelector';
 import { Popover } from 'antd';
 import { ItemGroup } from '../ItemGroup';

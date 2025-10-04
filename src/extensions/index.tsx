@@ -30,6 +30,8 @@ export const EditorExtensions = [
     orderedList: false, // Disable default to use our custom one
     bulletList: false, // Disable default to use our custom one
     listItem: false, // Disable default to use our custom one with depth limit
+    heading: false, // Disable default to use our custom one
+    blockquote: false, // Disable default to use our custom one
   }),
   OrderedListWithType,
   UnorderedListWithType,

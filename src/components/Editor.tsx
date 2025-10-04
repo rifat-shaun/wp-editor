@@ -9,7 +9,7 @@ import { EditorExtensions } from "@/extensions";
 import { Toolbar } from "@/components/toolbar/Toolbar";
 import { Footer } from "@/components/footer";
 
-interface EditorProps {
+export interface EditorProps {
   config?: EditorConfig;
 }
 
@@ -21,6 +21,7 @@ const Editor = ({ config = {} }: EditorProps) => {
   const editor = useEditor({
     extensions: EditorExtensions,
     content: editorConfig.initialContent,
+    autofocus: false
   });
 
   // Keep editor focused - refocus if focus is lost
@@ -41,6 +42,12 @@ const Editor = ({ config = {} }: EditorProps) => {
 
     return () => {
       document.removeEventListener("click", handleClick);
+    };
+  }, [editor]);
+
+  useEffect(() => {
+    return () => {
+      editor?.destroy();
     };
   }, [editor]);
 

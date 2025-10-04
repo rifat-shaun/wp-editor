@@ -133,7 +133,7 @@ export const useTiptapEditorState = (editor: Editor) => {
 
         // Blockquote
         isBlockquote: ctx.editor.isActive("blockquote") ?? false,
-        canBlockquote: ctx.editor.can().chain().focus().toggleBlockquote().run() ?? false,
+        canBlockquote: ctx.editor.can().chain().toggleBlockquote().run() ?? false,
 
         // Heading
         selectionHeadingLevel: ctx.editor.getAttributes("heading")?.level ?? "paragraph",

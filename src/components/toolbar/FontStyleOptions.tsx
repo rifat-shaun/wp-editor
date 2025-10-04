@@ -16,7 +16,7 @@ import {
 import { Editor } from "@tiptap/react";
 import { ToolbarButtonItem } from "./ToolbarButtonItem";
 import { HorizontalLayoutColorPicker } from "../base/ColorPicker";
-import { SvgIcon } from "@/index";
+import SvgIcon from "../common/SvgIcon";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
 import { useFontStyleMethods } from "@/hooks/useFontStyleMethods";
 
@@ -230,53 +230,32 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
           />
         </ToolbarButtonItem>
 
-        <ToolbarButtonItem
-          tooltip="Background Color"
-          active={false}
-          size="small"
-          className="w-6"
-        >
-          <HorizontalLayoutColorPicker
-            id="selectionColor"
-            showNone={false}
-            value={selectionColor}
-            icon={<TitleOutlined sx={{ fontSize: "14px", padding: "0" }} />}
-            onColorSelect={(color) => handleSetColor(color)}
-            onResetColor={handleUnsetColor}
-          />
-        </ToolbarButtonItem>
+        <HorizontalLayoutColorPicker
+          id="selectionColor"
+          showNone={false}
+          value={selectionColor}
+          icon={<TitleOutlined sx={{ fontSize: "14px", padding: "0" }} />}
+          onColorSelect={(color) => handleSetColor(color)}
+          onResetColor={handleUnsetColor}
+        />
 
-        <ToolbarButtonItem
-          tooltip="Background Color"
-          active={false}
-          size="small"
-          className="w-6"
-        >
-          <HorizontalLayoutColorPicker
-            id="selectionBackgroundColor"
-            showNone={false}
-            value={selectionBackgroundColor}
-            icon={<SvgIcon name="color-fill" />}
-            onColorSelect={(color) => handleSetBackgroundColor(color)}
-            onResetColor={handleUnsetBackgroundColor}
-          />
-        </ToolbarButtonItem>
+        <HorizontalLayoutColorPicker
+          id="selectionBackgroundColor"
+          showNone={false}
+          value={selectionBackgroundColor}
+          icon={<SvgIcon name="color-fill" />}
+          onColorSelect={(color) => handleSetBackgroundColor(color)}
+          onResetColor={handleUnsetBackgroundColor}
+        />
 
-        <ToolbarButtonItem
-          tooltip="Highlight"
-          active={false}
-          size="small"
-          className="w-6"
-        >
-          <HorizontalLayoutColorPicker
-            id="selectionColor"
-            showNone={false}
-            value={highlightColor}
-            icon={<EditOutlined sx={{ fontSize: "14px", padding: "0" }} />}
-            onColorSelect={(color) => handleSetHighlightColor(color)}
-            onResetColor={handleUnsetHighlightColor}
-          />
-        </ToolbarButtonItem>
+        <HorizontalLayoutColorPicker
+          id="selectionColor"
+          showNone={false}
+          value={highlightColor}
+          icon={<EditOutlined sx={{ fontSize: "14px", padding: "0" }} />}
+          onColorSelect={(color) => handleSetHighlightColor(color)}
+          onResetColor={handleUnsetHighlightColor}
+        />
       </div>
     </ItemGroup>
   );
