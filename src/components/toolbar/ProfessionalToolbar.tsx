@@ -1,5 +1,4 @@
 import { TOOLBAR_TYPES, TABS, type TTabKey } from "@/constants/Toolbar";
-import { useState } from "react";
 import { Editor } from "@tiptap/react";
 import { useHorizontalScroll } from "@/hooks/useHorizontalScroll";
 import { ScrollableContent } from "./ScrollableContent";
@@ -8,14 +7,17 @@ import { RenderToolbarTabContent } from "./RenderToolbarTabContent";
 interface ProfessionalToolbarProps {
   editor: Editor;
   onToolbarChange?: (toolbarType: string) => void;
+  activeTab: TTabKey;
+  setActiveTab: (tab: TTabKey) => void;
 }
 
 export const ProfessionalToolbar = ({
   editor,
   onToolbarChange,
+  activeTab,
+  setActiveTab,
 }: ProfessionalToolbarProps) => {
   const { PROFESSIONAL } = TOOLBAR_TYPES;
-  const [activeTab, setActiveTab] = useState<TTabKey>(TABS[0]);
 
   const {
     contentScrollerRef,

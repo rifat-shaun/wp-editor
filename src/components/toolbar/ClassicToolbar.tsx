@@ -12,14 +12,17 @@ import { capitalize } from "@/utils/Common";
 interface ClassicToolbarProps {
   onToolbarChange?: (toolbarType: string) => void;
   editor: Editor;
+  activeTab: TTabKey;
+  setActiveTab: (tab: TTabKey) => void;
 }
 
 export const ClassicToolbar = ({
   onToolbarChange,
   editor,
+  activeTab,
+  setActiveTab,
 }: ClassicToolbarProps) => {
   const { CLASSIC } = TOOLBAR_TYPES;
-  const [activeTab, setActiveTab] = useState<TTabKey>(TABS[0]);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
 
   const {
