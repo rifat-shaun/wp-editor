@@ -5,6 +5,8 @@ import { ProfessionalToolbar } from "./ProfessionalToolbar";
 import { TOOLBAR_TYPES_ENUM } from "../../constants/Toolbar";
 import { Editor } from "@tiptap/react";
 import { ToolbarProvider, useToolbar } from "@/contexts/ToolbarContext";
+import { useState } from "react";
+import { TABS, type TTabKey } from "@/constants/Toolbar";
 
 interface ToolbarProps {
   initialToolbar?: string;
@@ -12,18 +14,21 @@ interface ToolbarProps {
 }
 
 const ToolbarContent = ({ editor }: ToolbarProps) => {
+  const [activeTab, setActiveTab] = useState<TTabKey>(TABS[0]);
   const { CLASSIC, PROFESSIONAL, HIDE_TOOLBAR } = TOOLBAR_TYPES_ENUM;
   const { currentToolbar, handleToolbarChange, handleShowToolbar } =
     useToolbar();
 
   switch (currentToolbar) {
     case CLASSIC:
-      return <ClassicToolbar onToolbarChange={handleToolbarChange} editor={editor} />;
+      return <ClassicToolbar onToolbarChange={handleToolbarChange} editor={editor} activeTab={activeTab} setActiveTab={setActiveTab} />;
     case PROFESSIONAL:
       return (
         <ProfessionalToolbar
           onToolbarChange={handleToolbarChange}
           editor={editor}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
         />
       );
     case HIDE_TOOLBAR:
