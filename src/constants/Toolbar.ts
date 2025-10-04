@@ -1,4 +1,4 @@
-import { capitalize } from "../utils/Tommon";
+import { capitalize } from "@/utils/common";
 
 export const TABS = ['Home', 'Insert', 'Table', 'Page', 'Export'] as const;
 export type TTabKey = (typeof TABS)[number];
