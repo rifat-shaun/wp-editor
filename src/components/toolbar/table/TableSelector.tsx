@@ -1,4 +1,4 @@
-// import { CheckboxComponent } from '@/components/base';
+import { Checkbox } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 
 type TableSelectorProps = {
@@ -136,9 +136,9 @@ export const TableSelector: React.FC<TableSelectorProps> = ({ onSelect, withHead
 				<div>Click to insert table</div>
 			</div>
 
-			{/* <div className='my-2 mb-1'>
-                <CheckboxComponent id='table-header-row' label='Include header row' isChecked={withHeaderRow} onChange={handleHeaderRowChange} />
-            </div> */}
+			<div className='my-2 mb-1'>
+				<Checkbox id='table-header-row' checked={withHeaderRow} onChange={handleHeaderRowChange}>Include header row</Checkbox>
+			</div>
 		</div>
 	);
 };
