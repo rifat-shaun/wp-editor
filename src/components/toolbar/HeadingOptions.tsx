@@ -1,125 +1,80 @@
 import { Editor } from '@tiptap/react';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { ToolbarButtonItem } from './ToolbarButtonItem';
 import SvgIcon from '../common/SvgIcon';
-import { HEADING_OPTIONS } from '@/constants/Heading';
+import { DROPDOWN_OFFSET, HEADING_OPTIONS, HEADING_STYLES, VIEWPORT_BUFFER } from '@/constants/Heading';
 import { useTiptapEditorState } from '@/hooks/useTiptapEditorState';
+import { useHeadingStyleMethods } from '@/hooks/useHeadingStyleMethods';
 
-type THeadingOptionsProps = {
+type HeadingOptionsProps = {
 	editor: Editor;
 };
 
-export const HeadingOptions = ({ editor }: THeadingOptionsProps) => {
+export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
 	const { selectionHeadingLevel } = useTiptapEditorState(editor);
+	const { handleHeadingChange } = useHeadingStyleMethods(editor);
+
 	const headingsContainerRef = useRef<HTMLDivElement>(null);
 	const expandableContainerRef = useRef<HTMLDivElement>(null);
 	const [isOpen, setIsOpen] = useState(false);
 	const [position, setPosition] = useState({ top: 0, left: 0 });
 	const [shouldUseContentWidth, setShouldUseContentWidth] = useState(false);
 
+	const handleDropdownItemClick = useCallback((optionValue: string) => {
+		handleHeadingChange(optionValue);
+		setIsOpen(false);
+	}, [handleHeadingChange]);
+
 	useEffect(() => {
-		if (isOpen && headingsContainerRef.current) {
-			const rect = headingsContainerRef.current.getBoundingClientRect();
-			const windowWidth = window.innerWidth;
+		if (!isOpen || !headingsContainerRef.current) return;
 
-			if (rect.right + (Math.min(rect.left, 0) - 100) >= rect.width) {
-				setShouldUseContentWidth(false);
-				setPosition({
-					top: rect.bottom + window.scrollY - 6,
-					left: rect.left + window.scrollX,
-				});
+		const rect = headingsContainerRef.current.getBoundingClientRect();
+		const windowWidth = window.innerWidth;
+		const top = rect.bottom + window.scrollY - DROPDOWN_OFFSET;
 
-				return;
-			}
+		// Check if dropdown fits in viewport width
+		const hasEnoughSpace = rect.width <= windowWidth - VIEWPORT_BUFFER;
 
-			// Check if there's enough space on the left
-			const hasEnoughSpaceOnLeft = rect.width <= windowWidth - 20; // 20px buffer
-
-			if (hasEnoughSpaceOnLeft) {
-				setPosition({
-					top: rect.bottom + window.scrollY - 6,
-					left: (windowWidth - rect.width) / 2,
-				});
-				setShouldUseContentWidth(true);
-			} else {
-				// Position to the right if not enough space on left
-				setPosition({
-					top: rect.bottom + window.scrollY - 6,
-					left: Math.max(windowWidth - rect.width - 20, 0) + window.scrollX, // Ensure it stays within viewport
-				});
-				setShouldUseContentWidth(true);
-			}
+		if (hasEnoughSpace) {
+			// Center the dropdown
+			setPosition({
+				top,
+				left: (windowWidth - rect.width) / 2,
+			});
+			setShouldUseContentWidth(true);
+		} else {
+			// Position to the right with buffer
+			setPosition({
+				top,
+				left: Math.max(windowWidth - rect.width - VIEWPORT_BUFFER, 0) + window.scrollX,
+			});
+			setShouldUseContentWidth(true);
 		}
 	}, [isOpen]);
 
 	useEffect(() => {
+		if (!isOpen) return;
+
 		const handleClickOutside = (event: MouseEvent) => {
-			if (
-				isOpen &&
-				headingsContainerRef.current &&
-				!headingsContainerRef.current.contains(event.target as Node) &&
-				expandableContainerRef.current &&
-				!expandableContainerRef.current.contains(event.target as Node)
-			) {
+			const target = event.target as Node;
+			const isOutsideContainer = !headingsContainerRef.current?.contains(target);
+			const isOutsideDropdown = !expandableContainerRef.current?.contains(target);
+
+			if (isOutsideContainer && isOutsideDropdown) {
 				setIsOpen(false);
 			}
 		};
 
 		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
+		return () => document.removeEventListener('mousedown', handleClickOutside);
 	}, [isOpen]);
 
-	const handleHeadingChange = (headingType: string | number) => {
-		if (!editor) return;
-
-		if (headingType === 'paragraph') {
-			editor.chain().focus().setParagraph().run();
-		} else if (typeof headingType === 'string' && headingType.startsWith('h')) {
-			const level = parseInt(headingType.substring(1), 10);
-			if (level >= 1 && level <= 6) {
-				editor
-					.chain()
-					.focus()
-					.setHeading({ level: level as 1 | 2 | 3 | 4 | 5 | 6 })
-					.run();
-			}
-		}
-	};
-
-	const headingRenderer = (option: { label: string; value: string }) => {
-		const value = option.value;
-		let style = {};
-
-		switch (value) {
-			case 'h1':
-				style = { fontSize: '1rem', fontWeight: 'bold', lineHeight: '1.2' };
-				break;
-			case 'h2':
-				style = { fontSize: '0.9rem', fontWeight: 'bold', lineHeight: '1.2' };
-				break;
-			case 'h3':
-				style = { fontSize: '0.8rem', fontWeight: 'bold', lineHeight: '1.2' };
-				break;
-			case 'h4':
-				style = { fontSize: '0.75rem', fontWeight: 'bold', lineHeight: '1.2' };
-				break;
-			case 'h5':
-				style = { fontSize: '0.7rem', fontWeight: 'bold', lineHeight: '1.2' };
-				break;
-			case 'h6':
-				style = { fontSize: '0.65rem', fontWeight: 'bold', lineHeight: '1.2' };
-				break;
-			default:
-				style = { fontSize: '0.6rem', lineHeight: '1.2' };
-				break;
-		}
-
+	const headingRenderer = useCallback((option: { label: string; value: string }) => {
+		const style = HEADING_STYLES[option.value as keyof typeof HEADING_STYLES] || HEADING_STYLES.paragraph;
 		return <span style={style}>{option.label}</span>;
-	};
+	}, []);
 
 	return (
 		<div className={`flex items-center relative h-12 min-w-fit bg-gray-100`}>
@@ -140,7 +95,7 @@ export const HeadingOptions = ({ editor }: THeadingOptionsProps) => {
 						</ToolbarButtonItem>
 					))}
 
-					<div className='flex items-center justify-center' onClick={() => setIsOpen(!isOpen)}>
+					<div className='flex items-center justify-center' onClick={useCallback(() => setIsOpen(prev => !prev), [])}>
 						<SvgIcon name='arrow-down' className={`cursor-pointer ${isOpen ? 'rotate-180' : ''}`} />
 					</div>
 				</div>
@@ -162,10 +117,7 @@ export const HeadingOptions = ({ editor }: THeadingOptionsProps) => {
 								<ToolbarButtonItem
 									key={option.value}
 									tooltip={option.label}
-									onClick={() => {
-										handleHeadingChange(option.value);
-										setIsOpen(false);
-									}}
+									onClick={() => handleDropdownItemClick(option.value)}
 									active={selectionHeadingLevel === option.value}
 									className={`rounded-md h-9 w-fit ${selectionHeadingLevel === option.value ? 'bg-primary-100' : 'bg-white'}`}
 								>
