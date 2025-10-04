@@ -90,8 +90,8 @@ export const EditorExtensions = [
     protocols: ['http', 'https'],
     HTMLAttributes: {
       class: 'editor-link',
+      rel: 'noopener noreferrer nofollow',
     },
-    
   }),
   VariableTable.configure({
     resizable: true,

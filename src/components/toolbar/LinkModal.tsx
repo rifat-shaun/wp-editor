@@ -4,6 +4,7 @@ interface LinkModalProps {
   isOpen: boolean;
   position: { top: number; left: number };
   linkUrl: string;
+  isEditing?: boolean;
   onUrlChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown: (e: React.KeyboardEvent) => void;
   onAdd: () => void;
@@ -14,6 +15,7 @@ export const LinkModal = ({
   isOpen,
   position,
   linkUrl,
+  isEditing = false,
   onUrlChange,
   onKeyDown,
   onAdd,
@@ -37,7 +39,7 @@ export const LinkModal = ({
         }}
       >
       <div className="flex flex-col space-y-2">
-        <div className="text-xs font-medium text-gray-700 mb-1">Add Link</div>
+        <div className="text-xs font-medium text-gray-700 mb-1">{isEditing ? "Edit Link" : "Add Link"}</div>
         <div className="flex items-center space-x-2">
           <input
             type="text"
@@ -54,7 +56,7 @@ export const LinkModal = ({
             onClick={onAdd}
             className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
           >
-            Add
+            {isEditing ? "Save" : "Add"}
           </button>
           <button
             onClick={onCancel}
