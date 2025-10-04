@@ -1,16 +1,49 @@
 {
   "name": "lax-wp-editor",
-  "private": false,
-  "version": "0.0.0",
-  "type": "module",
+  "version": "1.0.0",
+  "description": "A modern, feature-rich WordPress-style editor built with React and TipTap",
+  "keywords": [
+    "editor",
+    "wysiwyg",
+    "react",
+    "tiptap",
+    "wordpress",
+    "rich-text"
+  ],
+  "author": "Rifat Hasan Shaun <mdrifathasanshaun@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/rifat-shaun/wp-editor#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rifat-shaun/wp-editor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rifat-shaun/wp-editor/issues"
+  },
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./styles": "./dist/index.css"
+  },
   "scripts": {
     "dev": "vite",
     "build": "npm run build:types && vite build",
-    "build:types": "tsc src/index.ts --declaration --emitDeclarationOnly --outDir dist --jsx react-jsx --moduleResolution bundler --target ES2022 --module ESNext --skipLibCheck",
+    "build:types": "tsc --declaration --emitDeclarationOnly --outDir dist --jsx react-jsx --moduleResolution bundler --target ES2022 --module ESNext --skipLibCheck",
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
 import { TOOLBAR_TYPES_ENUM } from "@/constants/Toolbar";
 
-interface ToolbarContextType {
+export interface ToolbarContextType {
   currentToolbar: string;
   setCurrentToolbar: (toolbar: string) => void;
   lastVisibleToolbar: string;

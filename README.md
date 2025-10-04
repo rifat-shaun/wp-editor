@@ -1,15 +1,16 @@
 # Lax WP Editor
 
-A powerful, configurable rich text editor built with TipTap and React, designed for creating paginated documents with support for multiple page sizes.
+A modern, feature-rich WordPress-style editor built with React and TipTap. This editor provides a clean, intuitive interface for rich text editing with customizable toolbars and extensive formatting options.
 
 ## Features
 
-- 📝 Rich text editing with TipTap
-- 📄 Multiple page sizes (A4, A3, Letter, Legal, Tabloid)
-- 🔄 Portrait and landscape orientations
-- 🎨 Bubble menu for text formatting
-- ⚙️ Fully configurable features
-- 📦 Easy to integrate as an npm package
+- 🎨 **Modern UI**: Clean, responsive design with customizable themes
+- 📝 **Rich Text Editing**: Full-featured WYSIWYG editor with TipTap
+- 🛠️ **Flexible Toolbars**: Professional and Classic toolbar modes
+- 📄 **Page Management**: Multiple page sizes and orientations
+- 🎯 **Customizable**: Easy to integrate and customize
+- 📱 **Responsive**: Works seamlessly on desktop and mobile
+- 🔧 **TypeScript**: Full TypeScript support with type definitions
 
 ## Installation
 
@@ -17,125 +18,237 @@ A powerful, configurable rich text editor built with TipTap and React, designed 
 npm install lax-wp-editor
 # or
 yarn add lax-wp-editor
+# or
+pnpm add lax-wp-editor
+```
+
+## Quick Start
+
+```tsx
+import React from 'react';
+import { Editor, ToolbarProvider } from 'lax-wp-editor';
+import 'lax-wp-editor/styles';
+
+function App() {
+  return (
+    <ToolbarProvider>
+      <Editor />
+    </ToolbarProvider>
+  );
+}
+
+export default App;
 ```
 
 ## Basic Usage
 
-```tsx
-import { Editor } from 'lax-wp-editor';
+### Simple Editor
 
-function App() {
-  return <Editor />;
+```tsx
+import { Editor, ToolbarProvider } from 'lax-wp-editor';
+import 'lax-wp-editor/styles';
+
+function MyEditor() {
+  return (
+    <ToolbarProvider>
+      <Editor />
+    </ToolbarProvider>
+  );
 }
 ```
+
+### Custom Configuration
+
+```tsx
+import { Editor, ToolbarProvider, defaultEditorConfig } from 'lax-wp-editor';
+import 'lax-wp-editor/styles';
+
+function MyEditor() {
+  const config = {
+    ...defaultEditorConfig,
+    // Add your custom configuration
+  };
+
+  return (
+    <ToolbarProvider>
+      <Editor config={config} />
+    </ToolbarProvider>
+  );
+}
+```
+
+### Different Toolbar Types
+
+```tsx
+import { Editor, ToolbarProvider, TOOLBAR_TYPES_ENUM } from 'lax-wp-editor';
+import 'lax-wp-editor/styles';
+
+function MyEditor() {
+  return (
+    <ToolbarProvider initialToolbar={TOOLBAR_TYPES_ENUM.CLASSIC}>
+      <Editor />
+    </ToolbarProvider>
+  );
+}
+```
+
+## Components
+
+### Main Components
+
+- **`Editor`**: The main editor component
+- **`ToolbarProvider`**: Context provider for toolbar state
+- **`Toolbar`**: Main toolbar component
+- **`ProfessionalToolbar`**: Professional-style toolbar
+- **`ClassicToolbar`**: Classic-style toolbar
+
+### Individual Toolbar Components
+
+- **`HeadingOptions`**: Heading selection dropdown
+- **`HomeOptions`**: Basic formatting options
+- **`FontStyleOptions`**: Font styling options
+- **`ParagraphStyleOption`**: Paragraph styling
+
+### Utility Components
+
+- **`SvgIcon`**: SVG icon component
+- **`PageSizeSelector`**: Page size and orientation selector
+
+## Hooks
+
+- **`useTiptapEditorState`**: Access editor state
+- **`useHeadingStyleMethods`**: Heading manipulation methods
+- **`useFontStyleMethods`**: Font styling methods
+- **`useHomeOptionMethods`**: Basic formatting methods
+- **`useParagraphStyleMethods`**: Paragraph styling methods
+- **`usePageSize`**: Page size management
 
 ## Configuration
 
-The Editor component accepts a `config` prop to customize its features:
+### Editor Configuration
 
 ```tsx
-import { Editor, EditorConfig } from 'lax-wp-editor';
+import { EditorConfig } from 'lax-wp-editor';
 
-const editorConfig: EditorConfig = {
-  showBubbleMenu: true,        // Show formatting menu on text selection
-  showFloatingMenu: true,      // Show menu on empty lines
-  showPageSizeSelector: true,  // Show page size selector
-  enablePagination: true,      // Enable page-based layout
-  initialContent: '<p>Start typing...</p>',
+const config: EditorConfig = {
+  // Your configuration options
 };
-
-function App() {
-  return <Editor config={editorConfig} />;
-}
 ```
 
-## Configuration Options
+### Toolbar Types
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `showBubbleMenu` | `boolean` | `true` | Enable/disable the bubble menu that appears on text selection |
-| `showFloatingMenu` | `boolean` | `true` | Enable/disable the floating menu that appears on empty lines |
-| `showPageSizeSelector` | `boolean` | `true` | Enable/disable the page size selector |
-| `initialContent` | `string` | `"<p>Hello World!</p>"` | Initial HTML content for the editor |
-| `enablePagination` | `boolean` | `true` | Enable/disable pagination with page sizing |
+```tsx
+import { TOOLBAR_TYPES_ENUM } from 'lax-wp-editor';
+
+// Available toolbar types:
+TOOLBAR_TYPES_ENUM.PROFESSIONAL  // Professional toolbar
+TOOLBAR_TYPES_ENUM.CLASSIC       // Classic toolbar
+```
+
+## Styling
+
+The package includes default styles that you can import:
+
+```tsx
+import 'lax-wp-editor/styles';
+```
+
+You can also customize the styles by overriding CSS variables or using your own CSS.
+
+## TypeScript Support
+
+The package includes full TypeScript definitions:
+
+```tsx
+import { Editor, EditorConfig, PageSize } from 'lax-wp-editor';
+```
+
+## API Reference
+
+### Editor Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `config` | `EditorConfig` | `defaultEditorConfig` | Editor configuration |
+| `onUpdate` | `(content: string) => void` | - | Callback when content changes |
+| `initialContent` | `string` | - | Initial editor content |
+
+### ToolbarProvider Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `initialToolbar` | `ToolbarType` | `PROFESSIONAL` | Initial toolbar type |
+| `children` | `ReactNode` | - | Child components |
 
 ## Examples
 
-### Minimal Editor (No menus or pagination)
+### Custom Toolbar
 
 ```tsx
-<Editor 
-  config={{
-    showBubbleMenu: false,
-    showFloatingMenu: false,
-    showPageSizeSelector: false,
-    enablePagination: false,
-  }}
-/>
+import { Editor, Toolbar, HeadingOptions, HomeOptions } from 'lax-wp-editor';
+
+function CustomEditor() {
+  return (
+    <div>
+      <Toolbar>
+        <HeadingOptions />
+        <HomeOptions />
+      </Toolbar>
+      <Editor />
+    </div>
+  );
+}
 ```
 
-### Editor with only Bubble Menu
+### Page Size Management
 
 ```tsx
-<Editor 
-  config={{
-    showBubbleMenu: true,
-    showFloatingMenu: false,
-    showPageSizeSelector: false,
-  }}
-/>
+import { Editor, PageSizeSelector, usePageSize } from 'lax-wp-editor';
+
+function EditorWithPageSize() {
+  const { pageSize, setPageSize } = usePageSize();
+  
+  return (
+    <div>
+      <PageSizeSelector />
+      <Editor />
+    </div>
+  );
+}
 ```
-
-### Custom Initial Content
-
-```tsx
-<Editor 
-  config={{
-    initialContent: '<h1>My Document</h1><p>Start writing here...</p>',
-  }}
-/>
-```
-
-## Supported Page Sizes
-
-- **A4**: 210mm × 297mm (Portrait) / 297mm × 210mm (Landscape)
-- **A3**: 297mm × 420mm (Portrait) / 420mm × 297mm (Landscape)
-- **Letter**: 8.5in × 11in (Portrait) / 11in × 8.5in (Landscape)
-- **Legal**: 8.5in × 14in (Portrait) / 14in × 8.5in (Landscape)
-- **Tabloid**: 11in × 17in (Portrait) / 17in × 11in (Landscape)
-
-## SVG Icons
-
-The editor uses `vite-plugin-svg-icons` for efficient SVG icon management. All icons are compiled into a single sprite.
-
-### Using Icons
-
-```tsx
-import { SvgIcon } from 'lax-wp-editor';
-
-<SvgIcon name="bold" size={18} />
-<SvgIcon name="italic" color="#333" />
-```
-
-### Adding Custom Icons
-
-1. Place SVG files in `src/assets/icons/`
-2. Icons are automatically registered on build
-3. Use with `SvgIcon` component using the filename as the name
 
 ## Development
 
+### Building the Package
+
 ```bash
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-
-# Build for production
 npm run build
 ```
 
+### Running Storybook
+
+```bash
+npm run storybook
+```
+
+### Linting
+
+```bash
+npm run lint
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
 ## License
 
-MIT
+MIT © [Your Name]
+
+## Support
+
+If you have any questions or need help, please open an issue on GitHub.

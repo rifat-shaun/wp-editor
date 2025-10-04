@@ -1,0 +1,45 @@
+# Source files
+src/
+.storybook/
+storybook-static/
+
+# Development files
+*.config.js
+*.config.ts
+vite.config.ts
+tailwind.config.js
+postcss.config.js
+eslint.config.js
+tsconfig*.json
+
+# Dependencies
+node_modules/
+
+# Build artifacts (except dist)
+build/
+coverage/
+
+# Development
+.env*
+.DS_Store
+.vscode/
+.idea/
+
+# Git
+.git/
+.gitignore
+
+# Package files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Test files
+__tests__/
+*.test.*
+*.spec.*
+
+# Documentation (except README)
+docs/
+*.md
+!README.md

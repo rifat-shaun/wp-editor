@@ -22,9 +22,37 @@ export default defineConfig({
       entry: "./src/index.ts",
       name: "LaxEditor",
       fileName: (format) => `index.${format}.js`,
+      formats: ["es", "umd"],
     },
     rollupOptions: {
-      external: ["react", "react-dom", "framer-motion"],
+      external: [
+        "react", 
+        "react-dom", 
+        "framer-motion",
+        "@tiptap/react",
+        "@tiptap/starter-kit",
+        "@tiptap/extension-blockquote",
+        "@tiptap/extension-character-count",
+        "@tiptap/extension-document",
+        "@tiptap/extension-heading",
+        "@tiptap/extension-highlight",
+        "@tiptap/extension-list",
+        "@tiptap/extension-subscript",
+        "@tiptap/extension-superscript",
+        "@tiptap/extension-table",
+        "@tiptap/extension-task-item",
+        "@tiptap/extension-task-list",
+        "@tiptap/extension-text-align",
+        "@tiptap/extension-text-style",
+        "@tiptap/extension-typography",
+        "@tiptap/extensions",
+        "@tiptap/pm",
+        "antd",
+        "@mui/material",
+        "@mui/icons-material",
+        "classnames",
+        "react-select"
+      ],
       output: {
         globals: {
           react: "React",
@@ -33,6 +61,7 @@ export default defineConfig({
         },
       },
     },
+    cssCodeSplit: false,
   },
   test: {
     projects: [
