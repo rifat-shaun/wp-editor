@@ -40,6 +40,28 @@ function App() {
 export default App;
 ```
 
+### Important: Vite Configuration
+
+If you're using Vite and encounter the `localsInner` error, add this to your `vite.config.ts`:
+
+```ts
+import { defineConfig } from 'vite';
+import path from 'path';
+
+export default defineConfig({
+  resolve: {
+    alias: {
+      // Force single instance of ProseMirror to prevent errors
+      'prosemirror-view': path.resolve(__dirname, 'node_modules/prosemirror-view'),
+      'prosemirror-state': path.resolve(__dirname, 'node_modules/prosemirror-state'),
+      'prosemirror-model': path.resolve(__dirname, 'node_modules/prosemirror-model'),
+      'prosemirror-transform': path.resolve(__dirname, 'node_modules/prosemirror-transform'),
+    },
+  },
+  // ... rest of your config
+});
+```
+
 ## Basic Usage
 
 ### Simple Editor

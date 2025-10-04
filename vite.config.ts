@@ -8,6 +8,11 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
+      // Force single instance of ProseMirror to prevent localsInner errors
+      "prosemirror-view": path.resolve(__dirname, "node_modules/prosemirror-view"),
+      "prosemirror-state": path.resolve(__dirname, "node_modules/prosemirror-state"),
+      "prosemirror-model": path.resolve(__dirname, "node_modules/prosemirror-model"),
+      "prosemirror-transform": path.resolve(__dirname, "node_modules/prosemirror-transform"),
     },
   },
   plugins: [
