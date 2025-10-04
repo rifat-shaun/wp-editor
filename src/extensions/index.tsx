@@ -22,6 +22,7 @@ import Superscript from "@tiptap/extension-superscript";
 import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
 import Blockquote from "@tiptap/extension-blockquote";
+import Heading from "@tiptap/extension-heading";
 
 export const EditorExtensions = [
   StarterKit.configure({
@@ -77,4 +78,7 @@ export const EditorExtensions = [
     defaultAlignment: "left",
   }),
   Blockquote,
+  Heading.configure({
+    levels: [1, 2, 3, 4, 5, 6],
+  }),
 ];

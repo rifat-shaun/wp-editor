@@ -32,7 +32,7 @@ export const ProfessionalToolbar = ({
       className="flex flex-col gap-0.5 bg-white w-full px-4 pt-1 pb-2"
       style={{ height: `${PROFESSIONAL.height}px` }}
     >
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex items-center justify-between gap-2 mb-0.5">
         <div>
           {TABS.map((tab: TTabKey) => (
             <button

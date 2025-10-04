@@ -18,7 +18,7 @@ export const TOOLBAR_TYPES = {
   PROFESSIONAL: {
     name: TOOLBAR_TYPES_ENUM.PROFESSIONAL,
     label: capitalize(TOOLBAR_TYPES_ENUM.PROFESSIONAL),
-    height: 92,
+    height: 94,
   },
   NONE: {
     name: TOOLBAR_TYPES_ENUM.HIDE_TOOLBAR,

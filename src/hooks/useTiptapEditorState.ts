@@ -38,6 +38,7 @@ export const useTiptapEditorState = (editor: Editor) => {
       isTextAlignLeft: false,
       isBlockquote: false,
       canBlockquote: false,
+      selectionHeadingLevel: "paragraph",
     };
   }
 
@@ -133,6 +134,9 @@ export const useTiptapEditorState = (editor: Editor) => {
         // Blockquote
         isBlockquote: ctx.editor.isActive("blockquote") ?? false,
         canBlockquote: ctx.editor.can().chain().focus().toggleBlockquote().run() ?? false,
+
+        // Heading
+        selectionHeadingLevel: ctx.editor.getAttributes("heading")?.level ?? "paragraph",
       };
     },
   });

@@ -5,6 +5,7 @@ import { Divider, ToolbarButtonItem, ItemGroup } from "@/components/toolbar";
 import { FontStyleOptions } from "./FontStyleOptions";
 import { useHomeOptionMethods } from "@/hooks/useHomeOptionMethods";
 import { ParagraphStyleOptions } from "./ParagraphStyleOption";
+import { HeadingOptions } from "./HeadingOptions";
 
 interface HomeOptionsProps {
   editor: Editor;
@@ -82,6 +83,10 @@ export const HomeOptions = ({ editor }: HomeOptionsProps) => {
       <Divider />
 
       <ParagraphStyleOptions editor={editor} />
+
+      <Divider />
+
+      <HeadingOptions editor={editor} />
     </>
   );
 };
