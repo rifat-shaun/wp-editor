@@ -20,8 +20,13 @@ const Editor = ({ config = {} }: EditorProps) => {
 
   const editor = useEditor({
     extensions: EditorExtensions,
-    content: editorConfig.initialContent,
-    autofocus: false
+    content: editorConfig.content,
+    autofocus: false,
+    onUpdate: ({ editor: editorInstance }) => {
+      if (editorConfig.onContentChange) {
+        editorConfig.onContentChange(editorInstance);
+      }
+    },
   });
 
   // Keep editor focused - refocus if focus is lost

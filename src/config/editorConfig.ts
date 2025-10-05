@@ -1,3 +1,4 @@
+import type { Editor } from "@tiptap/react";
 import { TOOLBAR_TYPES_ENUM } from "../constants/Toolbar";
 
 export interface EditorConfig {
@@ -8,18 +9,21 @@ export interface EditorConfig {
   /** Enable/disable the page size selector */
   showPageSizeSelector?: boolean;
   /** Initial content for the editor */
-  initialContent?: string;
+  content?: string;
   /** Enable/disable pagination */
   enablePagination?: boolean;
   /** Initial toolbar */
   defaultToolbar?: string;
+  /** Callback when content changes */
+  onContentChange?: (editor: Editor) => void;
 }
 
 export const defaultEditorConfig: EditorConfig = {
   showBubbleMenu: true,
   showFloatingMenu: false,
   showPageSizeSelector: true,
-  initialContent: "",
+  content: "",
   enablePagination: true,
   defaultToolbar: TOOLBAR_TYPES_ENUM.PROFESSIONAL,
+  onContentChange: undefined,
 };
