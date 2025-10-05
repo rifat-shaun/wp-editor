@@ -40,27 +40,75 @@ function App() {
 export default App;
 ```
 
-### Important: Vite Configuration
+### Important: Fixing ProseMirror Duplication Error
 
-If you're using Vite and encounter the `localsInner` error, add this to your `vite.config.ts`:
+If you encounter the `localsInner` error, it's caused by multiple versions of ProseMirror packages in **your application's** dependency tree.
 
-```ts
-import { defineConfig } from 'vite';
-import path from 'path';
+**Official Tiptap Solution:**
 
-export default defineConfig({
-  resolve: {
-    alias: {
-      // Force single instance of ProseMirror to prevent errors
-      'prosemirror-view': path.resolve(__dirname, 'node_modules/prosemirror-view'),
-      'prosemirror-state': path.resolve(__dirname, 'node_modules/prosemirror-state'),
-      'prosemirror-model': path.resolve(__dirname, 'node_modules/prosemirror-model'),
-      'prosemirror-transform': path.resolve(__dirname, 'node_modules/prosemirror-transform'),
-    },
-  },
-  // ... rest of your config
-});
+This package already uses `@tiptap/pm` for all ProseMirror functionality (as recommended by Tiptap). However, you need to ensure your application also deduplicates ProseMirror versions.
+
+**1. In your application directory, check for duplicate ProseMirror versions:**
+```bash
+npm ls prosemirror-view
+# or
+yarn list prosemirror-view
 ```
+
+**2. If you see multiple versions, add this to YOUR APPLICATION's `package.json`:**
+
+**For Yarn users:**
+```json
+{
+  "resolutions": {
+    "prosemirror-view": "^1.41.0",
+    "prosemirror-state": "^1.4.3",
+    "prosemirror-model": "^1.25.0",
+    "prosemirror-transform": "^1.10.0"
+  }
+}
+```
+
+**For npm users (v8.3.0+):**
+```json
+{
+  "overrides": {
+    "prosemirror-view": "^1.41.0",
+    "prosemirror-state": "^1.4.3",
+    "prosemirror-model": "^1.25.0",
+    "prosemirror-transform": "^1.10.0"
+  }
+}
+```
+
+**For pnpm users:**
+```json
+{
+  "pnpm": {
+    "overrides": {
+      "prosemirror-view": "^1.41.0",
+      "prosemirror-state": "^1.4.3",
+      "prosemirror-model": "^1.25.0",
+      "prosemirror-transform": "^1.10.0"
+    }
+  }
+}
+```
+
+**3. Clean install in YOUR APPLICATION:**
+```bash
+# In your application directory (not lax-wp-editor)
+rm -rf node_modules package-lock.json  # or yarn.lock / pnpm-lock.yaml
+npm install  # or yarn / pnpm install
+```
+
+**4. Verify all packages are deduped:**
+```bash
+npm ls prosemirror-view
+# All instances should show "deduped" and point to the same version
+```
+
+> **Note:** This package uses `@tiptap/pm` internally (not direct ProseMirror imports) to prevent version conflicts. The deduplication step is only needed if other packages in your project import ProseMirror directly.
 
 ## Basic Usage
 

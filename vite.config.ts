@@ -48,6 +48,8 @@ export default defineConfig({
         "@tiptap/extension-typography",
         "@tiptap/extensions",
         "@tiptap/pm",
+        // Externalize all ProseMirror packages to prevent bundling
+        /^prosemirror-/,
         "antd",
         "@mui/material",
         "@mui/icons-material",
