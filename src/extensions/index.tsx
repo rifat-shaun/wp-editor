@@ -24,6 +24,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import Blockquote from "@tiptap/extension-blockquote";
 import Heading from "@tiptap/extension-heading";
 import { VariableTable, VariableTableCell, VariableTableHeader, VariableTableRow } from "./VariableTable";
+import { Variable } from "./Variable";
 import type { EditorConfig } from "@/config/editorConfig";
 import { AI_AUTO_COMPLETION_DEBOUNCE_TIME, AI_AUTO_COMPLETION_TRIGGER_WORD_COUNT } from "@/constants";
 
@@ -101,6 +102,10 @@ export const getEditorExtensions = (config?: EditorConfig) => [
   VariableTableCell,
   VariableTableHeader,
   VariableTableRow,
+  Variable.configure({
+    enabled: config?.enableVariableText || false,
+    variableValues: config?.variableValues || {},
+  }),
 ];
 
 // Backward compatibility - default extensions without config

@@ -31,6 +31,10 @@ export interface EditorConfig {
   debounceTimeForContentChange?: number;
   /** AI Autocompletion configuration */
   aiAutocompletion?: AIAutocompletionConfig;
+  /** Enable variable text feature */
+  enableVariableText?: boolean;
+  /** Variable values mapping (key: variable name, value: display text) */
+  variableValues?: Record<string, string>;
   /** Callback when content changes */
   onContentChange?: (editor: Editor) => void;
 }
@@ -48,5 +52,7 @@ export const defaultEditorConfig: EditorConfig = {
     minWordsToTriggerAutoCompletion: AI_AUTO_COMPLETION_TRIGGER_WORD_COUNT,
     debounceTime: AI_AUTO_COMPLETION_DEBOUNCE_TIME,
   },
+  enableVariableText: false,
+  variableValues: {},
   debounceTimeForContentChange: DEFAULT_DEBOUNCE_TIME_FOR_CONTENT_CHANGE,
 };

@@ -26,9 +26,25 @@
     padding: 2px 0;
   }
 
-  .variable-text {
-    background-color: #fff9c4;
-    padding: 2px;
-    border-radius: 3px;
+  /* Variable text styling */
+  .lax-variable-text {
+    display: inline-block;
+    padding: 0 2px;
+    margin: 0;
+    background-color: #e3f2fd;
+    border: 1px solid #90caf9;
+    border-radius: 4px;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: default;
+    user-select: none;
+    white-space: nowrap;
+    scale: 0.95;
+  }
+
+  .lax-variable-text:hover {
+    background-color: #bbdefb;
+    border-color: #64b5f6;
   }
 }

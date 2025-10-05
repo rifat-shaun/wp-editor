@@ -34,17 +34,25 @@ function App() {
     }
   };
 
+  const content = '<p style="text-align: left;">Hello Mim, we are here to help you<span> </span>and this is very much needed <span data-variable-name="name" class="lax-variable-text" contenteditable="false"></span><span data-variable-name="name_no_value" class="lax-variable-text" contenteditable="false">John Doe</span><img class="ProseMirror-separator" alt=""><br class="ProseMirror-trailingBreak"></p>';
+
   return (
     <div className="h-screen bg-neutral-50 flex flex-col">
       <div className="flex-1 overflow-hidden">
         <Editor config={{
-          content: '<p>Hello Mim, we are here to help you and this is very much needed</p>',
+          content,
           defaultToolbar: 'classic',
           aiAutocompletion: {
             enabled: false,
             minWordsToTriggerAutoCompletion: 5,
             debounceTime: 100,
             fetchCompletion: fetchAICompletion,
+          },
+          enableVariableText: true,
+          variableValues: {
+            name: 'John Doe',
+            age: '25',
+            email: 'john.doe@example.com',
           },
         }} />
       </div>
