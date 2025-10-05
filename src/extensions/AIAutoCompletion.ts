@@ -3,10 +3,11 @@ import { Plugin, PluginKey } from "@tiptap/pm/state";
 import { Decoration, DecorationSet } from "@tiptap/pm/view";
 
 export interface AIAutocompletionOptions {
-  apiEndpoint: string;
-  triggerWordCount: number;
+  minWordsToTriggerAutoCompletion: number;
   debounceTime: number;
   isEnabled: boolean;
+  /** Custom fetch function - required for AI autocompletion to work */
+  fetchCompletion?: (text: string) => Promise<string>;
 }
 
 declare module "@tiptap/core" {
@@ -45,10 +46,10 @@ export const AIAutocompletion = Extension.create<AIAutocompletionOptions>({
 
   addOptions() {
     return {
-      apiEndpoint: `https://dev2.lambdax.ai/api/v1/lax-ai-editor/public/completions`,
-      triggerWordCount: 5,
+      minWordsToTriggerAutoCompletion: 3,
       debounceTime: 100,
       isEnabled: false,
+      fetchCompletion: undefined,
     };
   },
 
@@ -207,37 +208,33 @@ export const AIAutocompletion = Extension.create<AIAutocompletionOptions>({
             currentAbortController = new AbortController();
 
             try {
-              const response = await fetch(self.options.apiEndpoint, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  text,
-                  model: "local",
-                  stream: false,
-                  max_tokens: 3 + Math.floor(Math.random() * 6),
-                }),
-                signal: currentAbortController.signal,
-              });
+              // Only proceed if custom fetch function is provided
+              if (!self.options.fetchCompletion) {
+                return;
+              }
 
-              if (!response.ok)
-                throw new Error("Failed to fetch AI suggestion");
+              const completion = await self.options.fetchCompletion(text);
 
-              const data = await response.json();
-              if (data.completion) {
+              // Validate completion is a non-empty string
+              if (
+                completion && 
+                typeof completion === "string" && 
+                completion.trim().length > 0
+              ) {
                 view.dispatch(
                   view.state.tr.setMeta(aiAutocompletionKey, {
                     type: "setSuggestion",
                     suggestion: {
                       from: position - text.length,
                       to: position,
-                      text: data.completion,
+                      text: completion.trim(),
                     },
                   })
                 );
               }
             } catch (error) {
               if (error instanceof Error && error.name !== "AbortError") {
-                console.error(error);
+                console.error("[AI Autocompletion Error]:", error);
               }
             } finally {
               if (
@@ -269,9 +266,14 @@ export const AIAutocompletion = Extension.create<AIAutocompletionOptions>({
                 .split(/\s+/)
                 .filter(Boolean).length;
 
-              if (wordCount < self.options.triggerWordCount) {
+              // Clear any existing suggestions and abort if below threshold
+              if (wordCount < self.options.minWordsToTriggerAutoCompletion) {
                 currentAbortController?.abort();
                 currentAbortController = null;
+                clearTimeout(debounceTimeout);
+                updatedView.dispatch(
+                  updatedView.state.tr.setMeta(aiAutocompletionKey, { type: "clear" })
+                );
                 return;
               }
 
@@ -280,6 +282,12 @@ export const AIAutocompletion = Extension.create<AIAutocompletionOptions>({
                 () => fetchSuggestion(textBefore, cursorPos),
                 self.options.debounceTime
               );
+            },
+            destroy() {
+              // Cleanup on destroy
+              clearTimeout(debounceTimeout);
+              currentAbortController?.abort();
+              currentAbortController = null;
             },
           };
         },

@@ -5,7 +5,7 @@ import { usePageSize } from "@/hooks/usePageSize";
 import BubbleMenuContent from "./menubar/BubbleMenuContent";
 import type { EditorConfig } from "@/config/editorConfig";
 import { defaultEditorConfig } from "@/config/editorConfig";
-import { EditorExtensions } from "@/extensions";
+import { getEditorExtensions } from "@/extensions";
 import { Toolbar } from "@/components/toolbar/Toolbar";
 import { Footer } from "@/components/footer";
 
@@ -19,7 +19,7 @@ const Editor = ({ config = {} }: EditorProps) => {
   const { pageClass } = usePageSize();
 
   const editor = useEditor({
-    extensions: EditorExtensions,
+    extensions: getEditorExtensions(editorConfig),
     content: editorConfig.content,
     autofocus: false,
     onUpdate: ({ editor: editorInstance }) => {

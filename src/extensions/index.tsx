@@ -24,8 +24,10 @@ import TextAlign from "@tiptap/extension-text-align";
 import Blockquote from "@tiptap/extension-blockquote";
 import Heading from "@tiptap/extension-heading";
 import { VariableTable, VariableTableCell, VariableTableHeader, VariableTableRow } from "./VariableTable";
+import type { EditorConfig } from "@/config/editorConfig";
+import { AI_AUTO_COMPLETION_DEBOUNCE_TIME, AI_AUTO_COMPLETION_TRIGGER_WORD_COUNT } from "@/constants";
 
-export const EditorExtensions = [
+export const getEditorExtensions = (config?: EditorConfig) => [
   StarterKit.configure({
     orderedList: false, // Disable default to use our custom one
     bulletList: false, // Disable default to use our custom one
@@ -50,7 +52,13 @@ export const EditorExtensions = [
   TextStyle,
   FontSize,
   FontFamily,
-  AIAutocompletion,
+  AIAutocompletion.configure({
+    minWordsToTriggerAutoCompletion: config?.aiAutocompletion?.minWordsToTriggerAutoCompletion || AI_AUTO_COMPLETION_TRIGGER_WORD_COUNT,
+    debounceTime: config?.aiAutocompletion?.debounceTime || AI_AUTO_COMPLETION_DEBOUNCE_TIME,
+    // Only enable if fetchCompletion function is provided
+    isEnabled: !!(config?.aiAutocompletion?.enabled && config?.aiAutocompletion?.fetchCompletion),
+    fetchCompletion: config?.aiAutocompletion?.fetchCompletion,
+  }),
   OnBlurHighlight,
   Superscript,
   Subscript,
@@ -93,3 +101,6 @@ export const EditorExtensions = [
   VariableTableHeader,
   VariableTableRow,
 ];
+
+// Backward compatibility - default extensions without config
+export const EditorExtensions = getEditorExtensions();

@@ -48,6 +48,53 @@ export default App;
 > import 'lax-wp-editor/dist/lax-wp-editor.css';
 > ```
 
+## Configuration
+
+### AI Autocompletion
+
+You can enable AI autocompletion by providing your own completion function:
+
+```tsx
+import { Editor, type EditorConfig } from 'lax-wp-editor';
+
+function App() {
+  const config: EditorConfig = {
+    aiAutocompletion: {
+      enabled: true,
+      minWordsToTriggerAutoCompletion: 5, // Trigger after 5 words
+      debounceTime: 300, // Wait 300ms before calling API
+      
+      // Required: Provide your custom fetch function
+      fetchCompletion: async (text: string) => {
+        const response = await fetch('https://your-api.com/completions', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer YOUR_API_KEY',
+          },
+          body: JSON.stringify({ prompt: text }),
+        });
+        const data = await response.json();
+        return data.completion; // Return the completion text
+      },
+    },
+  };
+
+  return (
+    <div style={{ height: '100vh', width: '100%' }}>
+      <Editor config={config} />
+    </div>
+  );
+}
+```
+
+> **⚠️ Important:** AI autocompletion requires you to provide a `fetchCompletion` function. The editor does not include a default AI service.
+
+**Keyboard Shortcuts for AI Autocompletion:**
+- `Tab` - Accept suggestion
+- `Escape` - Dismiss suggestion
+- `Ctrl+Shift+Space` (Windows/Linux) or `Cmd+Shift+Space` (Mac) - Toggle autocompletion on/off
+
 ### Important: Fixing ProseMirror Duplication Error
 
 If you encounter the `localsInner` error, it's caused by multiple versions of ProseMirror packages in **your application's** dependency tree.
