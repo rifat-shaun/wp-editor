@@ -17,15 +17,21 @@ const Editor = ({ config = {} }: EditorProps) => {
   const editorPageRef = useRef<HTMLDivElement>(null);
   const editorConfig = { ...defaultEditorConfig, ...config };
   const { pageClass } = usePageSize();
+  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const editor = useEditor({
     extensions: getEditorExtensions(editorConfig),
     content: editorConfig.content,
     autofocus: false,
     onUpdate: ({ editor: editorInstance }) => {
-      if (editorConfig.onContentChange) {
-        editorConfig.onContentChange(editorInstance);
-      }
+      if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+
+      // Restart after debounce time for content change
+      saveTimeoutRef.current = setTimeout(() => {
+        if (editorConfig.onContentChange) {
+          editorConfig.onContentChange(editorInstance);
+        }
+      }, editorConfig.debounceTimeForContentChange);
     },
   });
 

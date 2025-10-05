@@ -50,6 +50,43 @@ export default App;
 
 ## Configuration
 
+The editor accepts a `config` prop with the following options:
+
+### Basic Configuration
+
+```tsx
+import { Editor, type EditorConfig } from 'lax-wp-editor';
+
+function App() {
+  const config: EditorConfig = {
+    // Initial content (HTML string)
+    content: '<p>Your initial content here</p>',
+    
+    // Toolbar type: 'professional' or 'classic'
+    defaultToolbar: 'professional',
+    
+    // Enable/disable features
+    showBubbleMenu: true,           // Show bubble menu on text selection
+    showFloatingMenu: false,        // Show floating menu on empty lines
+    showPageSizeSelector: true,     // Show page size selector
+    enablePagination: true,         // Enable pagination
+    
+    // Content change callback with debounce
+    debounceTimeForContentChange: 300,  // Debounce time in milliseconds (default: 300ms)
+    onContentChange: (editor) => {
+      const html = editor.getHTML();
+      console.log('Content changed:', html);
+    },
+  };
+
+  return (
+    <div style={{ height: '100vh', width: '100%' }}>
+      <Editor config={config} />
+    </div>
+  );
+}
+```
+
 ### AI Autocompletion
 
 You can enable AI autocompletion by providing your own completion function:
@@ -61,8 +98,8 @@ function App() {
   const config: EditorConfig = {
     aiAutocompletion: {
       enabled: true,
-      minWordsToTriggerAutoCompletion: 5, // Trigger after 5 words
-      debounceTime: 300, // Wait 300ms before calling API
+      minWordsToTriggerAutoCompletion: 5, // Trigger after 5 words (default: 3)
+      debounceTime: 300, // Wait 300ms before calling API (default: 100ms)
       
       // Required: Provide your custom fetch function
       fetchCompletion: async (text: string) => {
@@ -94,6 +131,29 @@ function App() {
 - `Tab` - Accept suggestion
 - `Escape` - Dismiss suggestion
 - `Ctrl+Shift+Space` (Windows/Linux) or `Cmd+Shift+Space` (Mac) - Toggle autocompletion on/off
+
+### Configuration Options Reference
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `content` | `string` | `""` | Initial HTML content for the editor |
+| `defaultToolbar` | `'professional' \| 'classic'` | `'professional'` | Toolbar style |
+| `showBubbleMenu` | `boolean` | `true` | Show bubble menu on text selection |
+| `showFloatingMenu` | `boolean` | `false` | Show floating menu on empty lines |
+| `showPageSizeSelector` | `boolean` | `true` | Show page size selector |
+| `enablePagination` | `boolean` | `true` | Enable pagination |
+| `debounceTimeForContentChange` | `number` | `300` | Debounce time (ms) for `onContentChange` callback |
+| `onContentChange` | `(editor: Editor) => void` | `undefined` | Callback when content changes (debounced) |
+| `aiAutocompletion` | `AIAutocompletionConfig` | See below | AI autocompletion configuration |
+
+**AIAutocompletionConfig:**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `enabled` | `boolean` | `false` | Enable/disable AI autocompletion |
+| `minWordsToTriggerAutoCompletion` | `number` | `3` | Minimum words to trigger autocompletion |
+| `debounceTime` | `number` | `100` | Debounce time (ms) before calling API |
+| `fetchCompletion` | `(text: string) => Promise<string>` | `undefined` | **Required** - Custom fetch function for AI completions |
 
 ### Important: Fixing ProseMirror Duplication Error
 

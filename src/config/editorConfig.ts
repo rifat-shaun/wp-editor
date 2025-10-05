@@ -1,6 +1,7 @@
 import type { Editor } from "@tiptap/react";
 import { TOOLBAR_TYPES_ENUM } from "../constants/Toolbar";
 import { AI_AUTO_COMPLETION_DEBOUNCE_TIME, AI_AUTO_COMPLETION_TRIGGER_WORD_COUNT } from "@/constants";
+import { DEFAULT_DEBOUNCE_TIME_FOR_CONTENT_CHANGE } from "@/constants/base";
 
 export interface AIAutocompletionConfig {
   /** Enable/disable AI autocompletion */
@@ -26,10 +27,12 @@ export interface EditorConfig {
   enablePagination?: boolean;
   /** Initial toolbar */
   defaultToolbar?: string;
-  /** Callback when content changes */
-  onContentChange?: (editor: Editor) => void;
+  /** Calback debounce time for content change milliseconds */
+  debounceTimeForContentChange?: number;
   /** AI Autocompletion configuration */
   aiAutocompletion?: AIAutocompletionConfig;
+  /** Callback when content changes */
+  onContentChange?: (editor: Editor) => void;
 }
 
 export const defaultEditorConfig: EditorConfig = {
@@ -45,4 +48,5 @@ export const defaultEditorConfig: EditorConfig = {
     minWordsToTriggerAutoCompletion: AI_AUTO_COMPLETION_TRIGGER_WORD_COUNT,
     debounceTime: AI_AUTO_COMPLETION_DEBOUNCE_TIME,
   },
+  debounceTimeForContentChange: DEFAULT_DEBOUNCE_TIME_FOR_CONTENT_CHANGE,
 };
