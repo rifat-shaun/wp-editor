@@ -26,8 +26,7 @@ pnpm add lax-wp-editor
 
 ```tsx
 import React from 'react';
-import { Editor } from 'lax-wp-editor';
-import 'lax-wp-editor/styles'; // ⚠️ Important: Don't forget to import the styles!
+import { Editor } from 'lax-wp-editor'; // CSS is automatically included!
 
 function App() {
   return (
@@ -40,14 +39,12 @@ function App() {
 export default App;
 ```
 
-> **⚠️ Important:** You must import the CSS styles for the editor to display correctly.
+> **✨ New in v1.2.0:** CSS is now automatically imported! You no longer need to manually import the styles.
 > 
-> **Two ways to import styles:**
+> **For older versions (v1.1.x), you need to manually import styles:**
 > ```tsx
-> // Option 1: Using the styles export (recommended)
 > import 'lax-wp-editor/styles';
-> 
-> // Option 2: Direct CSS import
+> // or
 > import 'lax-wp-editor/dist/lax-wp-editor.css';
 > ```
 
