@@ -26,19 +26,30 @@ pnpm add lax-wp-editor
 
 ```tsx
 import React from 'react';
-import { Editor, ToolbarProvider } from 'lax-wp-editor';
-import 'lax-wp-editor/styles';
+import { Editor } from 'lax-wp-editor';
+import 'lax-wp-editor/styles'; // ⚠️ Important: Don't forget to import the styles!
 
 function App() {
   return (
-    <ToolbarProvider>
+    <div style={{ height: '100vh', width: '100%' }}>
       <Editor />
-    </ToolbarProvider>
+    </div>
   );
 }
 
 export default App;
 ```
+
+> **⚠️ Important:** You must import the CSS styles for the editor to display correctly.
+> 
+> **Two ways to import styles:**
+> ```tsx
+> // Option 1: Using the styles export (recommended)
+> import 'lax-wp-editor/styles';
+> 
+> // Option 2: Direct CSS import
+> import 'lax-wp-editor/dist/lax-wp-editor.css';
+> ```
 
 ### Important: Fixing ProseMirror Duplication Error
 
