@@ -41,7 +41,7 @@ function App() {
           content: '<p>Hello Mim, we are here to help you and this is very much needed</p>',
           defaultToolbar: 'classic',
           aiAutocompletion: {
-            enabled: true,
+            enabled: false,
             minWordsToTriggerAutoCompletion: 5,
             debounceTime: 100,
             fetchCompletion: fetchAICompletion,

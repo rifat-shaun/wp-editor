@@ -20,7 +20,15 @@
   height: 0;
 }
 
-.blur-highlight {
-  background-color: rgba(212, 212, 212, 0.8);
-  padding: 2px 0;
+.tiptap {
+  .blur-highlight {
+    background-color: rgba(212, 212, 212, 0.8);
+    padding: 2px 0;
+  }
+
+  .variable-text {
+    background-color: #fff9c4;
+    padding: 2px;
+    border-radius: 3px;
+  }
 }
