@@ -39,10 +39,12 @@ interface PluginState {
   suggestion: SuggestionData | null;
 }
 
-const aiAutocompletionKey = new PluginKey<PluginState>("ai-autocompletion");
+export const aiAutocompletionKey = new PluginKey<PluginState>("ai-autocompletion");
 
 export const AIAutocompletion = Extension.create<AIAutocompletionOptions>({
   name: "aiAutoCompletion",
+
+  priority: 1000, // High priority to handle Tab before other extensions
 
   addOptions() {
     return {
@@ -63,53 +65,83 @@ export const AIAutocompletion = Extension.create<AIAutocompletionOptions>({
     return {
       acceptSuggestion:
         () =>
-        ({ editor }) => {
-          const pluginState = aiAutocompletionKey.getState(editor.state);
-          if (!pluginState?.suggestion) return false;
+          ({ state, dispatch }) => {
+            const pluginState = aiAutocompletionKey.getState(state);
+            if (!pluginState?.suggestion) return false;
 
-          const { to, text } = pluginState.suggestion;
-          editor.commands.insertContentAt(to, text);
-          editor.view.dispatch(
-            editor.state.tr.setMeta(aiAutocompletionKey, { type: "clear" })
-          );
+            if (dispatch) {
+              const { to, text } = pluginState.suggestion;
+              const tr = state.tr
+                .insertText(text, to, to)
+                .setMeta(aiAutocompletionKey, { type: "clear" });
+              dispatch(tr);
+            }
 
-          return true;
-        },
+            return true;
+          },
 
       dismissSuggestion:
         () =>
-        ({ editor }) => {
-          editor.view.dispatch(
-            editor.state.tr.setMeta(aiAutocompletionKey, { type: "clear" })
-          );
-          return true;
-        },
+          ({ state, dispatch }) => {
+            if (dispatch) {
+              const tr = state.tr.setMeta(aiAutocompletionKey, { type: "clear" });
+              dispatch(tr);
+            }
+            return true;
+          },
 
       enableAutocompletion:
         () =>
-        ({ editor }) => {
-          this.options.isEnabled = true;
-          this.storage.isEnabled = true;
-          editor.commands.dismissSuggestion();
-          return true;
-        },
+          ({ editor }) => {
+            this.options.isEnabled = true;
+            this.storage.isEnabled = true;
+            editor.commands.dismissSuggestion();
+            return true;
+          },
 
       disableAutocompletion:
         () =>
-        ({ editor }) => {
-          this.options.isEnabled = false;
-          this.storage.isEnabled = false;
-          editor.commands.dismissSuggestion();
-          return true;
-        },
+          ({ editor }) => {
+            this.options.isEnabled = false;
+            this.storage.isEnabled = false;
+            editor.commands.dismissSuggestion();
+            return true;
+          },
 
       toggleAutocompletion:
         () =>
-        ({ editor }) => {
-          return this.storage.isEnabled
-            ? editor.commands.disableAutocompletion()
-            : editor.commands.enableAutocompletion();
-        },
+          ({ editor }) => {
+            return this.storage.isEnabled
+              ? editor.commands.disableAutocompletion()
+              : editor.commands.enableAutocompletion();
+          },
+    };
+  },
+
+  addKeyboardShortcuts() {
+    return {
+      Tab: ({ editor }) => {
+        // Check if there's a suggestion
+        const pluginState = aiAutocompletionKey.getState(editor.state);
+        if (pluginState?.suggestion) {
+          const result = editor.commands.acceptSuggestion();
+          return result;
+        }
+        // If no suggestion, let other extensions handle Tab (e.g., indent)
+        return false;
+      },
+      Escape: ({ editor }) => {
+        // Check if there's a suggestion
+        const pluginState = aiAutocompletionKey.getState(editor.state);
+        if (pluginState?.suggestion) {
+          return editor.commands.dismissSuggestion();
+        }
+        // If no suggestion, let other extensions handle Escape
+        return false;
+      },
+      "Mod-Shift-Space": ({ editor }) => {
+        return editor.commands.toggleAutocompletion();
+      },
     };
   },
 
@@ -169,35 +201,6 @@ export const AIAutocompletion = Extension.create<AIAutocompletionOptions>({
           decorations(state) {
             return this.getState(state)?.decorationSet;
           },
-
-          handleKeyDown(view, event) {
-            const pluginState = this.getState(view.state);
-            if (!pluginState?.suggestion) return false;
-
-            if (event.key === "Tab") {
-              event.preventDefault();
-              view.dispatch(
-                view.state.tr
-                  .insertText(
-                    pluginState.suggestion.text,
-                    pluginState.suggestion.to,
-                    pluginState.suggestion.to
-                  )
-                  .setMeta(aiAutocompletionKey, { type: "clear" })
-              );
-              return true;
-            }
-
-            if (event.key === "Escape") {
-              event.preventDefault();
-              view.dispatch(
-                view.state.tr.setMeta(aiAutocompletionKey, { type: "clear" })
-              );
-              return true;
-            }
-
-            return false;
-          },
         },
 
         view(view) {
@@ -217,9 +220,8 @@ export const AIAutocompletion = Extension.create<AIAutocompletionOptions>({
 
               // Validate completion is a non-empty string
               if (
-                completion && 
-                typeof completion === "string" && 
-                completion.trim().length > 0
+                completion &&
+                typeof completion === "string"
               ) {
                 view.dispatch(
                   view.state.tr.setMeta(aiAutocompletionKey, {
@@ -227,7 +229,7 @@ export const AIAutocompletion = Extension.create<AIAutocompletionOptions>({
                     suggestion: {
                       from: position - text.length,
                       to: position,
-                      text: completion.trim(),
+                      text: completion,
                     },
                   })
                 );

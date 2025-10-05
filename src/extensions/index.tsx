@@ -52,13 +52,6 @@ export const getEditorExtensions = (config?: EditorConfig) => [
   TextStyle,
   FontSize,
   FontFamily,
-  AIAutocompletion.configure({
-    minWordsToTriggerAutoCompletion: config?.aiAutocompletion?.minWordsToTriggerAutoCompletion || AI_AUTO_COMPLETION_TRIGGER_WORD_COUNT,
-    debounceTime: config?.aiAutocompletion?.debounceTime || AI_AUTO_COMPLETION_DEBOUNCE_TIME,
-    // Only enable if fetchCompletion function is provided
-    isEnabled: !!(config?.aiAutocompletion?.enabled && config?.aiAutocompletion?.fetchCompletion),
-    fetchCompletion: config?.aiAutocompletion?.fetchCompletion,
-  }),
   OnBlurHighlight,
   Superscript,
   Subscript,
@@ -75,6 +68,14 @@ export const getEditorExtensions = (config?: EditorConfig) => [
     types: ["paragraph", "heading", "blockquote"],
     minLevel: 0,
     maxLevel: 12,
+  }),
+  // AIAutocompletion MUST be after Indent to intercept Tab key first (due to reverse processing order)
+  AIAutocompletion.configure({
+    minWordsToTriggerAutoCompletion: config?.aiAutocompletion?.minWordsToTriggerAutoCompletion || AI_AUTO_COMPLETION_TRIGGER_WORD_COUNT,
+    debounceTime: config?.aiAutocompletion?.debounceTime || AI_AUTO_COMPLETION_DEBOUNCE_TIME,
+    // Only enable if fetchCompletion function is provided
+    isEnabled: !!(config?.aiAutocompletion?.enabled && config?.aiAutocompletion?.fetchCompletion),
+    fetchCompletion: config?.aiAutocompletion?.fetchCompletion,
   }),
   TextAlign.configure({
     types: [
