@@ -27,7 +27,7 @@
   }
 
   /* Variable text styling */
-  .lax-variable-text {
+  .variable-text {
     display: inline-block;
     padding: 0 2px;
     margin: 0;
@@ -43,7 +43,7 @@
     scale: 0.95;
   }
 
-  .lax-variable-text:hover {
+  .variable-text:hover {
     background-color: #bbdefb;
     border-color: #64b5f6;
   }

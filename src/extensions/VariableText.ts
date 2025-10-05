@@ -15,10 +15,10 @@ declare module '@tiptap/core' {
   }
 }
 
-const variablePluginKey = new PluginKey('variable');
+const variableTextPluginKey = new PluginKey('variableText');
 
-export const Variable = Node.create<VariableOptions>({
-  name: 'variable',
+export const VariableText = Node.create<VariableOptions>({
+  name: 'variableText',
   group: 'inline',
   inline: true,
   atom: true,
@@ -60,7 +60,7 @@ export const Variable = Node.create<VariableOptions>({
       'span',
       {
         'data-variable-name': variableName,
-        class: 'lax-variable-text',
+        class: 'variable-text',
         contenteditable: 'false',
       },
       displayText,
@@ -80,11 +80,11 @@ export const Variable = Node.create<VariableOptions>({
 
       updateVariableValues:
         (values: Record<string, string>) =>
-        ({ tr, state, dispatch }) => {
+        ({ tr, dispatch }) => {
           this.options.variableValues = { ...this.options.variableValues, ...values };
 
           if (dispatch) {
-            const updatedTransaction = tr.setMeta(variablePluginKey, {
+            const updatedTransaction = tr.setMeta(variableTextPluginKey, {
               type: 'update-values',
               values,
             });
@@ -99,7 +99,7 @@ export const Variable = Node.create<VariableOptions>({
   addInputRules() {
     if (!this.options.enabled) return [];
 
-    const variablePattern = /\{\{([a-zA-Z0-9_-]+)\}\}\s$/;
+    const variablePattern = /\{\{([a-zA-Z0-9_-]+)\}\}$/;
 
     return [
       new InputRule({
@@ -108,12 +108,7 @@ export const Variable = Node.create<VariableOptions>({
           const variableName = match[1];
           if (!variableName) return;
 
-          const rangeWithoutSpace = {
-            from: range.from,
-            to: range.to - 1, // Exclude the trailing space
-          };
-
-          commands.deleteRange(rangeWithoutSpace);
+          commands.deleteRange(range);
           commands.insertVariable(variableName);
         },
       }),
@@ -145,17 +140,17 @@ export const Variable = Node.create<VariableOptions>({
 
     return [
       new Plugin({
-        key: variablePluginKey,
+        key: variableTextPluginKey,
 
         appendTransaction(transactions, _oldState, newState) {
-          const meta = transactions[0]?.getMeta(variablePluginKey);
+          const meta = transactions[0]?.getMeta(variableTextPluginKey);
           if (!meta || meta.type !== 'update-values') return null;
 
           const updatedTransaction = newState.tr;
           let hasChanges = false;
 
-          newState.doc.descendants((node, pos) => {
-            if (node.type.name === 'variable') {
+        newState.doc.descendants((node, pos) => {
+          if (node.type.name === 'variableText') {
               const variableName = node.attrs.variableName;
               const newValue = extension.options.variableValues[variableName];
               
