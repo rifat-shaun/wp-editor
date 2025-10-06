@@ -1,10 +1,5 @@
 import { Editor } from '@tiptap/react';
 import { useState } from 'react';
-
-
-
-// import { deleteTableRowsWithIdUpdate } from '../../utilities';
-// import { ToolbarDropdownItem } from './ToolbarDropdownItem';
 import SvgIcon from '../../common/SvgIcon';
 import { TableSelector } from './TableSelector';
 import { Popover } from 'antd';
@@ -13,12 +8,16 @@ import { ToolbarButtonItem } from '../ToolbarButtonItem';
 import { Divider } from '../Divider';
 import { useToolbar } from '@/contexts/ToolbarContext';
 import { TOOLBAR_TYPES_ENUM } from '@/constants/Toolbar';
+import { useTiptapEditorState } from '@/hooks/useTiptapEditorState';
+import { useTableMethods } from '@/hooks/useTableMethods';
 
 type TTableOptionsProps = {
   editor: Editor;
 };
 
 export const TableOptions = ({ editor }: TTableOptionsProps) => {
+  const { isTableActive } = useTiptapEditorState(editor);
+  const { handleInsertTable, handleInsertRowAbove, handleInsertRowBelow, handleInsertColumnLeft, handleInsertColumnRight, handleDeleteColumn, handleMergeCells, handleSplitCell, handleDeleteTable } = useTableMethods(editor);
   const { currentToolbar } = useToolbar();
   const isClassicToolbar = currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC;
 
@@ -29,19 +28,13 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
     setOpen(newOpen);
   };
 
-
-  const insertTable = (rows: number, cols: number) => {
-    editor.commands.insertTable({ rows, cols, withHeaderRow });
-    setOpen(false);
-  };
-
   const tableOptionsItemGroup = (
     <ItemGroup>
       <div className='flex items-center space-x-2'>
         <ToolbarButtonItem
           tooltip='Insert Row Above'
-          onClick={() => editor.chain().focus().addRowBefore().run()}
-          disabled={!editor.isActive('table')}
+          onClick={handleInsertRowAbove}
+          disabled={!isTableActive}
           active={false}
           buttonTitle='Insert Row Above'
           size='small'
@@ -52,8 +45,8 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
 
         <ToolbarButtonItem
           tooltip='Insert Row Below'
-          onClick={() => editor.chain().focus().addRowAfter().run()}
-          disabled={!editor.isActive('table')}
+          onClick={handleInsertRowBelow}
+          disabled={!isTableActive}
           active={false}
           buttonTitle='Insert Row Below'
           size='small'
@@ -65,7 +58,7 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
         {/* <ToolbarButtonItem
 					tooltip='Delete Row'
 					onClick={() => deleteTableRowsWithIdUpdate(editor)}
-					disabled={!editor.isActive('table')}
+					disabled={!isTableActive}
 					active={false}
 					buttonTitle='Delete Row'
 					size='small'
@@ -78,8 +71,8 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
       <div className='flex items-center space-x-2'>
         <ToolbarButtonItem
           tooltip='Insert Column Left'
-          onClick={() => editor.chain().focus().addColumnBefore().run()}
-          disabled={!editor.isActive('table')}
+          onClick={handleInsertColumnLeft}
+          disabled={!isTableActive}
           active={false}
           buttonTitle='Insert Column Left'
           size='small'
@@ -90,8 +83,8 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
 
         <ToolbarButtonItem
           tooltip='Insert Column Right'
-          onClick={() => editor.chain().focus().addColumnAfter().run()}
-          disabled={!editor.isActive('table')}
+          onClick={handleInsertColumnRight}
+          disabled={!isTableActive}
           active={false}
           buttonTitle='Insert Column Right'
           size='small'
@@ -102,8 +95,8 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
 
         <ToolbarButtonItem
           tooltip='Delete Column'
-          onClick={() => editor.chain().focus().deleteColumn().run()}
-          disabled={!editor.isActive('table')}
+          onClick={handleDeleteColumn}
+          disabled={!isTableActive}
           active={false}
           buttonTitle='Delete Column'
           size='small'
@@ -118,7 +111,7 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
   return (
     <>
       <Popover
-        content={<TableSelector onSelect={insertTable} withHeaderRow={withHeaderRow} onHeaderRowChange={(checked: boolean) => setWithHeaderRow(checked)} />}
+        content={<TableSelector onSelect={(rows, cols) => handleInsertTable(rows, cols, withHeaderRow)} withHeaderRow={withHeaderRow} onHeaderRowChange={(checked: boolean) => setWithHeaderRow(checked)} />}
         trigger="click"
         open={open}
         onOpenChange={handleOpenChange}
@@ -137,8 +130,8 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
       <ItemGroup>
         <ToolbarButtonItem
           tooltip='Merge Cells'
-          onClick={() => editor.chain().focus().mergeCells().run()}
-          disabled={!editor.isActive('table')}
+          onClick={handleMergeCells}
+          disabled={!isTableActive}
           active={false}
           buttonTitle='Merge Cells'
           size='small'
@@ -149,8 +142,8 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
 
         <ToolbarButtonItem
           tooltip='Split Cell'
-          onClick={() => editor.chain().focus().splitCell().run()}
-          disabled={!editor.isActive('table')}
+          onClick={handleSplitCell}
+          disabled={!isTableActive}
           active={false}
           buttonTitle='Split Cell'
           size='small'
@@ -165,8 +158,8 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
       <ItemGroup>
         <ToolbarButtonItem
           tooltip='Delete Table'
-          onClick={() => editor.chain().focus().deleteTable().run()}
-          disabled={!editor.isActive('table')}
+          onClick={handleDeleteTable}
+          disabled={!isTableActive}
           active={false}
           buttonTitle='Delete Table'
           size={isClassicToolbar ? 'small' : 'medium'}

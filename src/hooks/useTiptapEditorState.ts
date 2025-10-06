@@ -39,6 +39,7 @@ export const useTiptapEditorState = (editor: Editor) => {
       isBlockquote: false,
       canBlockquote: false,
       selectionHeadingLevel: "paragraph",
+      isTableActive: false,
     };
   }
 
@@ -137,6 +138,9 @@ export const useTiptapEditorState = (editor: Editor) => {
 
         // Heading
         selectionHeadingLevel: ctx.editor.getAttributes("heading")?.level ?? "paragraph",
+
+        // Table
+        isTableActive: ctx.editor.isActive("table") ?? false,
       };
     },
   });
