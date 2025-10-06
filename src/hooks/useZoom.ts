@@ -15,10 +15,15 @@ export const useZoom = () => {
     setZoomLevel(100);
   };
 
+  const handleSetZoom = (value: number) => {
+    setZoomLevel(Math.min(Math.max(value, 50), 200));
+  };
+
   return {
     zoomLevel,
     handleZoomIn,
     handleZoomOut,
     handleFitToScreen,
+    handleSetZoom,
   };
 };
