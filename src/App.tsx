@@ -1,4 +1,4 @@
-import { Editor } from 'lax-wp-editor'
+import Editor from "./components/Editor";
 
 function App() {
 
@@ -34,7 +34,7 @@ function App() {
     }
   };
 
-  const content = '<p style="text-align: left;">Hello Mim, we are here to help you<span> </span>and this is very much needed <span data-variable-name="name" class="variable-text" contenteditable="false"></span><span data-variable-name="name_no_value" class="variable-text" contenteditable="false">John Doe</span><img class="ProseMirror-separator" alt=""><br class="ProseMirror-trailingBreak"></p>';
+  const content = '<p style="text-align: left;">Hello there, we are here to help you<span> </span>and this is very much needed <span data-variable-name="name" class="variable-text" contenteditable="false"></span><span data-variable-name="name_no_value" class="variable-text" contenteditable="false">John Doe</span><img class="ProseMirror-separator" alt=""><br class="ProseMirror-trailingBreak"></p>';
 
   return (
     <div className="h-screen bg-neutral-50 flex flex-col">
