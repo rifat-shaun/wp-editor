@@ -22,7 +22,7 @@ export const useInsertOptionMethods = (editor: Editor) => {
     setModalPosition({ top, left });
   }, [editor]);
 
-  const handleToggleLink = useCallback(() => {
+  const handleToggleAddLinkModal = useCallback(() => {
     if (!hasTextSelected) {
       return;
     }
@@ -155,7 +155,7 @@ export const useInsertOptionMethods = (editor: Editor) => {
     hasTextSelected,
     isLinkActive,
 
-    handleToggleLink,
+    handleToggleAddLinkModal,
     handleSetLink,
     handleCancelLink,
     handleKeyDown,

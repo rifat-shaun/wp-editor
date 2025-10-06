@@ -20,7 +20,7 @@ export const InsertOptions = ({ editor }: InsertOptionsProps) => {
     modalPosition,
     hasTextSelected,
     isLinkActive,
-    handleToggleLink,
+    handleToggleAddLinkModal,
     handleSetLink,
     handleCancelLink,
     handleKeyDown,
@@ -60,7 +60,7 @@ export const InsertOptions = ({ editor }: InsertOptionsProps) => {
                   ? "Remove Link" 
                   : "Add Link"
             }
-            onClick={handleToggleLink}
+            onClick={handleToggleAddLinkModal}
             active={isLinkActive}
             disabled={!hasTextSelected}
             size="small"
