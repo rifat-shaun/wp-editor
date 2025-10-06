@@ -73,7 +73,7 @@ const Editor = ({ config = {} }: EditorProps) => {
   if (!editor) return null;
 
   return (
-    <div className={`h-full flex flex-col bg-neutral-200 editor-container ${isPresentationMode ? "lax-presentation-mode" : ""} ${isLaserActive ? "laser-active" : ""}`}>
+    <div className={`h-full flex flex-col bg-neutral-200 editor-container ${isPresentationMode ? "editor-presentation-mode" : ""} ${isLaserActive ? "laser-active" : ""}`}>
       {/* Toolbar */}
       {!isPresentationMode && (
         <Toolbar initialToolbar={editorConfig.defaultToolbar} editor={editor} />

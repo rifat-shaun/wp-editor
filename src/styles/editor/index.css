@@ -49,6 +49,20 @@
   }
 }
 
+  /* Disable variable-text styling in presentation mode */
+  .editor-presentation-mode .variable-text {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0;
+    scale: 1;
+    user-select: text;
+  }
+
+  .editor-presentation-mode .variable-text:hover {
+    background-color: transparent;
+    border: none !important;
+  }
+
 /* Laser Pointer */
 .editor-laser-pointer {
   position: fixed;

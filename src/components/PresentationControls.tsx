@@ -66,7 +66,7 @@ export const PresentationControls = ({ onExit, onLaserToggle }: PresentationCont
       </div>
 
       <style>{`
-        .lax-presentation-mode .editor-content {
+        .editor-presentation-mode .editor-content {
           zoom: ${zoomLevel}%;
           transition: zoom 0.2s ease;
         }
