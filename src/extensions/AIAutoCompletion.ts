@@ -170,7 +170,7 @@ export const AIAutocompletion = Extension.create<AIAutocompletionOptions>({
               const { to, text } = meta.suggestion;
               const decoration = Decoration.widget(to, () => {
                 const span = document.createElement("span");
-                span.className = "lax-ai-suggestion";
+                span.className = "ai-suggestion";
                 span.textContent = text;
                 span.style.opacity = "0.6";
                 span.style.backgroundColor = "#f8f9fa";

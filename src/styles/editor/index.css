@@ -48,3 +48,32 @@
     border-color: #64b5f6;
   }
 }
+
+/* Laser Pointer */
+.editor-laser-pointer {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 20%, rgba(255, 0, 0, 0.9) 40%, rgba(255, 0, 0, 0.6) 70%, rgba(255, 0, 0, 0.2) 100%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow: 0 0 8px rgba(255, 0, 0, 0.6), 0 0 15px rgba(255, 0, 0, 0.3);
+  display: block;
+}
+
+/* Hide cursor when laser is active */
+.laser-active,
+.laser-active * {
+  cursor: none !important;
+}
+
+/* Ensure cursor is hidden in fullscreen mode with laser */
+:fullscreen.laser-active,
+:fullscreen.laser-active *,
+:-webkit-full-screen.laser-active,
+:-webkit-full-screen.laser-active *,
+:-moz-full-screen.laser-active,
+:-moz-full-screen.laser-active * {
+  cursor: none !important;
+}
