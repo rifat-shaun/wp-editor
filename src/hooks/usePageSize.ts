@@ -1,5 +1,5 @@
+import type { PageConfig } from "@/components/toolbar/page/PageSizeSelector";
 import { useState } from "react";
-import type { PageConfig } from "../components/PageSizeSelector";
 
 export const usePageSize = () => {
   const [pageConfig, setPageConfig] = useState<PageConfig>({

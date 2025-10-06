@@ -27,7 +27,7 @@ export const Footer = ({ editor, onPresentationModeToggle }: FooterProps) => {
         <div className="flex items-center gap-2">
           <button
             onClick={handleZoomOut}
-            className="p-1.5 text-neutral-700 hover:bg-neutral-100 rounded transition-colors"
+            className="p-1 text-neutral-700 hover:bg-neutral-200 rounded transition-colors"
             title="Zoom Out"
           >
             <SvgIcon name="minus" size={16} strokeWidth={3.5} />
@@ -46,7 +46,7 @@ export const Footer = ({ editor, onPresentationModeToggle }: FooterProps) => {
 
           <button
             onClick={handleZoomIn}
-            className="p-1.5 text-neutral-700 hover:bg-neutral-100 rounded transition-colors"
+            className="p-1 text-neutral-700 hover:bg-neutral-200 rounded transition-colors"
             title="Zoom In"
           >
             <SvgIcon name="plus" size={16} strokeWidth={3.5} />
@@ -56,17 +56,17 @@ export const Footer = ({ editor, onPresentationModeToggle }: FooterProps) => {
 
           <button
             onClick={handleFitToScreen}
-            className="p-1.5 text-neutral-700 hover:bg-neutral-100 rounded transition-colors"
+            className="p-1 text-neutral-700 hover:bg-neutral-200 rounded transition-colors"
             title="Fit to Screen (100%)"
           >
             <SvgIcon name="auto-width" size={16} strokeWidth={3.5} />
           </button>
 
           <div className="h-6 w-px bg-neutral-300" />
-          
+
           <button
             onClick={onPresentationModeToggle}
-            className="flex items-center gap-2 px-3 py-px text-sm text-neutral-700 hover:bg-neutral-100 rounded transition-colors"
+            className="flex items-center gap-2 p-1 py-px text-sm text-neutral-700 hover:bg-neutral-200 rounded transition-colors"
             title="Enter Presentation Mode"
           >
             <SvgIcon name="preview" strokeWidth={3.5} />
