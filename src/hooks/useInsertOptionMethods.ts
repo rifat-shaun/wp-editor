@@ -1,9 +1,10 @@
 import { Editor } from "@tiptap/react";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { useTiptapEditorState } from "./useTiptapEditorState";
 
 export const useInsertOptionMethods = (editor: Editor) => {
-  const { hasTextSelected, isLinkActive, currentLinkUrl } = useTiptapEditorState(editor);
+  const { hasTextSelected, isLinkActive, currentLinkUrl } =
+    useTiptapEditorState(editor);
   const [showLinkInput, setShowLinkInput] = useState(false);
   const [showLinkActions, setShowLinkActions] = useState(false);
   const [isEditingLink, setIsEditingLink] = useState(false);
@@ -14,10 +15,10 @@ export const useInsertOptionMethods = (editor: Editor) => {
     const { from, to } = editor.state.selection;
     const start = editor.view.coordsAtPos(from);
     const end = editor.view.coordsAtPos(to);
-    
+
     const top = start.top + 20;
     const left = (start.left + end.left) / 2 + 90;
-    
+
     setModalPosition({ top, left });
   }, [editor]);
 
@@ -34,14 +35,21 @@ export const useInsertOptionMethods = (editor: Editor) => {
       setIsEditingLink(false);
       setShowLinkInput(true);
     }
-  }, [editor, isLinkActive, currentLinkUrl, hasTextSelected, calculateModalPosition]);
+  }, [
+    editor,
+    isLinkActive,
+    currentLinkUrl,
+    hasTextSelected,
+    calculateModalPosition,
+  ]);
 
   const handleSetLink = useCallback(() => {
     if (linkUrl && hasTextSelected) {
-      const url = linkUrl.startsWith('http://') || linkUrl.startsWith('https://') 
-        ? linkUrl 
-        : `https://${linkUrl}`;
-      
+      const url =
+        linkUrl.startsWith("http://") || linkUrl.startsWith("https://")
+          ? linkUrl
+          : `https://${linkUrl}`;
+
       editor.chain().focus().setLink({ href: url }).run();
     }
     setShowLinkInput(false);
@@ -55,56 +63,70 @@ export const useInsertOptionMethods = (editor: Editor) => {
     setLinkUrl("");
   }, []);
 
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      handleSetLink();
-    } else if (e.key === 'Escape') {
-      e.preventDefault();
-      handleCancelLink();
-    }
-  }, [handleSetLink, handleCancelLink]);
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleSetLink();
+      } else if (e.key === "Escape") {
+        e.preventDefault();
+        handleCancelLink();
+      }
+    },
+    [handleSetLink, handleCancelLink]
+  );
 
-  const handleLinkUrlChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setLinkUrl(e.target.value);
-  }, []);
+  const handleLinkUrlChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setLinkUrl(e.target.value);
+    },
+    []
+  );
 
-  const handleLinkActionsModalToggle = useCallback((url: string, event: MouseEvent) => {
-    const target = event.target as HTMLElement;
-    const rect = target.getBoundingClientRect();
-    
-    const top = rect.bottom + window.scrollY + 10;
-    const left = rect.left + rect.width / 2 + window.scrollX;
-    
-    setModalPosition({ top, left });
-    setLinkUrl(url);
-    setShowLinkActions(true);
-  }, []);
+  const handleLinkActionsModalToggle = useCallback(
+    (url: string, event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      const rect = target.getBoundingClientRect();
+
+      const top = rect.bottom + window.scrollY + 10;
+      const left = rect.left + rect.width / 2 + window.scrollX;
+
+      setModalPosition({ top, left });
+      setLinkUrl(url);
+      setShowLinkActions(true);
+    },
+    []
+  );
 
   const handleEditLink = useCallback(() => {
     setShowLinkActions(false);
-    
     const { state } = editor;
     const { selection } = state;
     const { $from } = selection;
-    
-    const linkMark = $from.marks().find(mark => mark.type.name === 'link');
-    
+
+    const linkMark = $from.marks().find((mark) => mark.type.name === "link");
+
     if (linkMark) {
       const start = $from.pos - $from.textOffset;
       let end = start;
-      
+
       state.doc.nodesBetween(start, state.doc.content.size, (node, pos) => {
-        if (node.marks.some(mark => mark.type.name === 'link' && mark.attrs.href === linkMark.attrs.href)) {
+        if (
+          node.marks.some(
+            (mark) =>
+              mark.type.name === "link" &&
+              mark.attrs.href === linkMark.attrs.href
+          )
+        ) {
           if (pos >= start) {
             end = Math.max(end, pos + node.nodeSize);
           }
         }
       });
-      
+
       editor.chain().focus().setTextSelection({ from: start, to: end }).run();
     }
-    
+
     setIsEditingLink(true);
     setShowLinkInput(true);
   }, [editor]);
@@ -124,13 +146,6 @@ export const useInsertOptionMethods = (editor: Editor) => {
     setLinkUrl("");
   }, []);
 
-  useEffect(() => {
-    if (showLinkInput && !hasTextSelected) {
-      setShowLinkInput(false);
-      setLinkUrl("");
-    }
-  }, [showLinkInput, hasTextSelected]);
-
   return {
     showLinkInput,
     showLinkActions,
@@ -139,7 +154,7 @@ export const useInsertOptionMethods = (editor: Editor) => {
     modalPosition,
     hasTextSelected,
     isLinkActive,
-    
+
     handleToggleLink,
     handleSetLink,
     handleCancelLink,

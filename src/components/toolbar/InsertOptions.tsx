@@ -38,9 +38,6 @@ export const InsertOptions = ({ editor }: InsertOptionsProps) => {
       const linkElement = target.closest('a.editor-link') as HTMLAnchorElement;
       
       if (linkElement) {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
         handleLinkActionsModalToggle(linkElement.getAttribute('href') || '', event);
         return false;
       }
@@ -49,9 +46,6 @@ export const InsertOptions = ({ editor }: InsertOptionsProps) => {
     const editorElement = editor.view.dom;
     editorElement.addEventListener('click', handleClick, true);
 
-    return () => {
-      editorElement.removeEventListener('click', handleClick, true);
-    };
   }, [editor, handleLinkActionsModalToggle]);
 
   return (

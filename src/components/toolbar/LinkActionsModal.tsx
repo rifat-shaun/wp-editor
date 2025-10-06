@@ -44,7 +44,6 @@ export const LinkActionsModal = ({
           left: `${position.left}px`,
           transform: 'translateX(-50%)',
         }}
-        onMouseLeave={onClose}
       >
         <div className="flex items-center px-3 py-2 space-x-3">
           <div className="flex items-center space-x-2 min-w-0">
