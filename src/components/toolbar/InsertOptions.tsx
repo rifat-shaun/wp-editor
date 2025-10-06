@@ -25,7 +25,7 @@ export const InsertOptions = ({ editor }: InsertOptionsProps) => {
     handleCancelLink,
     handleKeyDown,
     handleLinkUrlChange,
-    handleLinkClick,
+    handleLinkActionsModalToggle,
     handleEditLink,
     handleRemoveLink,
     handleCopyLink,
@@ -33,38 +33,6 @@ export const InsertOptions = ({ editor }: InsertOptionsProps) => {
   } = useInsertOptionMethods(editor, hasTextSelected, isLinkActive, currentLinkUrl);
 
   useEffect(() => {
-    let hoverTimeout: NodeJS.Timeout | null = null;
-
-    const handleMouseEnter = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      const linkElement = target.closest('a.editor-link') as HTMLAnchorElement;
-      
-      if (linkElement) {
-        if (hoverTimeout) {
-          clearTimeout(hoverTimeout);
-        }
-        
-        hoverTimeout = setTimeout(() => {
-          const href = linkElement.getAttribute('href');
-          if (href) {
-            handleLinkClick(href, event);
-          }
-        }, 300);
-      }
-    };
-
-    const handleMouseLeave = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      const linkElement = target.closest('a.editor-link') as HTMLAnchorElement;
-      
-      if (linkElement) {
-        if (hoverTimeout) {
-          clearTimeout(hoverTimeout);
-          hoverTimeout = null;
-        }
-      }
-    };
-
     const handleClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       const linkElement = target.closest('a.editor-link') as HTMLAnchorElement;
@@ -73,24 +41,18 @@ export const InsertOptions = ({ editor }: InsertOptionsProps) => {
         event.preventDefault();
         event.stopPropagation();
         event.stopImmediatePropagation();
+        handleLinkActionsModalToggle(linkElement.getAttribute('href') || '', event);
         return false;
       }
     };
 
     const editorElement = editor.view.dom;
-    editorElement.addEventListener('mouseenter', handleMouseEnter, true);
-    editorElement.addEventListener('mouseleave', handleMouseLeave, true);
     editorElement.addEventListener('click', handleClick, true);
 
     return () => {
-      if (hoverTimeout) {
-        clearTimeout(hoverTimeout);
-      }
-      editorElement.removeEventListener('mouseenter', handleMouseEnter, true);
-      editorElement.removeEventListener('mouseleave', handleMouseLeave, true);
       editorElement.removeEventListener('click', handleClick, true);
     };
-  }, [editor, handleLinkClick]);
+  }, [editor, handleLinkActionsModalToggle]);
 
   return (
     <>

@@ -29,7 +29,7 @@
 .editor-link {
   color: #3b82f6;
   text-decoration: underline;
-  cursor: pointer;
+  cursor: cursor;
 }
 
 .editor-link:hover {

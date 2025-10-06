@@ -36,6 +36,7 @@ export const getEditorExtensions = (config?: EditorConfig) => [
     listItem: false, // Disable default to use our custom one with depth limit
     heading: false, // Disable default to use our custom one
     blockquote: false, // Disable default to use our custom one
+    link: false, // Disable default to use our custom one
   }),
   OrderedListWithType,
   UnorderedListWithType,

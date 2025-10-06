@@ -67,7 +67,7 @@ export const useInsertOptionMethods = (editor: Editor, hasTextSelected: boolean,
     setLinkUrl(e.target.value);
   }, []);
 
-  const handleLinkClick = useCallback((url: string, event: MouseEvent) => {
+  const handleLinkActionsModalToggle = useCallback((url: string, event: MouseEvent) => {
     const target = event.target as HTMLElement;
     const rect = target.getBoundingClientRect();
     
@@ -141,7 +141,7 @@ export const useInsertOptionMethods = (editor: Editor, hasTextSelected: boolean,
     handleCancelLink,
     handleKeyDown,
     handleLinkUrlChange,
-    handleLinkClick,
+    handleLinkActionsModalToggle,
     handleEditLink,
     handleRemoveLink,
     handleCopyLink,
