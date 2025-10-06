@@ -1,7 +1,9 @@
 import { Editor } from "@tiptap/react";
 import { useState, useCallback, useEffect } from "react";
+import { useTiptapEditorState } from "./useTiptapEditorState";
 
-export const useInsertOptionMethods = (editor: Editor, hasTextSelected: boolean, isLinkActive: boolean, currentLinkUrl: string) => {
+export const useInsertOptionMethods = (editor: Editor) => {
+  const { hasTextSelected, isLinkActive, currentLinkUrl } = useTiptapEditorState(editor);
   const [showLinkInput, setShowLinkInput] = useState(false);
   const [showLinkActions, setShowLinkActions] = useState(false);
   const [isEditingLink, setIsEditingLink] = useState(false);
@@ -135,6 +137,8 @@ export const useInsertOptionMethods = (editor: Editor, hasTextSelected: boolean,
     isEditingLink,
     linkUrl,
     modalPosition,
+    hasTextSelected,
+    isLinkActive,
     
     handleToggleLink,
     handleSetLink,

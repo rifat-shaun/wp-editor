@@ -2,7 +2,6 @@ import SvgIcon from "@/components/common/SvgIcon";
 import { Editor } from "@tiptap/react";
 import { ToolbarButtonItem, ItemGroup } from "@/components/toolbar";
 import { useInsertOptionMethods } from "@/hooks/useInsertOptionMethods";
-import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
 import { LinkModal } from "./LinkModal";
 import { LinkActionsModal } from "./LinkActionsModal";
 import { useEffect } from "react";
@@ -12,7 +11,6 @@ interface InsertOptionsProps {
 }
 
 export const InsertOptions = ({ editor }: InsertOptionsProps) => {
-  const { isLinkActive, hasTextSelected, currentLinkUrl } = useTiptapEditorState(editor);
   
   const {
     showLinkInput,
@@ -20,6 +18,8 @@ export const InsertOptions = ({ editor }: InsertOptionsProps) => {
     isEditingLink,
     linkUrl,
     modalPosition,
+    hasTextSelected,
+    isLinkActive,
     handleToggleLink,
     handleSetLink,
     handleCancelLink,
@@ -30,7 +30,7 @@ export const InsertOptions = ({ editor }: InsertOptionsProps) => {
     handleRemoveLink,
     handleCopyLink,
     handleCloseActions,
-  } = useInsertOptionMethods(editor, hasTextSelected, isLinkActive, currentLinkUrl);
+  } = useInsertOptionMethods(editor);
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
