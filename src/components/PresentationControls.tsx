@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import SvgIcon from "./common/SvgIcon";
+import { useZoom } from "../hooks/useZoom";
 
 interface PresentationControlsProps {
   onExit: () => void;
@@ -7,21 +8,9 @@ interface PresentationControlsProps {
 }
 
 export const PresentationControls = ({ onExit, onLaserToggle }: PresentationControlsProps) => {
-  const [zoomLevel, setZoomLevel] = useState(100);
+  const { zoomLevel, handleZoomIn, handleZoomOut, handleFitToScreen } = useZoom();
   const [isLaserActive, setIsLaserActive] = useState(false);
   const [laserPosition, setLaserPosition] = useState({ x: 0, y: 0 });
-
-  const handleZoomIn = () => {
-    setZoomLevel((prev) => Math.min(prev + 10, 200));
-  };
-
-  const handleZoomOut = () => {
-    setZoomLevel((prev) => Math.max(prev - 10, 50));
-  };
-
-  const handleFitToScreen = () => {
-    setZoomLevel(100);
-  };
 
   const handleToggleLaser = () => {
     const newLaserState = !isLaserActive;
