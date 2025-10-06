@@ -35,82 +35,81 @@
 .editor-link:hover {
   color: #1d4ed8;
   text-decoration: underline;
-  .tiptap {
-    .blur-highlight {
-      background-color: rgba(212, 212, 212, 0.8);
-      padding: 2px 0;
-    }
+}
 
-    /* Variable text styling */
-    .variable-text {
-      display: inline-block;
-      padding: 0 2px;
-      margin: 0;
-      background-color: #e3f2fd;
-      border: 1px solid #90caf9;
-      border-radius: 4px;
-      color: inherit;
-      font-family: inherit;
-      font-size: inherit;
-      cursor: default;
-      user-select: none;
-      white-space: nowrap;
-      scale: 0.95;
-    }
-
-    .variable-text:hover {
-      background-color: #bbdefb;
-      border-color: #64b5f6;
-    }
+.tiptap {
+  .blur-highlight {
+    background-color: rgba(212, 212, 212, 0.8);
+    padding: 2px 0;
   }
 
-  /* Disable variable-text styling in presentation mode */
-  .editor-presentation-mode .variable-text {
-    background-color: transparent !important;
-    border: none !important;
-    padding: 0;
-    scale: 1;
-    user-select: text;
+  /* Variable text styling */
+  .variable-text {
+    display: inline-block;
+    padding: 0 2px;
+    margin: 0;
+    background-color: #e3f2fd;
+    border: 1px solid #90caf9;
+    border-radius: 4px;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: default;
+    user-select: none;
+    white-space: nowrap;
+    scale: 0.95;
   }
 
-  .editor-presentation-mode .variable-text:hover {
-    background-color: transparent;
-    border: none !important;
+  .variable-text:hover {
+    background-color: #bbdefb;
+    border-color: #64b5f6;
   }
+}
 
-  /* Laser Pointer */
-  .editor-laser-pointer {
-    position: fixed;
-    width: 12px;
-    height: 12px;
-    background: radial-gradient(
-      circle,
+/* Disable variable-text styling in presentation mode */
+.editor-presentation-mode .variable-text {
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0;
+  scale: 1;
+  user-select: text;
+}
+
+.editor-presentation-mode .variable-text:hover {
+  background-color: transparent;
+  border: none !important;
+}
+
+/* Laser Pointer */
+.editor-laser-pointer {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle,
       rgba(255, 255, 255, 1) 0%,
       rgba(255, 255, 255, 0.8) 20%,
       rgba(255, 0, 0, 0.9) 40%,
       rgba(255, 0, 0, 0.6) 70%,
-      rgba(255, 0, 0, 0.2) 100%
-    );
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    box-shadow: 0 0 8px rgba(255, 0, 0, 0.6), 0 0 15px rgba(255, 0, 0, 0.3);
-    display: block;
-  }
+      rgba(255, 0, 0, 0.2) 100%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow: 0 0 8px rgba(255, 0, 0, 0.6), 0 0 15px rgba(255, 0, 0, 0.3);
+  display: block;
+}
 
-  /* Hide cursor when laser is active */
-  .laser-active,
-  .laser-active * {
-    cursor: none !important;
-  }
+/* Hide cursor when laser is active */
+.laser-active,
+.laser-active * {
+  cursor: none !important;
+}
 
-  /* Ensure cursor is hidden in fullscreen mode with laser */
-  :fullscreen.laser-active,
-  :fullscreen.laser-active *,
-  :-webkit-full-screen.laser-active,
-  :-webkit-full-screen.laser-active *,
-  :-moz-full-screen.laser-active,
-  :-moz-full-screen.laser-active * {
-    cursor: none !important;
-  }
+/* Ensure cursor is hidden in fullscreen mode with laser */
+:fullscreen.laser-active,
+:fullscreen.laser-active *,
+:-webkit-full-screen.laser-active,
+:-webkit-full-screen.laser-active *,
+:-moz-full-screen.laser-active,
+:-moz-full-screen.laser-active * {
+  cursor: none !important;
 }

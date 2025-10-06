@@ -64,7 +64,7 @@ export const LinkActionsModal = ({
               className={`p-1.5 hover:bg-gray-100 hover:text-primary-600 rounded transition-colors ${copied ? "text-green-600" : "text-gray-600"}`}
               title={copied ? "Copied!" : "Copy link"}
             >
-              <SvgIcon name={copied ? "check" : "copy"} size={16} />
+              <SvgIcon name={copied ? "check" : "copy"} size={16} strokeWidth={3} />
             </button>
 
             <button
@@ -72,7 +72,7 @@ export const LinkActionsModal = ({
               className="p-1.5 hover:bg-gray-100 hover:text-primary-600 rounded transition-colors"
               title="Edit link"
             >
-              <SvgIcon name="edit" size={16} />
+              <SvgIcon name="edit" size={16} strokeWidth={3} />
             </button>
 
             <button
@@ -80,19 +80,10 @@ export const LinkActionsModal = ({
               className="p-1.5 hover:bg-gray-100 hover:text-primary-600 rounded transition-colors"
               title="Remove link"
             >
-              <SvgIcon name="node-delete" size={16} />
+              <SvgIcon name="node-delete" size={16} strokeWidth={3} />
             </button>
           </div>
         </div>
-
-        <div 
-          className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-gray-300"
-          style={{ marginTop: '-1px' }}
-        />
-        <div 
-          className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[5px] border-r-[5px] border-t-[5px] border-l-transparent border-r-transparent border-t-white"
-          style={{ marginTop: '-5px' }}
-        />
       </div>
     </>
   );

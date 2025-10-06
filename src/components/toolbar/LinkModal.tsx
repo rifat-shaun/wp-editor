@@ -66,15 +66,6 @@ export const LinkModal = ({
           </button>
         </div>
       </div>
-      
-      <div 
-        className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-gray-300"
-        style={{ marginTop: '-1px' }}
-      />
-      <div 
-        className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-3 border-r-3 border-t-3 border-l-transparent border-r-transparent border-t-white"
-        style={{ marginTop: '-4px' }}
-      />
     </div>
     </>
   );
