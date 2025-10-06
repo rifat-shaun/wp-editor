@@ -25,12 +25,17 @@ import Blockquote from "@tiptap/extension-blockquote";
 import Heading from "@tiptap/extension-heading";
 import Link from "@tiptap/extension-link";
 import { VariableTable, VariableTableCell, VariableTableHeader, VariableTableRow } from "./VariableTable";
+import { VariableText } from "./VariableText";
+import type { EditorConfig } from "@/config/editorConfig";
+import { AI_AUTO_COMPLETION_DEBOUNCE_TIME, AI_AUTO_COMPLETION_TRIGGER_WORD_COUNT } from "@/constants";
 
-export const EditorExtensions = [
+export const getEditorExtensions = (config?: EditorConfig) => [
   StarterKit.configure({
     orderedList: false, // Disable default to use our custom one
     bulletList: false, // Disable default to use our custom one
     listItem: false, // Disable default to use our custom one with depth limit
+    heading: false, // Disable default to use our custom one
+    blockquote: false, // Disable default to use our custom one
   }),
   OrderedListWithType,
   UnorderedListWithType,
@@ -49,7 +54,6 @@ export const EditorExtensions = [
   TextStyle,
   FontSize,
   FontFamily,
-  AIAutocompletion,
   OnBlurHighlight,
   Superscript,
   Subscript,
@@ -66,6 +70,14 @@ export const EditorExtensions = [
     types: ["paragraph", "heading", "blockquote"],
     minLevel: 0,
     maxLevel: 12,
+  }),
+  // AIAutocompletion MUST be after Indent to intercept Tab key first (due to reverse processing order)
+  AIAutocompletion.configure({
+    minWordsToTriggerAutoCompletion: config?.aiAutocompletion?.minWordsToTriggerAutoCompletion || AI_AUTO_COMPLETION_TRIGGER_WORD_COUNT,
+    debounceTime: config?.aiAutocompletion?.debounceTime || AI_AUTO_COMPLETION_DEBOUNCE_TIME,
+    // Only enable if fetchCompletion function is provided
+    isEnabled: !!(config?.aiAutocompletion?.enabled && config?.aiAutocompletion?.fetchCompletion),
+    fetchCompletion: config?.aiAutocompletion?.fetchCompletion,
   }),
   TextAlign.configure({
     types: [
@@ -101,4 +113,11 @@ export const EditorExtensions = [
   VariableTableCell,
   VariableTableHeader,
   VariableTableRow,
+  VariableText.configure({
+    enabled: config?.enableVariableText || false,
+    variableValues: config?.variableValues || {},
+  }),
 ];
+
+// Backward compatibility - default extensions without config
+export const EditorExtensions = getEditorExtensions();

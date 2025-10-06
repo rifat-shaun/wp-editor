@@ -4,6 +4,25 @@ import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import path from "path";
 
+// Plugin to inject CSS import into the built JS
+function injectCssImport() {
+  return {
+    name: 'inject-css-import',
+    generateBundle(_options: any, bundle: any) {
+      // Find the main JS file
+      const jsFile = Object.keys(bundle).find(
+        (fileName) => fileName.endsWith('.es.js') || fileName.endsWith('.umd.js')
+      );
+      
+      if (jsFile && bundle[jsFile].type === 'chunk') {
+        const cssFileName = 'lax-wp-editor.css';
+        // Inject CSS import at the top of the file
+        bundle[jsFile].code = `import './${cssFileName}';\n${bundle[jsFile].code}`;
+      }
+    },
+  };
+}
+
 export default defineConfig({
   resolve: {
     alias: {
@@ -16,8 +35,10 @@ export default defineConfig({
       iconDirs: [path.resolve(process.cwd(), "src/assets/icons")],
       symbolId: "icon-[dir]-[name]",
     }),
+    injectCssImport(),
   ],
   build: {
+    emptyOutDir: false,
     lib: {
       entry: "./src/index.ts",
       name: "LaxEditor",
@@ -47,6 +68,8 @@ export default defineConfig({
         "@tiptap/extension-typography",
         "@tiptap/extensions",
         "@tiptap/pm",
+        // Externalize all ProseMirror packages to prevent bundling
+        /^prosemirror-/,
         "antd",
         "@mui/material",
         "@mui/icons-material",

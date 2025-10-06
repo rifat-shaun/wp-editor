@@ -2,14 +2,16 @@ import { useEditor, EditorContent, EditorContext } from "@tiptap/react";
 import { FloatingMenu, BubbleMenu } from "@tiptap/react/menus";
 import { useMemo, useEffect, useRef } from "react";
 import { usePageSize } from "@/hooks/usePageSize";
+import { usePresentationMode } from "@/hooks/usePresentationMode";
 import BubbleMenuContent from "./menubar/BubbleMenuContent";
 import type { EditorConfig } from "@/config/editorConfig";
 import { defaultEditorConfig } from "@/config/editorConfig";
-import { EditorExtensions } from "@/extensions";
+import { getEditorExtensions } from "@/extensions";
 import { Toolbar } from "@/components/toolbar/Toolbar";
 import { Footer } from "@/components/footer";
+import { PresentationControls } from "./PresentationControls";
 
-interface EditorProps {
+export interface EditorProps {
   config?: EditorConfig;
 }
 
@@ -18,10 +20,25 @@ const Editor = ({ config = {} }: EditorProps) => {
   const editorConfig = { ...defaultEditorConfig, ...config };
   const { pageClass } = usePageSize();
 
+  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const editor = useEditor({
-    extensions: EditorExtensions,
-    content: editorConfig.initialContent,
+    extensions: getEditorExtensions(editorConfig),
+    content: editorConfig.content,
+    autofocus: false,
+    onUpdate: ({ editor: editorInstance }) => {
+      if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+
+      // Restart after debounce time for content change
+      saveTimeoutRef.current = setTimeout(() => {
+        if (editorConfig.onContentChange) {
+          editorConfig.onContentChange(editorInstance);
+        }
+      }, editorConfig.debounceTimeForContentChange);
+    },
   });
+
+  const { isPresentationMode, isLaserActive, enterPresentationMode, exitPresentationMode, handleLaserToggle } = usePresentationMode(editor);
 
   // Keep editor focused - refocus if focus is lost
   useEffect(() => {
@@ -44,26 +61,34 @@ const Editor = ({ config = {} }: EditorProps) => {
     };
   }, [editor]);
 
+  useEffect(() => {
+    return () => {
+      editor?.destroy();
+    };
+  }, [editor]);
+
   // Memoize the provider value to avoid unnecessary re-renders
   const providerValue = useMemo(() => ({ editor }), [editor]);
 
   if (!editor) return null;
 
   return (
-    <div className="h-full flex flex-col bg-neutral-200">
+    <div className={`h-full flex flex-col bg-neutral-200 editor-container ${isPresentationMode ? "editor-presentation-mode" : ""} ${isLaserActive ? "laser-active" : ""}`}>
       {/* Toolbar */}
-      <Toolbar initialToolbar={editorConfig.defaultToolbar} editor={editor} />
+      {!isPresentationMode && (
+        <Toolbar initialToolbar={editorConfig.defaultToolbar} editor={editor} />
+      )}
 
       {/* Main Content Area */}
       <div className="flex-1 flex justify-center items-start w-full overflow-auto py-4">
         <div
-          className={editorConfig.enablePagination ? pageClass : ""}
+          className={`${editorConfig.enablePagination ? pageClass : ""} editor-content`}
           ref={editorPageRef}
         >
           <EditorContext.Provider value={providerValue}>
             <EditorContent editor={editor} />
 
-            {editorConfig.showFloatingMenu && editor && (
+            {editorConfig.showFloatingMenu && editor && !isPresentationMode && (
               <FloatingMenu editor={editor}>
                 <div className="bg-white shadow-lg rounded-lg border border-neutral-200 p-2">
                   This is the floating menu
@@ -71,7 +96,7 @@ const Editor = ({ config = {} }: EditorProps) => {
               </FloatingMenu>
             )}
 
-            {editorConfig.showBubbleMenu && editor && (
+            {editorConfig.showBubbleMenu && editor && !isPresentationMode && (
               <BubbleMenu editor={editor}>
                 <BubbleMenuContent editor={editor} />
               </BubbleMenu>
@@ -81,7 +106,14 @@ const Editor = ({ config = {} }: EditorProps) => {
       </div>
 
       {/* Footer */}
-      <Footer editor={editor} />
+      {!isPresentationMode && (
+        <Footer editor={editor} onPresentationModeToggle={enterPresentationMode} />
+      )}
+
+      {/* Presentation Controls */}
+      {isPresentationMode && (
+        <PresentationControls onExit={exitPresentationMode} onLaserToggle={handleLaserToggle} />
+      )}
     </div>
   );
 };

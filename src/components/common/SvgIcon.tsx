@@ -5,10 +5,10 @@ interface SvgIconProps {
   name: string;
   /** Icon size */
   size?: number | string;
-  /** Icon color */
-  color?: string;
   /** Additional CSS classes */
   className?: string;
+  /** Stroke width */
+  strokeWidth?: number;
   /** Click handler */
   onClick?: () => void;
 }
@@ -16,18 +16,23 @@ interface SvgIconProps {
 const SvgIcon: React.FC<SvgIconProps> = ({
   name,
   size = 14,
-  color = "currentColor",
   className = "",
+  strokeWidth,
   onClick,
 }) => {
   const symbolId = `#icon-${name}`;
   const sizeStyle =
     typeof size === "number" ? { width: `${size}px`, height: `${size}px` } : { width: size, height: size };
 
+  const combinedStyle = {
+    ...sizeStyle,
+    ...(strokeWidth && { strokeWidth }),
+  };
+
   return (
     <svg
       className={className}
-      style={{ ...sizeStyle, fill: color }}
+      style={combinedStyle}
       aria-hidden="true"
       onClick={onClick}
     >

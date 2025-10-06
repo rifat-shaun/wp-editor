@@ -3,10 +3,11 @@ import { Plugin, PluginKey } from "@tiptap/pm/state";
 import { Decoration, DecorationSet } from "@tiptap/pm/view";
 
 export interface AIAutocompletionOptions {
-  apiEndpoint: string;
-  triggerWordCount: number;
+  minWordsToTriggerAutoCompletion: number;
   debounceTime: number;
   isEnabled: boolean;
+  /** Custom fetch function - required for AI autocompletion to work */
+  fetchCompletion?: (text: string) => Promise<string>;
 }
 
 declare module "@tiptap/core" {
@@ -38,17 +39,19 @@ interface PluginState {
   suggestion: SuggestionData | null;
 }
 
-const aiAutocompletionKey = new PluginKey<PluginState>("ai-autocompletion");
+export const aiAutocompletionKey = new PluginKey<PluginState>("ai-autocompletion");
 
 export const AIAutocompletion = Extension.create<AIAutocompletionOptions>({
   name: "aiAutoCompletion",
 
+  priority: 1000, // High priority to handle Tab before other extensions
+
   addOptions() {
     return {
-      apiEndpoint: `https://dev2.lambdax.ai/api/v1/lax-ai-editor/public/completions`,
-      triggerWordCount: 5,
+      minWordsToTriggerAutoCompletion: 3,
       debounceTime: 100,
       isEnabled: false,
+      fetchCompletion: undefined,
     };
   },
 
@@ -62,53 +65,83 @@ export const AIAutocompletion = Extension.create<AIAutocompletionOptions>({
     return {
       acceptSuggestion:
         () =>
-        ({ editor }) => {
-          const pluginState = aiAutocompletionKey.getState(editor.state);
-          if (!pluginState?.suggestion) return false;
+          ({ state, dispatch }) => {
+            const pluginState = aiAutocompletionKey.getState(state);
+            if (!pluginState?.suggestion) return false;
 
-          const { to, text } = pluginState.suggestion;
-          editor.commands.insertContentAt(to, text);
-          editor.view.dispatch(
-            editor.state.tr.setMeta(aiAutocompletionKey, { type: "clear" })
-          );
+            if (dispatch) {
+              const { to, text } = pluginState.suggestion;
+              const tr = state.tr
+                .insertText(text, to, to)
+                .setMeta(aiAutocompletionKey, { type: "clear" });
+              dispatch(tr);
+            }
 
-          return true;
-        },
+            return true;
+          },
 
       dismissSuggestion:
         () =>
-        ({ editor }) => {
-          editor.view.dispatch(
-            editor.state.tr.setMeta(aiAutocompletionKey, { type: "clear" })
-          );
-          return true;
-        },
+          ({ state, dispatch }) => {
+            if (dispatch) {
+              const tr = state.tr.setMeta(aiAutocompletionKey, { type: "clear" });
+              dispatch(tr);
+            }
+            return true;
+          },
 
       enableAutocompletion:
         () =>
-        ({ editor }) => {
-          this.options.isEnabled = true;
-          this.storage.isEnabled = true;
-          editor.commands.dismissSuggestion();
-          return true;
-        },
+          ({ editor }) => {
+            this.options.isEnabled = true;
+            this.storage.isEnabled = true;
+            editor.commands.dismissSuggestion();
+            return true;
+          },
 
       disableAutocompletion:
         () =>
-        ({ editor }) => {
-          this.options.isEnabled = false;
-          this.storage.isEnabled = false;
-          editor.commands.dismissSuggestion();
-          return true;
-        },
+          ({ editor }) => {
+            this.options.isEnabled = false;
+            this.storage.isEnabled = false;
+            editor.commands.dismissSuggestion();
+            return true;
+          },
 
       toggleAutocompletion:
         () =>
-        ({ editor }) => {
-          return this.storage.isEnabled
-            ? editor.commands.disableAutocompletion()
-            : editor.commands.enableAutocompletion();
-        },
+          ({ editor }) => {
+            return this.storage.isEnabled
+              ? editor.commands.disableAutocompletion()
+              : editor.commands.enableAutocompletion();
+          },
+    };
+  },
+
+  addKeyboardShortcuts() {
+    return {
+      Tab: ({ editor }) => {
+        // Check if there's a suggestion
+        const pluginState = aiAutocompletionKey.getState(editor.state);
+        if (pluginState?.suggestion) {
+          const result = editor.commands.acceptSuggestion();
+          return result;
+        }
+        // If no suggestion, let other extensions handle Tab (e.g., indent)
+        return false;
+      },
+      Escape: ({ editor }) => {
+        // Check if there's a suggestion
+        const pluginState = aiAutocompletionKey.getState(editor.state);
+        if (pluginState?.suggestion) {
+          return editor.commands.dismissSuggestion();
+        }
+        // If no suggestion, let other extensions handle Escape
+        return false;
+      },
+      "Mod-Shift-Space": ({ editor }) => {
+        return editor.commands.toggleAutocompletion();
+      },
     };
   },
 
@@ -137,7 +170,7 @@ export const AIAutocompletion = Extension.create<AIAutocompletionOptions>({
               const { to, text } = meta.suggestion;
               const decoration = Decoration.widget(to, () => {
                 const span = document.createElement("span");
-                span.className = "lax-ai-suggestion";
+                span.className = "ai-suggestion";
                 span.textContent = text;
                 span.style.opacity = "0.6";
                 span.style.backgroundColor = "#f8f9fa";
@@ -168,35 +201,6 @@ export const AIAutocompletion = Extension.create<AIAutocompletionOptions>({
           decorations(state) {
             return this.getState(state)?.decorationSet;
           },
-
-          handleKeyDown(view, event) {
-            const pluginState = this.getState(view.state);
-            if (!pluginState?.suggestion) return false;
-
-            if (event.key === "Tab") {
-              event.preventDefault();
-              view.dispatch(
-                view.state.tr
-                  .insertText(
-                    pluginState.suggestion.text,
-                    pluginState.suggestion.to,
-                    pluginState.suggestion.to
-                  )
-                  .setMeta(aiAutocompletionKey, { type: "clear" })
-              );
-              return true;
-            }
-
-            if (event.key === "Escape") {
-              event.preventDefault();
-              view.dispatch(
-                view.state.tr.setMeta(aiAutocompletionKey, { type: "clear" })
-              );
-              return true;
-            }
-
-            return false;
-          },
         },
 
         view(view) {
@@ -207,37 +211,32 @@ export const AIAutocompletion = Extension.create<AIAutocompletionOptions>({
             currentAbortController = new AbortController();
 
             try {
-              const response = await fetch(self.options.apiEndpoint, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  text,
-                  model: "local",
-                  stream: false,
-                  max_tokens: 3 + Math.floor(Math.random() * 6),
-                }),
-                signal: currentAbortController.signal,
-              });
+              // Only proceed if custom fetch function is provided
+              if (!self.options.fetchCompletion) {
+                return;
+              }
 
-              if (!response.ok)
-                throw new Error("Failed to fetch AI suggestion");
+              const completion = await self.options.fetchCompletion(text);
 
-              const data = await response.json();
-              if (data.completion) {
+              // Validate completion is a non-empty string
+              if (
+                completion &&
+                typeof completion === "string"
+              ) {
                 view.dispatch(
                   view.state.tr.setMeta(aiAutocompletionKey, {
                     type: "setSuggestion",
                     suggestion: {
                       from: position - text.length,
                       to: position,
-                      text: data.completion,
+                      text: completion,
                     },
                   })
                 );
               }
             } catch (error) {
               if (error instanceof Error && error.name !== "AbortError") {
-                console.error(error);
+                console.error("[AI Autocompletion Error]:", error);
               }
             } finally {
               if (
@@ -269,9 +268,14 @@ export const AIAutocompletion = Extension.create<AIAutocompletionOptions>({
                 .split(/\s+/)
                 .filter(Boolean).length;
 
-              if (wordCount < self.options.triggerWordCount) {
+              // Clear any existing suggestions and abort if below threshold
+              if (wordCount < self.options.minWordsToTriggerAutoCompletion) {
                 currentAbortController?.abort();
                 currentAbortController = null;
+                clearTimeout(debounceTimeout);
+                updatedView.dispatch(
+                  updatedView.state.tr.setMeta(aiAutocompletionKey, { type: "clear" })
+                );
                 return;
               }
 
@@ -280,6 +284,12 @@ export const AIAutocompletion = Extension.create<AIAutocompletionOptions>({
                 () => fetchSuggestion(textBefore, cursorPos),
                 self.options.debounceTime
               );
+            },
+            destroy() {
+              // Cleanup on destroy
+              clearTimeout(debounceTimeout);
+              currentAbortController?.abort();
+              currentAbortController = null;
             },
           };
         },
