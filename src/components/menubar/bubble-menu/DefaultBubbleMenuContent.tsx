@@ -1,44 +1,41 @@
 import { Editor } from "@tiptap/core";
-import SvgIcon from "../common/SvgIcon";
+import SvgIcon from "../../common/SvgIcon";
 
-interface BubbleMenuContentProps {
+interface DefaultBubbleMenuContentProps {
   editor: Editor;
 }
 
-const BubbleMenuContent = ({ editor }: BubbleMenuContentProps) => {
+export const DefaultBubbleMenuContent = ({ editor }: DefaultBubbleMenuContentProps) => {
   return (
     <div className="flex items-center gap-1 bg-white shadow-lg rounded-lg border border-neutral-200 p-2">
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
-        className={`p-2 rounded transition-colors ${
-          editor.isActive("bold")
+        className={`p-2 rounded transition-colors ${editor.isActive("bold")
             ? "bg-primary-100 text-primary-700"
             : "hover:bg-neutral-100"
-        }`}
+          }`}
         title="Bold (Ctrl+B)"
       >
-        <SvgIcon name="bold"  />
+        <SvgIcon name="bold" />
       </button>
 
       <button
         onClick={() => editor.chain().focus().toggleItalic().run()}
-        className={`p-2 rounded transition-colors ${
-          editor.isActive("italic")
+        className={`p-2 rounded transition-colors ${editor.isActive("italic")
             ? "bg-primary-100 text-primary-700"
             : "hover:bg-neutral-100"
-        }`}
+          }`}
         title="Italic (Ctrl+I)"
       >
-        <SvgIcon name="italic"  />
+        <SvgIcon name="italic" />
       </button>
 
       <button
         onClick={() => editor.chain().focus().toggleStrike().run()}
-        className={`p-2 rounded transition-colors ${
-          editor.isActive("strike")
+        className={`p-2 rounded transition-colors ${editor.isActive("strike")
             ? "bg-primary-100 text-primary-700"
             : "hover:bg-neutral-100"
-        }`}
+          }`}
         title="Strikethrough"
       >
         <SvgIcon name="strikethrough" />
@@ -51,11 +48,8 @@ const BubbleMenuContent = ({ editor }: BubbleMenuContentProps) => {
         className="p-2 rounded hover:bg-neutral-100 transition-colors"
         title="Clear formatting"
       >
-        <SvgIcon name="clear-format"  />
+        <SvgIcon name="clear-format" />
       </button>
     </div>
   );
 };
-
-export default BubbleMenuContent;
-

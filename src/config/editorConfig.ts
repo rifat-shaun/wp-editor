@@ -1,7 +1,7 @@
 import type { Editor } from "@tiptap/react";
 import { TOOLBAR_TYPES_ENUM } from "../constants/Toolbar";
 import { AI_AUTO_COMPLETION_DEBOUNCE_TIME, AI_AUTO_COMPLETION_TRIGGER_WORD_COUNT } from "@/constants";
-import { DEFAULT_DEBOUNCE_TIME_FOR_CONTENT_CHANGE } from "@/constants/base";
+import { DEFAULT_DEBOUNCE_TIME_FOR_CONTENT_CHANGE } from "@/constants/Base";
 
 export interface AIAutocompletionConfig {
   /** Enable/disable AI autocompletion */
@@ -15,10 +15,6 @@ export interface AIAutocompletionConfig {
 }
 
 export interface EditorConfig {
-  /** Enable/disable the bubble menu that appears on text selection */
-  showBubbleMenu?: boolean;
-  /** Enable/disable the floating menu that appears on empty lines */
-  showFloatingMenu?: boolean;
   /** Enable/disable the page size selector */
   showPageSizeSelector?: boolean;
   /** Initial content for the editor */
@@ -40,8 +36,6 @@ export interface EditorConfig {
 }
 
 export const defaultEditorConfig: EditorConfig = {
-  showBubbleMenu: true,
-  showFloatingMenu: false,
   showPageSizeSelector: true,
   content: "",
   enablePagination: true,
