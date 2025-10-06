@@ -1,7 +1,8 @@
 import type { PageConfig } from "@/components/toolbar/page/PageSizeSelector";
+import { Editor } from "@tiptap/react";
 import { useState } from "react";
 
-export const usePageSize = () => {
+export const usePageMethods = (editor: Editor) => {
   const [pageConfig, setPageConfig] = useState<PageConfig>({
     size: "A4",
     orientation: "portrait",

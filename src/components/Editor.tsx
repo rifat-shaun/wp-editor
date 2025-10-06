@@ -1,7 +1,6 @@
 import { useEditor, EditorContent, EditorContext } from "@tiptap/react";
 import { FloatingMenu, BubbleMenu } from "@tiptap/react/menus";
 import { useMemo, useEffect, useRef } from "react";
-import { usePageSize } from "@/hooks/usePageSize";
 import { usePresentationMode } from "@/hooks/usePresentationMode";
 import BubbleMenuContent from "./menubar/BubbleMenuContent";
 import type { EditorConfig } from "@/config/editorConfig";
@@ -10,6 +9,7 @@ import { getEditorExtensions } from "@/extensions";
 import { Toolbar } from "@/components/toolbar/Toolbar";
 import { Footer } from "@/components/footer";
 import { PresentationControls } from "./PresentationControls";
+import { usePageMethods } from "@/hooks/usePageMethods";
 
 export interface EditorProps {
   config?: EditorConfig;
@@ -18,8 +18,6 @@ export interface EditorProps {
 const Editor = ({ config = {} }: EditorProps) => {
   const editorPageRef = useRef<HTMLDivElement>(null);
   const editorConfig = { ...defaultEditorConfig, ...config };
-  const { pageClass } = usePageSize();
-
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const editor = useEditor({
@@ -38,6 +36,7 @@ const Editor = ({ config = {} }: EditorProps) => {
     },
   });
 
+  const { pageClass } = usePageMethods(editor);
   const { isPresentationMode, isLaserActive, enterPresentationMode, exitPresentationMode, handleLaserToggle } = usePresentationMode(editor);
 
   // Keep editor focused - refocus if focus is lost
