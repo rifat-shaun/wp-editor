@@ -14,7 +14,7 @@ import {
   TitleOutlined,
 } from "@mui/icons-material";
 import { Editor } from "@tiptap/react";
-import { ToolbarButtonItem } from "../ToolbarButtonItem";
+import { Button } from "../../base/Button";
 import { HorizontalLayoutColorPicker } from "../../base/ColorPicker";
 import SvgIcon from "../../common/SvgIcon";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
@@ -127,8 +127,8 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
           </Space.Compact>
         </Tooltip>
 
-        <ToolbarButtonItem
-          tooltip={"Decrease Font Size"}
+        <Button
+          title="Decrease Font Size"
           onClick={decreaseFontSize}
           disabled={!editor.isEditable}
           active={false}
@@ -138,10 +138,10 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
             className="text-gray-700"
             sx={{ fontSize: "18px" }}
           />
-        </ToolbarButtonItem>
+        </Button>
 
-        <ToolbarButtonItem
-          tooltip={"Increase Font Size"}
+        <Button
+          title="Increase Font Size"
           onClick={increaseFontSize}
           disabled={!editor.isEditable}
           active={false}
@@ -151,12 +151,12 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
             className="text-gray-700"
             sx={{ fontSize: "18px" }}
           />
-        </ToolbarButtonItem>
+        </Button>
       </div>
 
       <div className="flex items-center space-x-2">
-        <ToolbarButtonItem
-          tooltip={"Bold"}
+        <Button
+          title="Bold"
           onClick={handleToggleBold}
           disabled={!canBold}
           active={isBold}
@@ -166,10 +166,10 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
             className="text-gray-700"
             sx={{ fontSize: "18px" }}
           />
-        </ToolbarButtonItem>
+        </Button>
 
-        <ToolbarButtonItem
-          tooltip={"Italic"}
+        <Button
+          title="Italic"
           onClick={handleToggleItalic}
           disabled={!canItalic}
           active={isItalic}
@@ -179,10 +179,10 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
             className="text-gray-700"
             sx={{ fontSize: "18px" }}
           />
-        </ToolbarButtonItem>
+        </Button>
 
-        <ToolbarButtonItem
-          tooltip={"Underline"}
+        <Button
+          title="Underline"
           onClick={handleToggleUnderline}
           disabled={!canUnderline}
           active={isUnderline}
@@ -192,20 +192,20 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
             className="text-gray-700"
             sx={{ fontSize: "18px" }}
           />
-        </ToolbarButtonItem>
+        </Button>
 
-        <ToolbarButtonItem
-          tooltip={"Strikethrough"}
+        <Button
+          title="Strikethrough"
           onClick={handleToggleStrike}
           disabled={!canStrike}
           active={isStrike}
           size="small"
         >
           <SvgIcon name="strikethrough" />
-        </ToolbarButtonItem>
+        </Button>
 
-        <ToolbarButtonItem
-          tooltip={"Superscript"}
+        <Button
+          title="Superscript"
           onClick={handleSuperscriptToggle}
           disabled={!canSuperscript}
           active={isSuperscript}
@@ -215,10 +215,10 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
             className="text-gray-700"
             sx={{ fontSize: "18px" }}
           />
-        </ToolbarButtonItem>
+        </Button>
 
-        <ToolbarButtonItem
-          tooltip={"Subscript"}
+        <Button
+          title="Subscript"
           onClick={handleSubscriptToggle}
           disabled={!canSubscript}
           active={isSubscript}
@@ -228,7 +228,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
             className="text-gray-700"
             sx={{ fontSize: "18px" }}
           />
-        </ToolbarButtonItem>
+        </Button>
 
         <HorizontalLayoutColorPicker
           id="selectionColor"
