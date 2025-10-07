@@ -11,6 +11,8 @@ import { TOOLBAR_TYPES_ENUM } from "@/constants/Toolbar";
 import PageOrientationSelector from "./PageOrientationSelector";
 import { PageMarginPicker } from "./PageMarginPicker";
 import { Editor } from "@tiptap/react";
+import { PAGE_BACKGROUND_COLORS } from "@/constants/PageBackground";
+import { PageBackgroundColorPicker } from "./PageBackgroundColorPicker";
 
 export const PageOptions = ({ editor }: { editor: Editor }) => {
 	const { pageConfig, setPageConfig, currentToolbar, onPresentationModeToggle } = useToolbar();
@@ -19,6 +21,12 @@ export const PageOptions = ({ editor }: { editor: Editor }) => {
 	const [isPageSizeOpen, setIsPageSizeOpen] = useState(false);
 	const [isPageOrientationOpen, setIsPageOrientationOpen] = useState(false);
 	const [isPageMarginsOpen, setIsPageMarginsOpen] = useState(false);
+	const [selectedBGColor, setSelectedBGColor] = useState(PAGE_BACKGROUND_COLORS[0].value);
+
+	const handleSetPageBackgroundColor = (color: string) => {
+		setSelectedBGColor(color);
+		editor.chain().focus().setPageBackgroundColor(color).run();
+	}
 
 	return (
 		<>
@@ -42,16 +50,31 @@ export const PageOptions = ({ editor }: { editor: Editor }) => {
 				>
 					<Button
 						onClick={() => setIsPageMarginsOpen(true)}
-						title="Insert Link"
-						className="flex items-center gap-1"
+						title="Page Margin"
+						size={isClassicToolbar ? "small" : "medium"}
 					>
-						<SvgIcon
-							name="page-margin"
-							strokeWidth={1.5}
-							size={isClassicToolbar ? "18px" : "32px"}
-						/>
-						<span className="text-xs">Margin</span>
-						<ArrowDropDownOutlined sx={{ fontSize: isClassicToolbar ? "18px" : "22px", color: "inherit" }} />
+						{isClassicToolbar ? (
+							<div className="relative flex items-center gap-1">
+								<SvgIcon
+									name="page-margin"
+									strokeWidth={1.5}
+								/>
+								<span className="text-xs">Margin</span>
+								<ArrowDropDownOutlined sx={{ fontSize: "14px", color: "inherit" }} />
+							</div>
+						) : (
+							<div className="relative flex flex-col items-center gap-1">
+								<div className="flex items-center gap-1">
+									<SvgIcon
+										name="page-margin"
+										strokeWidth={1.5}
+										size={20}
+									/>
+									<ArrowDropDownOutlined sx={{ fontSize: "16px", color: "inherit" }} />
+								</div>
+								<span className="text-xs">Margin</span>
+							</div>
+						)}
 					</Button>
 				</Popover>
 			</ItemGroup>
@@ -114,14 +137,30 @@ export const PageOptions = ({ editor }: { editor: Editor }) => {
 
 			<Divider />
 
+			<PageBackgroundColorPicker
+				id="pageBackgroundColor"
+				selectedBGColor={selectedBGColor}
+				setSelectedBGColor={handleSetPageBackgroundColor}
+			/>
+
+			<Divider />
+
 			<Button
 				onClick={onPresentationModeToggle}
-				className="flex items-center gap-2 py-px"
 				title="Enter Presentation Mode"
-				size="small"
+				size={isClassicToolbar ? "small" : "medium"}
 			>
-				<SvgIcon name="preview" strokeWidth={3.5} />
-				<span>Presentation</span>
+				{isClassicToolbar ? (
+					<div className="relative flex items-center gap-1">
+						<SvgIcon name="preview" strokeWidth={3.5} />
+						<span className="text-xs">Presentation</span>
+					</div>
+				) : (
+					<div className="relative flex flex-col items-center gap-1">
+						<SvgIcon name="preview" size={20} strokeWidth={3.5} />
+						<span className="text-xs">Presentation</span>
+					</div>
+				)}
 			</Button>
 		</>
 	)

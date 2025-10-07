@@ -30,6 +30,7 @@ import { AI_AUTO_COMPLETION_DEBOUNCE_TIME, AI_AUTO_COMPLETION_TRIGGER_WORD_COUNT
 import Link from "@tiptap/extension-link";
 import { HorizontalRuleWithStyle } from "./HorizontalRuleWithStyle";
 import PageMargin from "./PageMargin";
+import PageBackground from "./PageBackground";
 
 const getEditorExtensions = (config?: EditorConfig) => [
   StarterKit.configure({
@@ -127,6 +128,7 @@ const getEditorExtensions = (config?: EditorConfig) => [
       left: 1,
     },
   }),
+  PageBackground,
 ];
 
 // Backward compatibility - default extensions without config

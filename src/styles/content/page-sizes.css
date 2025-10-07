@@ -2,79 +2,49 @@
 .page-a4 {
   width: 210mm;
   min-height: 297mm;
-  background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
 }
 
 .page-a4-landscape {
   width: 297mm;
   min-height: 210mm;
-  background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
 }
 
 .page-a3 {
   width: 297mm;
   min-height: 420mm;
-  background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
 }
 
 .page-a3-landscape {
   width: 420mm;
   min-height: 297mm;
-  background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
 }
 
 .page-letter {
   width: 8.5in;
   min-height: 11in;
-  background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
 }
 
 .page-letter-landscape {
   width: 11in;
   min-height: 8.5in;
-  background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
 }
 
 .page-legal {
   width: 8.5in;
   min-height: 14in;
-  background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
 }
 
 .page-legal-landscape {
   width: 14in;
   min-height: 8.5in;
-  background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
 }
 
 .page-tabloid {
   width: 11in;
   min-height: 17in;
-  background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
 }
 
 .page-tabloid-landscape {
   width: 17in;
   min-height: 11in;
-  background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
 }
