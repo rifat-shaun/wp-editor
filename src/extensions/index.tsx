@@ -28,6 +28,7 @@ import { VariableText } from "./VariableText";
 import type { EditorConfig } from "@/config/editorConfig";
 import { AI_AUTO_COMPLETION_DEBOUNCE_TIME, AI_AUTO_COMPLETION_TRIGGER_WORD_COUNT } from "@/constants";
 import Link from "@tiptap/extension-link";
+import { HorizontalRuleWithStyle } from "./HorizontalRuleWithStyle";
 
 export const getEditorExtensions = (config?: EditorConfig) => [
   StarterKit.configure({
@@ -37,6 +38,7 @@ export const getEditorExtensions = (config?: EditorConfig) => [
     heading: false, // Disable default to use our custom one
     blockquote: false, // Disable default to use our custom one
     link: false, // Disable default to use our custom one
+    horizontalRule: false, // Disable default to use our custom one
   }),
   OrderedListWithType,
   UnorderedListWithType,
@@ -114,6 +116,7 @@ export const getEditorExtensions = (config?: EditorConfig) => [
     defaultProtocol: 'https',
     protocols: ['http', 'https'],
   }),
+  HorizontalRuleWithStyle,
 ];
 
 // Backward compatibility - default extensions without config
