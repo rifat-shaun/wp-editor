@@ -91,10 +91,10 @@ export const CodeBlockToolbar = ({ node, updateAttributes, deleteNode, editor }:
   return (
     <NodeViewWrapper className="code-block-wrapper">
       <div 
-        className="flex justify-between items-center p-2 bg-gray-800 border-b border-gray-700 user-select-none select-none" 
+        className={`code-block-toolbar theme-${theme}`}
         contentEditable={false}
       >
-        <div className="flex gap-2 items-center">
+        <div className="code-block-toolbar-left">
           <Select
             value={language}
             onChange={handleLanguageChange}
@@ -134,7 +134,7 @@ export const CodeBlockToolbar = ({ node, updateAttributes, deleteNode, editor }:
             }}
           />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="code-block-toolbar-actions">
           <button
             onClick={handleCopy}
             onMouseDown={(e) => e.stopPropagation()}
