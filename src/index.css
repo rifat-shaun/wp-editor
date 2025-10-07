@@ -6,6 +6,7 @@
 @import "./styles/content/table.css";
 @import "./styles/content/link.css";
 @import "./styles/content/divider.css";
+@import "./styles/content/codeblock.css";
 
 @tailwind base;
 @tailwind components;

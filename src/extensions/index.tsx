@@ -29,6 +29,12 @@ import type { EditorConfig } from "@/config/editorConfig";
 import { AI_AUTO_COMPLETION_DEBOUNCE_TIME, AI_AUTO_COMPLETION_TRIGGER_WORD_COUNT } from "@/constants";
 import Link from "@tiptap/extension-link";
 import { HorizontalRuleWithStyle } from "./HorizontalRuleWithStyle";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import { all, createLowlight } from 'lowlight'
+
+// create a lowlight instance with all languages loaded
+const lowlight = createLowlight(all)
+
 
 const getEditorExtensions = (config?: EditorConfig) => [
   StarterKit.configure({
@@ -117,6 +123,12 @@ const getEditorExtensions = (config?: EditorConfig) => [
     protocols: ['http', 'https'],
   }),
   HorizontalRuleWithStyle,
+  CodeBlockLowlight.configure({
+    lowlight,
+    HTMLAttributes: {
+      class: 'code-block-wrapper',
+    },
+  })
 ];
 
 // Backward compatibility - default extensions without config

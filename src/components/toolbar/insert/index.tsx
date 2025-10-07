@@ -84,6 +84,14 @@ export const InsertOptions = ({ editor }: { editor: Editor }) => {
           />
         </Button>
       </Popover>
+      <Button
+        size={isClassicToolbar ? "medium" : "large"}
+        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+        title="Insert Code Block"
+        className="flex items-center gap-1"
+      >
+        <SvgIcon name="code" size={isClassicToolbar ? "18px" : "32px"} strokeWidth={4} />
+      </Button>
     </>
   );
 };
