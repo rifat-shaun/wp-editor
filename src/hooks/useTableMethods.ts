@@ -22,6 +22,11 @@ export const useTableMethods = (editor: Editor) => {
 		editor.chain().focus().addColumnBefore().run();
 	};
 
+	const handleDeleteRow = () => {
+		if (!editor) return;
+		editor.chain().focus().deleteRow().run();
+	};
+
 	const handleInsertColumnRight = () => {
 		if (!editor) return;
 		editor.chain().focus().addColumnAfter().run();
@@ -51,6 +56,7 @@ export const useTableMethods = (editor: Editor) => {
 		handleInsertTable,
 		handleInsertRowAbove,
 		handleInsertRowBelow,
+		handleDeleteRow,
 		handleInsertColumnLeft,
 		handleInsertColumnRight,
 		handleDeleteColumn,

@@ -44,7 +44,7 @@ export const InsertOptions = ({ editor }: { editor: Editor }) => {
 					title="Insert Link"
 					className="flex items-center gap-1"
 				>
-					<SvgIcon name="link" size={isClassicToolbar ? "18px" : "22px"} />
+					<SvgIcon name="link" size={isClassicToolbar ? "18px" : "32px"} strokeWidth={2} />
 					<ArrowDropDownOutlined sx={{ fontSize: isClassicToolbar ? "18px" : "22px", color: 'inherit' }} />
 				</Button>
 			</Popover>

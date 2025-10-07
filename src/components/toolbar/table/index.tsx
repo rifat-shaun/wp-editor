@@ -18,7 +18,7 @@ type TTableOptionsProps = {
 
 export const TableOptions = ({ editor }: TTableOptionsProps) => {
   const { isTableActive } = useTiptapEditorState(editor);
-  const { handleInsertTable, handleInsertRowAbove, handleInsertRowBelow, handleInsertColumnLeft, handleInsertColumnRight, handleDeleteColumn, handleMergeCells, handleSplitCell, handleDeleteTable } = useTableMethods(editor);
+  const { handleInsertTable, handleInsertRowAbove, handleInsertRowBelow, handleDeleteRow, handleInsertColumnLeft, handleInsertColumnRight, handleDeleteColumn, handleMergeCells, handleSplitCell, handleDeleteTable } = useTableMethods(editor);
   const { currentToolbar } = useToolbar();
   const isClassicToolbar = currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC;
 
@@ -28,91 +28,6 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
   };
-
-  const tableOptionsItemGroup = (
-    <ItemGroup>
-      <div className='flex items-center space-x-2'>
-        <Button
-          onClick={handleInsertRowAbove}
-          disabled={!isTableActive}
-          active={false}
-          size='small'
-          title='Insert Row Above'
-        >
-          <div className='flex items-center flex-row gap-1'>
-            <SvgIcon name='table-add-row-before' strokeWidth={4} />
-            <span className='text-sm min-w-max'>Insert Row Above</span>
-          </div>
-        </Button>
-
-        <Button
-          onClick={handleInsertRowBelow}
-          disabled={!isTableActive}
-          active={false}
-          size='small'
-          title='Insert Row Below'
-        >
-          <div className='flex items-center flex-row gap-1'>
-            <SvgIcon name='table-add-row-after' strokeWidth={4} />
-            <span className='text-sm min-w-max'>Insert Row Below</span>
-          </div>
-        </Button>
-
-        {/* <ToolbarButtonItem
-					tooltip='Delete Row'
-					onClick={() => deleteTableRowsWithIdUpdate(editor)}
-					disabled={!isTableActive}
-					active={false}
-					buttonTitle='Delete Row'
-					size='small'
-					showChildrenInline
-				>
-					<SvgIcon name='table-delete-row' />
-				</ToolbarButtonItem> */}
-      </div>
-
-      <div className='flex items-center space-x-2'>
-        <Button
-          onClick={handleInsertColumnLeft}
-          disabled={!isTableActive}
-          active={false}
-          size='small'
-          title='Insert Column Left'
-        >
-          <div className='flex items-center flex-row gap-1'>
-            <SvgIcon name='table-add-column-before' strokeWidth={4} />
-            <span className='text-sm min-w-max'>Insert Column Left</span>
-          </div>
-        </Button>
-
-        <Button
-          onClick={handleInsertColumnRight}
-          disabled={!isTableActive}
-          active={false}
-          size='small'
-          title='Insert Column Right'
-        >
-          <div className='flex items-center flex-row gap-1'>
-            <SvgIcon name='table-add-column-after' strokeWidth={4} />
-            <span className='text-sm min-w-max'>Insert Column Right</span>
-          </div>
-        </Button>
-
-        <Button
-          onClick={handleDeleteColumn}
-          disabled={!isTableActive}
-          active={false}
-          size='small'
-          title='Delete Column'
-        >
-          <div className='flex items-center flex-row gap-1'>
-            <SvgIcon name='table-delete-column' strokeWidth={2} />
-            <span className='text-sm min-w-max'>Delete Column</span>
-          </div>
-        </Button>
-      </div>
-    </ItemGroup>
-  );
 
   return (
     <>
@@ -139,7 +54,89 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
 
       <Divider />
 
-      {tableOptionsItemGroup}
+      <ItemGroup>
+        <div className='flex items-center space-x-2'>
+          <Button
+            onClick={handleInsertRowAbove}
+            disabled={!isTableActive}
+            active={false}
+            size='small'
+            title='Insert Row Above'
+          >
+            <div className='flex items-center flex-row gap-1'>
+              <SvgIcon name='table-add-row-before' strokeWidth={4} />
+              <span className='text-sm min-w-max'>Insert Row Above</span>
+            </div>
+          </Button>
+
+          <Button
+            onClick={handleInsertRowBelow}
+            disabled={!isTableActive}
+            active={false}
+            size='small'
+            title='Insert Row Below'
+          >
+            <div className='flex items-center flex-row gap-1'>
+              <SvgIcon name='table-add-row-after' strokeWidth={4} />
+              <span className='text-sm min-w-max'>Insert Row Below</span>
+            </div>
+          </Button>
+
+          <Button
+            onClick={handleDeleteRow}
+            disabled={!isTableActive}
+            active={false}
+            size='small'
+            title='Delete Row'
+          >
+            <div className='flex items-center flex-row gap-1'>
+              <SvgIcon name='table-delete-row' strokeWidth={2} />
+              <span className='text-sm min-w-max'>Delete Row</span>
+            </div>
+          </Button>
+        </div>
+
+        <div className='flex items-center space-x-2'>
+          <Button
+            onClick={handleInsertColumnLeft}
+            disabled={!isTableActive}
+            active={false}
+            size='small'
+            title='Insert Column Left'
+          >
+            <div className='flex items-center flex-row gap-1'>
+              <SvgIcon name='table-add-column-before' strokeWidth={4} />
+              <span className='text-sm min-w-max'>Insert Column Left</span>
+            </div>
+          </Button>
+
+          <Button
+            onClick={handleInsertColumnRight}
+            disabled={!isTableActive}
+            active={false}
+            size='small'
+            title='Insert Column Right'
+          >
+            <div className='flex items-center flex-row gap-1'>
+              <SvgIcon name='table-add-column-after' strokeWidth={4} />
+              <span className='text-sm min-w-max'>Insert Column Right</span>
+            </div>
+          </Button>
+
+          <Button
+            onClick={handleDeleteColumn}
+            disabled={!isTableActive}
+            active={false}
+            size='small'
+            title='Delete Column'
+          >
+            <div className='flex items-center flex-row gap-1'>
+              <SvgIcon name='table-delete-column' strokeWidth={2} />
+              <span className='text-sm min-w-max'>Delete Column</span>
+            </div>
+          </Button>
+        </div>
+      </ItemGroup>
 
       <Divider />
 
