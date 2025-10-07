@@ -120,7 +120,7 @@ export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
 				className='border border-gray-300 rounded px-2 w-[100px] cursor-pointer'
 			>
 				<div className='flex items-center gap-1 justify-between'>
-					<span className='text-xs truncate'>{HEADING_OPTIONS.find(option => option.value === selectedHeadingTag)?.label}</span>
+					<span className='text-sm truncate'>{HEADING_OPTIONS.find(option => option.value === selectedHeadingTag)?.label}</span>
 					<ArrowDropDownOutlined className='text-gray-500 hover:opacity-50' />
 				</div>
 			</Dropdown>

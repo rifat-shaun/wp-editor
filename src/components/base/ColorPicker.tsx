@@ -6,6 +6,7 @@ import { FormatColorResetOutlined } from "@mui/icons-material";
 import { Col, ColorPicker, Divider, Row, theme } from "antd";
 import type { ColorPickerProps } from "antd";
 import { useState, type ReactNode } from "react";
+import { Button } from "./Button";
 
 interface HorizontalLayoutColorPickerProps {
   id: string;
@@ -54,9 +55,8 @@ export const HorizontalLayoutColorPicker = ({
                 {row.map((color) => (
                   <button
                     key={color}
-                    className={`w-4 h-4 rounded-sm hover:scale-[1.2] transition-transform ${
-                      selectedColor === color ? "ring-2 ring-blue-500" : ""
-                    } ${color === "#FFFFFF" ? "border" : ""}`}
+                    className={`w-4 h-4 rounded-sm hover:scale-[1.2] transition-transform ${selectedColor === color ? "ring-2 ring-blue-500" : ""
+                      } ${color === "#FFFFFF" ? "border" : ""}`}
                     style={{ backgroundColor: color }}
                     onClick={() => handlePresetColorSelect(color)}
                   />
@@ -72,9 +72,8 @@ export const HorizontalLayoutColorPicker = ({
             {COLOR_PICKER_STANDARD_COLORS.map((color) => (
               <button
                 key={color}
-                className={`w-3.5 h-3.5 rounded-sm hover:scale-[1.2] transition-transform ${
-                  selectedColor === color ? "ring-2 ring-blue-500" : ""
-                }`}
+                className={`w-3.5 h-3.5 rounded-sm hover:scale-[1.2] transition-transform ${selectedColor === color ? "ring-2 ring-blue-500" : ""
+                  }`}
                 style={{ backgroundColor: color }}
                 onClick={() => handlePresetColorSelect(color)}
               />
@@ -130,26 +129,26 @@ export const HorizontalLayoutColorPicker = ({
         }
       }}
     >
-      <button
+      <Button
         id={id}
-        className="relative flex items-center"
+        className="relative flex items-center w-[26px] h-6"
         onClick={() => setOpen(true)}
       >
         {icon ? (
-          <div className="flex flex-col items-center gap-px relative">
+          <div className="flex flex-col items-center relative">
             {icon}
             <div
-              className="h-[3px] w-full"
+              className="h-[2px] w-full"
               style={{ backgroundColor: value }}
             />
           </div>
         ) : (
           <div
-            className="w-4 h-4 rounded-sm"
+            className="w-full h-full rounded-sm"
             style={{ backgroundColor: value }}
           />
         )}
-      </button>
+      </Button>
     </ColorPicker>
   );
 };

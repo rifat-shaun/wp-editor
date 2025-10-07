@@ -15,7 +15,7 @@ interface SvgIconProps {
 
 const SvgIcon: React.FC<SvgIconProps> = ({
   name,
-  size = 14,
+  size = 16,
   className = "",
   strokeWidth,
   onClick,
