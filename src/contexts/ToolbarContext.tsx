@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
 import { TOOLBAR_TYPES_ENUM } from "@/constants/Toolbar";
+import type { PageConfig } from "@/components/toolbar/page/PageSizeSelector";
 
 export interface ToolbarContextType {
   currentToolbar: string;
@@ -10,6 +11,8 @@ export interface ToolbarContextType {
   handleToolbarChange: (toolbarType: string) => void;
   handleShowToolbar: () => void;
   onPresentationModeToggle: () => void;
+  pageConfig: PageConfig;
+  setPageConfig: (config: PageConfig) => void;
 }
 
 const ToolbarContext = createContext<ToolbarContextType | undefined>(undefined);
@@ -18,12 +21,16 @@ interface ToolbarProviderProps {
   children: ReactNode;
   defaultToolbar?: string;
   onPresentationModeToggle: () => void;
+  pageConfig: PageConfig;
+  setPageConfig: (config: PageConfig) => void;
 }
 
 export const ToolbarProvider = ({
   children,
   defaultToolbar = TOOLBAR_TYPES_ENUM.PROFESSIONAL,
-  onPresentationModeToggle
+  onPresentationModeToggle,
+  pageConfig,
+  setPageConfig
 }: ToolbarProviderProps) => {
   const { HIDE_TOOLBAR } = TOOLBAR_TYPES_ENUM;
 
@@ -58,7 +65,9 @@ export const ToolbarProvider = ({
         setLastVisibleToolbar,
         handleToolbarChange,
         handleShowToolbar,
-        onPresentationModeToggle
+        onPresentationModeToggle,
+        pageConfig,
+        setPageConfig
       }}
     >
       {children}

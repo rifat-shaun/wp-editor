@@ -36,7 +36,7 @@ const Editor = ({ config = {} }: EditorProps) => {
     },
   });
 
-  const { pageClass } = usePageMethods(editor);
+  const { pageClass, pageConfig, setPageConfig } = usePageMethods(editor);
   const { isPresentationMode, isLaserActive, onPresentationModeToggle, handleLaserToggle } = usePresentationMode(editor);
 
   // Keep editor focused - refocus if focus is lost
@@ -75,7 +75,13 @@ const Editor = ({ config = {} }: EditorProps) => {
     <div className={`h-full flex flex-col bg-neutral-200 editor-container ${isPresentationMode ? "editor-presentation-mode" : ""} ${isLaserActive ? "laser-active" : ""}`}>
       {/* Toolbar */}
       {!isPresentationMode && (
-        <Toolbar initialToolbar={editorConfig.defaultToolbar} editor={editor} onPresentationModeToggle={onPresentationModeToggle} />
+        <Toolbar 
+          initialToolbar={editorConfig.defaultToolbar} 
+          editor={editor} 
+          onPresentationModeToggle={onPresentationModeToggle}
+          pageConfig={pageConfig}
+          setPageConfig={setPageConfig}
+        />
       )}
 
       {/* Main Content Area */}

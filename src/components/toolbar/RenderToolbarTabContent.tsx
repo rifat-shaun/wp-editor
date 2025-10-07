@@ -22,7 +22,7 @@ export const RenderToolbarTabContent = ({
     case "Table":
       return <TableOptions editor={editor} />;
     case "Page":
-      return <PageOptions editor={editor} />;
+      return <PageOptions />;
     case "Export":
       return <div>Export</div>;
     default:

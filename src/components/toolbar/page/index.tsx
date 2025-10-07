@@ -1,5 +1,3 @@
-import { usePageMethods } from "@/hooks/usePageMethods";
-import { Editor } from "@tiptap/react";
 import { ItemGroup } from "../ItemGroup";
 import PageSizeSelector from "./PageSizeSelector";
 import { Button } from "@/components/base";
@@ -10,10 +8,10 @@ import { ArrowDropDownOutlined } from "@mui/icons-material";
 import { Divider } from "../Divider";
 import { useToolbar } from "@/contexts/ToolbarContext";
 import { TOOLBAR_TYPES_ENUM } from "@/constants/Toolbar";
+import PageOrientationSelector from "./PageOrientationSelector";
 
-export const PageOptions = ({ editor }: { editor: Editor }) => {
-	const { pageConfig, setPageConfig } = usePageMethods(editor);
-	const { currentToolbar, onPresentationModeToggle } = useToolbar();
+export const PageOptions = () => {
+	const { pageConfig, setPageConfig, currentToolbar, onPresentationModeToggle } = useToolbar();
 	const isClassicToolbar = currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC;
 
 	const [isPageSizeOpen, setIsPageSizeOpen] = useState(false);
@@ -25,7 +23,7 @@ export const PageOptions = ({ editor }: { editor: Editor }) => {
 			<ItemGroup>
 				<Popover
 					content={
-						<PageSizeSelector selectedConfig={pageConfig} onConfigChange={setPageConfig} />
+						<div>Hello</div>
 					}
 					trigger="click"
 					placement="bottom"
@@ -52,7 +50,10 @@ export const PageOptions = ({ editor }: { editor: Editor }) => {
 			<ItemGroup>
 				<Popover
 					content={
-						<PageSizeSelector selectedConfig={pageConfig} onConfigChange={setPageConfig} />
+						<PageSizeSelector 
+							selectedSize={pageConfig.size} 
+							onSizeChange={(size) => setPageConfig({ ...pageConfig, size })} 
+						/>
 					}
 					trigger="click"
 					placement="bottom"
@@ -62,7 +63,7 @@ export const PageOptions = ({ editor }: { editor: Editor }) => {
 				>
 					<Button
 						onClick={() => setIsPageSizeOpen(true)}
-						title="Insert Link"
+						title="Page Size"
 						className="flex items-center gap-1"
 					>
 						<SvgIcon
@@ -76,7 +77,10 @@ export const PageOptions = ({ editor }: { editor: Editor }) => {
 
 				<Popover
 					content={
-						<PageSizeSelector selectedConfig={pageConfig} onConfigChange={setPageConfig} />
+						<PageOrientationSelector 
+							selectedOrientation={pageConfig.orientation} 
+							onOrientationChange={(orientation) => setPageConfig({ ...pageConfig, orientation })} 
+						/>
 					}
 					trigger="click"
 					placement="bottom"
@@ -86,7 +90,7 @@ export const PageOptions = ({ editor }: { editor: Editor }) => {
 				>
 					<Button
 						onClick={() => setIsPageOrientationOpen(true)}
-						title="Insert Link"
+						title="Page Orientation"
 						className="flex items-center gap-1"
 					>
 						<SvgIcon
