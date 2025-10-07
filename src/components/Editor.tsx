@@ -85,11 +85,12 @@ const Editor = ({ config = {} }: EditorProps) => {
       )}
 
       {/* Main Content Area */}
-      <div className="flex-1 flex justify-center items-start w-full overflow-auto py-4">
-        <div
-          className={`${editorConfig.enablePagination ? pageClass : ""} editor-content`}
-          ref={editorPageRef}
-        >
+      <div className="flex-1 overflow-auto">
+        <div className="min-h-full w-fit min-w-full flex justify-center items-start p-4">
+          <div
+            className={`${editorConfig.enablePagination ? pageClass : ""} editor-content`}
+            ref={editorPageRef}
+          >
           <EditorContext.Provider value={providerValue}>
             <EditorContent editor={editor} />
 
@@ -106,6 +107,7 @@ const Editor = ({ config = {} }: EditorProps) => {
               <BubbleMenus editor={editor} />
             )}
           </EditorContext.Provider>
+          </div>
         </div>
       </div>
 
