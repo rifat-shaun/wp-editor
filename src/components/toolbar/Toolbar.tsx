@@ -9,9 +9,10 @@ import { useState } from "react";
 import { TABS, type TTabKey } from "@/constants/Toolbar";
 
 import type { PageConfig } from "@/components/toolbar/page/PageSizeSelector";
+import type { EditorConfig } from "@/config/editorConfig";
 
 interface ToolbarProps {
-  initialToolbar?: string;
+  editorConfig: EditorConfig;
   editor: Editor;
   onPresentationModeToggle: () => void;
   pageConfig: PageConfig;
@@ -59,7 +60,7 @@ const ToolbarContent = ({ editor }: ToolbarContentProps) => {
 };
 
 export const Toolbar = ({
-  initialToolbar = TOOLBAR_TYPES_ENUM.PROFESSIONAL,
+  editorConfig,
   editor,
   onPresentationModeToggle,
   pageConfig,
@@ -67,8 +68,8 @@ export const Toolbar = ({
 }: ToolbarProps) => {
 
   return (
-    <ToolbarProvider 
-      defaultToolbar={initialToolbar} 
+    <ToolbarProvider
+      editorConfig={editorConfig}
       onPresentationModeToggle={onPresentationModeToggle}
       pageConfig={pageConfig}
       setPageConfig={setPageConfig}

@@ -8,6 +8,9 @@ import { ScrollableContent } from "./ScrollableContent";
 import { ToolbarDropdown } from "./ToolbarDropdown";
 import { RenderToolbarTabContent } from "./RenderToolbarTabContent";
 import { capitalize } from "@/utils/Common";
+import SvgIcon from "../common/SvgIcon";
+import { Button } from "../base";
+import { useToolbar } from "@/contexts/ToolbarContext";
 
 interface ClassicToolbarProps {
   onToolbarChange?: (toolbarType: string) => void;
@@ -23,6 +26,7 @@ export const ClassicToolbar = ({
   setActiveTab,
 }: ClassicToolbarProps) => {
   const { CLASSIC } = TOOLBAR_TYPES;
+  const { editorConfig } = useToolbar();
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
 
   const {
@@ -91,7 +95,15 @@ export const ClassicToolbar = ({
           <RenderToolbarTabContent activeTab={activeTab} editor={editor} />
         </ScrollableContent>
       </div>
-      <ToolbarDropdown onToolbarChange={onToolbarChange} />
+
+      <div className="flex items-center gap-2">
+        {editorConfig.onShare && (
+          <Button title='Share' onClick={editorConfig.onShare} disabled={false} active={false}>
+            <SvgIcon name='share' strokeWidth={3} />
+          </Button>
+        )}
+        <ToolbarDropdown onToolbarChange={onToolbarChange} />
+      </div>
     </div>
   );
 };

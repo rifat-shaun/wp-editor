@@ -4,6 +4,9 @@ import { useHorizontalScroll } from "@/hooks/useHorizontalScroll";
 import { ScrollableContent } from "./ScrollableContent";
 import { ToolbarDropdown } from "./ToolbarDropdown";
 import { RenderToolbarTabContent } from "./RenderToolbarTabContent";
+import SvgIcon from "../common/SvgIcon";
+import { Button } from "../base";
+import { useToolbar } from "@/contexts/ToolbarContext";
 interface ProfessionalToolbarProps {
   editor: Editor;
   onToolbarChange?: (toolbarType: string) => void;
@@ -18,7 +21,7 @@ export const ProfessionalToolbar = ({
   setActiveTab,
 }: ProfessionalToolbarProps) => {
   const { PROFESSIONAL } = TOOLBAR_TYPES;
-
+  const { editorConfig } = useToolbar();
   const {
     contentScrollerRef,
     showScrollButtons,
@@ -40,11 +43,10 @@ export const ProfessionalToolbar = ({
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`relative mx-2 pb-0.5 text-xs font-medium text-gray-600 transition-all duration-300 border-b-2 hover:text-primary-400 ${
-                activeTab === tab
+              className={`relative mx-2 pb-0.5 text-xs font-medium text-gray-600 transition-all duration-300 border-b-2 hover:text-primary-400 ${activeTab === tab
                   ? "border-primary-500 text-primary-600"
                   : "border-transparent"
-              }`}
+                }`}
             >
               {tab}
               {activeTab === tab && (
@@ -53,7 +55,14 @@ export const ProfessionalToolbar = ({
             </button>
           ))}
         </div>
-        <ToolbarDropdown onToolbarChange={onToolbarChange} />
+        <div className="flex items-center gap-2">
+          {editorConfig.onShare && (
+            <Button title='Share' onClick={editorConfig.onShare} disabled={false} active={false}>
+              <SvgIcon name='share' strokeWidth={3} />
+            </Button>
+          )}
+          <ToolbarDropdown onToolbarChange={onToolbarChange} />
+        </div>
       </div>
       <ScrollableContent
         contentScrollerRef={contentScrollerRef}

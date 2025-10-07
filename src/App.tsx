@@ -54,6 +54,9 @@ function App() {
             age: '25',
             email: 'john.doe@example.com',
           },
+          onShare: () => {
+            console.log('Share');
+          },
         }} />
       </div>
     </div>
