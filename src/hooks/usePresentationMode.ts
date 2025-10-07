@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import type { Editor } from "@tiptap/react";
 
 export const usePresentationMode = (editor: Editor | null) => {
@@ -11,7 +11,7 @@ export const usePresentationMode = (editor: Editor | null) => {
     document.documentElement.requestFullscreen?.();
   };
 
-  const handleExitPresentationMode = () => {
+  const handleExitPresentationMode = useCallback(() => {
     setIsPresentationMode(false);
     setIsLaserActive(false);
     document.documentElement.classList.remove('laser-active');
@@ -19,7 +19,7 @@ export const usePresentationMode = (editor: Editor | null) => {
     if (document.fullscreenElement) {
       document.exitFullscreen?.();
     }
-  };
+  }, [editor]);
 
   const handleLaserToggle = (isActive: boolean) => {
     setIsLaserActive(isActive);
@@ -29,6 +29,14 @@ export const usePresentationMode = (editor: Editor | null) => {
       document.documentElement.classList.add('laser-active');
     } else {
       document.documentElement.classList.remove('laser-active');
+    }
+  };
+
+  const onPresentationModeToggle = () => {
+    if (isPresentationMode) {
+      handleExitPresentationMode();
+    } else {
+      handleEnterPresentationMode();
     }
   };
 
@@ -45,13 +53,12 @@ export const usePresentationMode = (editor: Editor | null) => {
     return () => {
       document.removeEventListener(PRESENTATION_MODE_EXIT_EVENT, handlePresentationModeExit);
     };
-  }, [isPresentationMode, editor]);
+  }, [isPresentationMode, editor, handleExitPresentationMode]);
 
   return {
     isPresentationMode,
     isLaserActive,
-    enterPresentationMode: handleEnterPresentationMode,
-    exitPresentationMode: handleExitPresentationMode,
+    onPresentationModeToggle,
     handleLaserToggle,
   };
 };

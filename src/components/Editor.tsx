@@ -37,7 +37,7 @@ const Editor = ({ config = {} }: EditorProps) => {
   });
 
   const { pageClass } = usePageMethods(editor);
-  const { isPresentationMode, isLaserActive, enterPresentationMode, exitPresentationMode, handleLaserToggle } = usePresentationMode(editor);
+  const { isPresentationMode, isLaserActive, onPresentationModeToggle, handleLaserToggle } = usePresentationMode(editor);
 
   // Keep editor focused - refocus if focus is lost
   useEffect(() => {
@@ -75,7 +75,7 @@ const Editor = ({ config = {} }: EditorProps) => {
     <div className={`h-full flex flex-col bg-neutral-200 editor-container ${isPresentationMode ? "editor-presentation-mode" : ""} ${isLaserActive ? "laser-active" : ""}`}>
       {/* Toolbar */}
       {!isPresentationMode && (
-        <Toolbar initialToolbar={editorConfig.defaultToolbar} editor={editor} />
+        <Toolbar initialToolbar={editorConfig.defaultToolbar} editor={editor} onPresentationModeToggle={onPresentationModeToggle} />
       )}
 
       {/* Main Content Area */}
@@ -105,12 +105,12 @@ const Editor = ({ config = {} }: EditorProps) => {
 
       {/* Footer */}
       {!isPresentationMode && (
-        <Footer editor={editor} onPresentationModeToggle={enterPresentationMode} />
+        <Footer editor={editor} onPresentationModeToggle={onPresentationModeToggle} />
       )}
 
       {/* Presentation Controls */}
       {isPresentationMode && (
-        <PresentationControls onExit={exitPresentationMode} onLaserToggle={handleLaserToggle} />
+        <PresentationControls onPresentationModeToggle={onPresentationModeToggle} onLaserToggle={handleLaserToggle} />
       )}
     </div>
   );

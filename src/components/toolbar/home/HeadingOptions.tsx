@@ -2,7 +2,7 @@ import { Editor } from '@tiptap/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { ToolbarButtonItem } from "../ToolbarButtonItem";
+import { Button } from "../../base/Button";
 import SvgIcon from "../../common/SvgIcon";
 import { DROPDOWN_OFFSET, HEADING_OPTIONS, HEADING_STYLES } from '@/constants/Heading';
 import { useTiptapEditorState } from '@/hooks/useTiptapEditorState';
@@ -119,7 +119,7 @@ export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
 						onClick: () => handleHeadingChange(option.value),
 					})),
 				}}
-				className='border border-gray-300 rounded px-2 w-[100px] cursor-pointer'
+				className='border border-gray-300 rounded px-2 w-[100px] h-6 cursor-pointer'
 			>
 				<div className='flex items-center gap-1 justify-between'>
 					<span className='text-sm truncate'>{HEADING_OPTIONS.find(option => option.value === selectedHeadingTag)?.label}</span>
@@ -134,9 +134,9 @@ export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
 			<div ref={headingsContainerRef} className={`flex flex-col items-center bg-gray-100 rounded-md p-2 ${isOpen ? 'rounded-b-none' : ''}`}>
 				<div className='flex items-center gap-2'>
 					{HEADING_OPTIONS?.slice(0, 4)?.map((option) => (
-						<ToolbarButtonItem
+						<Button
 							key={option.value}
-							tooltip={option.label}
+							title={option.label}
 							onClick={() => handleHeadingChange(option.value)}
 							active={selectionHeadingLevel === option.value}
 							className={`rounded-md h-9 w-fit ${selectionHeadingLevel === option.value ? 'bg-primary-100' : 'bg-white'}`}
@@ -145,7 +145,7 @@ export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
 								{headingRenderer(option)}
 								<div className='text-[8px] text-gray-500 font-bold'>{option.value.toUpperCase()}</div>
 							</div>
-						</ToolbarButtonItem>
+						</Button>
 					))}
 
 					<div className='flex items-center justify-center' onClick={toggleOpen}>
@@ -167,9 +167,9 @@ export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
 					>
 						<div className='flex items-center gap-2 w-full'>
 							{HEADING_OPTIONS?.slice(4, 7)?.map((option) => (
-								<ToolbarButtonItem
+								<Button
 									key={option.value}
-									tooltip={option.label}
+									title={option.label}
 									onClick={() => handleDropdownItemClick(option.value)}
 									active={selectionHeadingLevel === option.value}
 									className={`rounded-md h-9 w-fit ${selectionHeadingLevel === option.value ? 'bg-primary-100' : 'bg-white'}`}
@@ -178,7 +178,7 @@ export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
 										{headingRenderer(option)}
 										<div className='text-[8px] text-gray-500 font-bold'>{option.value.toUpperCase()}</div>
 									</div>
-								</ToolbarButtonItem>
+								</Button>
 							))}
 						</div>
 					</div>,

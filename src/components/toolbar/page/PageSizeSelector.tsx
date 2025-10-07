@@ -28,9 +28,9 @@ const orientations = [
 
 const PageSizeSelector: React.FC<PageSizeSelectorProps> = ({ selectedConfig, onConfigChange }) => {
   return (
-    <div className="bg-white border border-neutral-200 rounded-lg p-4 shadow-sm">
+    <>
       <h3 className="text-sm font-medium text-neutral-700 mb-4">Page Configuration</h3>
-      
+
       {/* Page Size Selection */}
       <div className="mb-4">
         <h4 className="text-xs font-medium text-neutral-600 mb-2">Size</h4>
@@ -38,11 +38,10 @@ const PageSizeSelector: React.FC<PageSizeSelectorProps> = ({ selectedConfig, onC
           {pageSizes.map((size) => (
             <label
               key={size.value}
-              className={`flex items-center p-2 rounded border cursor-pointer transition-colors ${
-                selectedConfig.size === size.value
+              className={`flex items-center p-2 rounded border cursor-pointer transition-colors ${selectedConfig.size === size.value
                   ? 'border-primary-500 bg-primary-50'
                   : 'border-neutral-200 hover:border-neutral-300'
-              }`}
+                }`}
             >
               <input
                 type="radio"
@@ -68,11 +67,10 @@ const PageSizeSelector: React.FC<PageSizeSelectorProps> = ({ selectedConfig, onC
           {orientations.map((orientation) => (
             <label
               key={orientation.value}
-              className={`flex items-center justify-center p-3 rounded border cursor-pointer transition-colors flex-1 ${
-                selectedConfig.orientation === orientation.value
+              className={`flex items-center justify-center p-3 rounded border cursor-pointer transition-colors flex-1 ${selectedConfig.orientation === orientation.value
                   ? 'border-primary-500 bg-primary-50'
                   : 'border-neutral-200 hover:border-neutral-300'
-              }`}
+                }`}
             >
               <input
                 type="radio"
@@ -90,7 +88,7 @@ const PageSizeSelector: React.FC<PageSizeSelectorProps> = ({ selectedConfig, onC
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

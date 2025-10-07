@@ -11,9 +11,14 @@ import { TABS, type TTabKey } from "@/constants/Toolbar";
 interface ToolbarProps {
   initialToolbar?: string;
   editor: Editor;
+  onPresentationModeToggle: () => void;
 }
 
-const ToolbarContent = ({ editor }: ToolbarProps) => {
+interface ToolbarContentProps {
+  editor: Editor;
+}
+
+const ToolbarContent = ({ editor }: ToolbarContentProps) => {
   const [activeTab, setActiveTab] = useState<TTabKey>(TABS[0]);
   const { CLASSIC, PROFESSIONAL, HIDE_TOOLBAR } = TOOLBAR_TYPES_ENUM;
   const { currentToolbar, handleToolbarChange, handleShowToolbar } =
@@ -52,9 +57,11 @@ const ToolbarContent = ({ editor }: ToolbarProps) => {
 export const Toolbar = ({
   initialToolbar = TOOLBAR_TYPES_ENUM.PROFESSIONAL,
   editor,
+  onPresentationModeToggle
 }: ToolbarProps) => {
+
   return (
-    <ToolbarProvider defaultToolbar={initialToolbar}>
+    <ToolbarProvider defaultToolbar={initialToolbar} onPresentationModeToggle={onPresentationModeToggle}>
       <ToolbarContent editor={editor} />
     </ToolbarProvider>
   );

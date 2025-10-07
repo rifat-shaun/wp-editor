@@ -4,11 +4,11 @@ import { useZoom } from "../hooks/useZoom";
 import { Button } from "./base/Button";
 
 interface PresentationControlsProps {
-  onExit: () => void;
+  onPresentationModeToggle: () => void;
   onLaserToggle?: (isActive: boolean) => void;
 }
 
-export const PresentationControls = ({ onExit, onLaserToggle }: PresentationControlsProps) => {
+export const PresentationControls = ({ onPresentationModeToggle, onLaserToggle }: PresentationControlsProps) => {
   const { zoomLevel, handleZoomIn, handleZoomOut, handleFitToScreen } = useZoom();
   const [isLaserActive, setIsLaserActive] = useState(false);
   const [laserPosition, setLaserPosition] = useState({ x: 0, y: 0 });
@@ -60,7 +60,7 @@ export const PresentationControls = ({ onExit, onLaserToggle }: PresentationCont
 
         <div className="h-6 w-px bg-white/30" />
 
-        <Button onClick={onExit} className="flex items-center justify-center !p-2 !bg-transparent hover:!bg-red-500/20 !text-white" title="Exit Presentation">
+        <Button onClick={onPresentationModeToggle} className="flex items-center justify-center !p-2 !bg-transparent hover:!bg-red-500/20 !text-white" title="Exit Presentation">
           <SvgIcon name="exit" size={20} className="text-white" strokeWidth={3.5} />
         </Button>
       </div>

@@ -9,6 +9,7 @@ export interface ToolbarContextType {
   setLastVisibleToolbar: (toolbar: string) => void;
   handleToolbarChange: (toolbarType: string) => void;
   handleShowToolbar: () => void;
+  onPresentationModeToggle: () => void;
 }
 
 const ToolbarContext = createContext<ToolbarContextType | undefined>(undefined);
@@ -16,11 +17,13 @@ const ToolbarContext = createContext<ToolbarContextType | undefined>(undefined);
 interface ToolbarProviderProps {
   children: ReactNode;
   defaultToolbar?: string;
+  onPresentationModeToggle: () => void;
 }
 
 export const ToolbarProvider = ({
   children,
   defaultToolbar = TOOLBAR_TYPES_ENUM.PROFESSIONAL,
+  onPresentationModeToggle
 }: ToolbarProviderProps) => {
   const { HIDE_TOOLBAR } = TOOLBAR_TYPES_ENUM;
 
@@ -55,6 +58,7 @@ export const ToolbarProvider = ({
         setLastVisibleToolbar,
         handleToolbarChange,
         handleShowToolbar,
+        onPresentationModeToggle
       }}
     >
       {children}
