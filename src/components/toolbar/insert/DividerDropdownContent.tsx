@@ -17,7 +17,7 @@ export const DividerDropdownContent = ({
 
   return (
     <div className="w-56">
-      <div className="px-2 pb-2 text-sm font-medium text-gray-500 border-b">
+      <div className="px-2 pb-2 text-sm font-medium text-gray-800 border-b">
         Divider Style
       </div>
 
