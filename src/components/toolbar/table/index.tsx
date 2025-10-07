@@ -60,12 +60,11 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
             onClick={handleInsertRowAbove}
             disabled={!isTableActive}
             active={false}
-            size='small'
             title='Insert Row Above'
           >
             <div className='flex items-center flex-row gap-1'>
               <SvgIcon name='table-add-row-before' strokeWidth={4} />
-              <span className='text-sm min-w-max'>Insert Row Above</span>
+              <span className='text-xs min-w-max'>Insert Row Above</span>
             </div>
           </Button>
 
@@ -73,12 +72,11 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
             onClick={handleInsertRowBelow}
             disabled={!isTableActive}
             active={false}
-            size='small'
             title='Insert Row Below'
           >
             <div className='flex items-center flex-row gap-1'>
               <SvgIcon name='table-add-row-after' strokeWidth={4} />
-              <span className='text-sm min-w-max'>Insert Row Below</span>
+              <span className='text-xs min-w-max'>Insert Row Below</span>
             </div>
           </Button>
 
@@ -86,12 +84,11 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
             onClick={handleDeleteRow}
             disabled={!isTableActive}
             active={false}
-            size='small'
             title='Delete Row'
           >
             <div className='flex items-center flex-row gap-1'>
               <SvgIcon name='table-delete-row' strokeWidth={2} />
-              <span className='text-sm min-w-max'>Delete Row</span>
+              <span className='text-xs min-w-max'>Delete Row</span>
             </div>
           </Button>
         </div>
@@ -101,12 +98,11 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
             onClick={handleInsertColumnLeft}
             disabled={!isTableActive}
             active={false}
-            size='small'
             title='Insert Column Left'
           >
             <div className='flex items-center flex-row gap-1'>
               <SvgIcon name='table-add-column-before' strokeWidth={4} />
-              <span className='text-sm min-w-max'>Insert Column Left</span>
+              <span className='text-xs min-w-max'>Insert Column Left</span>
             </div>
           </Button>
 
@@ -114,12 +110,11 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
             onClick={handleInsertColumnRight}
             disabled={!isTableActive}
             active={false}
-            size='small'
             title='Insert Column Right'
           >
             <div className='flex items-center flex-row gap-1'>
               <SvgIcon name='table-add-column-after' strokeWidth={4} />
-              <span className='text-sm min-w-max'>Insert Column Right</span>
+              <span className='text-xs min-w-max'>Insert Column Right</span>
             </div>
           </Button>
 
@@ -127,12 +122,11 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
             onClick={handleDeleteColumn}
             disabled={!isTableActive}
             active={false}
-            size='small'
             title='Delete Column'
           >
             <div className='flex items-center flex-row gap-1'>
               <SvgIcon name='table-delete-column' strokeWidth={2} />
-              <span className='text-sm min-w-max'>Delete Column</span>
+              <span className='text-xs min-w-max'>Delete Column</span>
             </div>
           </Button>
         </div>
@@ -145,12 +139,11 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
           onClick={handleMergeCells}
           disabled={!isTableActive}
           active={false}
-          size='small'
           title='Merge Cells'
         >
           <div className='flex items-center flex-row gap-1'>
             <SvgIcon name='table-merge-cell' strokeWidth={4} />
-            <span className='text-sm min-w-max'>Merge Cells</span>
+            <span className='text-xs min-w-max'>Merge Cells</span>
           </div>
         </Button>
 
@@ -158,12 +151,11 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
           onClick={handleSplitCell}
           disabled={!isTableActive}
           active={false}
-          size='small'
           title='Split Cell'
         >
           <div className='flex items-center flex-row gap-1'>
             <SvgIcon name='table-split-cell' strokeWidth={4} />
-            <span className='text-sm min-w-max'>Split Cell</span>
+            <span className='text-xs min-w-max'>Split Cell</span>
           </div>
         </Button>
       </ItemGroup>
@@ -180,7 +172,7 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
         >
           <div className={`flex items-center ${isClassicToolbar ? 'flex-row gap-1' : 'flex-col gap-0.5'}`}>
             <SvgIcon name='table-delete' size='20px' strokeWidth={4} />
-            <span className='text-sm min-w-max'>Delete Table</span>
+            <span className='text-xs min-w-max'>Delete Table</span>
           </div>
         </Button>
       </ItemGroup>
