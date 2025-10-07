@@ -1,14 +1,209 @@
 .code-block-wrapper {
-  background-color: #1e1e1e;
-  color: #f5f5f5;
+  margin: 1rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #333;
+  background: #1e1e1e;
+  position: relative;
 }
 
-.code-block-wrapper pre {
-  background-color: #1e1e1e;
-  color: #f5f5f5;
+.code-block-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  background: transparent;
+  border: 1px solid #555;
+  border-radius: 4px;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-.code-block-wrapper code {  
-  background-color: #1e1e1e;
-  color: #f5f5f5;
+.code-block-action-btn:hover {
+  background: #3d3d3d;
+  border-color: #777;
+}
+
+.code-block-delete-btn:hover {
+  color: #d32f2f;
+  border-color: #d32f2f;
+}
+
+/* Select Dropdowns */
+.code-block-language-select .ant-select-selector,
+.code-block-theme-select .ant-select-selector {
+  background: #1e1e1e !important;
+  border: 1px solid #555 !important;
+  color: #e0e0e0 !important;
+}
+
+.code-block-language-select .ant-select-arrow,
+.code-block-theme-select .ant-select-arrow {
+  color: #e0e0e0 !important;
+}
+
+.code-block-language-select .ant-select-selection-item,
+.code-block-theme-select .ant-select-selection-item {
+  color: #e0e0e0 !important;
+}
+
+/* Code Content */
+.code-block-content {
+  margin: 0;
+  padding: 16px;
+  overflow-x: auto;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  position: relative;
+}
+
+.code-block-content code {
+  display: block;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-family: inherit;
+  white-space: pre;
+}
+
+.code-block-content.wrapped {
+  overflow-x: hidden;
+}
+
+.code-block-content.wrapped code {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Dark Theme (Default) */
+.code-block-content.theme-dark {
+  background: #1e1e1e;
+  color: #d4d4d4;
+}
+
+.theme-dark .hljs-comment,
+.theme-dark .hljs-quote {
+  color: #6a9955;
+  font-style: italic;
+}
+
+.theme-dark .hljs-keyword,
+.theme-dark .hljs-selector-tag,
+.theme-dark .hljs-literal,
+.theme-dark .hljs-type {
+  color: #569cd6;
+}
+
+.theme-dark .hljs-string,
+.theme-dark .hljs-title,
+.theme-dark .hljs-name {
+  color: #ce9178;
+}
+
+.theme-dark .hljs-number,
+.theme-dark .hljs-symbol,
+.theme-dark .hljs-bullet {
+  color: #b5cea8;
+}
+
+.theme-dark .hljs-function,
+.theme-dark .hljs-params {
+  color: #dcdcaa;
+}
+
+.theme-dark .hljs-attr,
+.theme-dark .hljs-variable,
+.theme-dark .hljs-property {
+  color: #9cdcfe;
+}
+
+.theme-dark .hljs-built_in,
+.theme-dark .hljs-class {
+  color: #4ec9b0;
+}
+
+.theme-dark .hljs-tag {
+  color: #808080;
+}
+
+.theme-dark .hljs-meta {
+  color: #d7ba7d;
+}
+
+/* Light Theme */
+.code-block-content.theme-light {
+  background: #ffffff;
+  color: #000000;
+}
+
+.theme-light .hljs-comment,
+.theme-light .hljs-quote {
+  color: #008000;
+  font-style: italic;
+}
+
+.theme-light .hljs-keyword,
+.theme-light .hljs-selector-tag,
+.theme-light .hljs-literal,
+.theme-light .hljs-type {
+  color: #0000ff;
+}
+
+.theme-light .hljs-string,
+.theme-light .hljs-title,
+.theme-light .hljs-name {
+  color: #a31515;
+}
+
+.theme-light .hljs-number,
+.theme-light .hljs-symbol,
+.theme-light .hljs-bullet {
+  color: #098658;
+}
+
+.theme-light .hljs-function,
+.theme-light .hljs-params {
+  color: #795e26;
+}
+
+.theme-light .hljs-attr,
+.theme-light .hljs-variable,
+.theme-light .hljs-property {
+  color: #001080;
+}
+
+.theme-light .hljs-built_in,
+.theme-light .hljs-class {
+  color: #267f99;
+}
+
+/* Syntax highlighting for lowlight */
+.code-block-content .hljs {
+  display: block;
+  overflow-x: auto;
+}
+
+/* Selection */
+.code-block-content ::selection {
+  background: rgba(128, 203, 196, 0.3);
+}
+
+/* Scrollbar for code blocks */
+.code-block-content::-webkit-scrollbar {
+  height: 8px;
+}
+
+.code-block-content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.code-block-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.code-block-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
