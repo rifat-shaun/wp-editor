@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Button from './Button';
+import Button from './Button1';
 import { AddCircleOutline, DeleteOutline, SaveOutlined } from '@mui/icons-material';
 
 const meta: Meta<typeof Button> = {

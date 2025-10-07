@@ -1,5 +1,5 @@
 import { ClassicToolbar } from "./ClassicToolbar";
-import Button from "../base/Button";
+import Button from "../base/Button1";
 import SvgIcon from "../common/SvgIcon";
 import { ProfessionalToolbar } from "./ProfessionalToolbar";
 import { TOOLBAR_TYPES_ENUM } from "../../constants/Toolbar";

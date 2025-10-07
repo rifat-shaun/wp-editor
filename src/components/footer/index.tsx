@@ -1,8 +1,9 @@
-import { FOOTER_HEIGHT } from "../../constants";
+import { FOOTER_HEIGHT } from "@/constants";
 import { Editor } from "@tiptap/react";
-import { useTiptapEditorState } from "../../hooks/useTiptapEditorState";
-import { useZoom } from "../../hooks/useZoom";
-import SvgIcon from "../common/SvgIcon";
+import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
+import { useZoom } from "@/hooks/useZoom";
+import SvgIcon from "@/components/common/SvgIcon";
+import { Button } from "@/components/base";
 
 interface FooterProps {
   editor: Editor;
@@ -23,15 +24,15 @@ export const Footer = ({ editor, onPresentationModeToggle }: FooterProps) => {
           <span>Characters: {characterCount}</span>
           <span>Words: {wordCount}</span>
         </div>
-        
+
         <div className="flex items-center gap-2">
-          <button
+          <Button
             onClick={handleZoomOut}
-            className="p-1 text-neutral-700 hover:bg-neutral-200 rounded transition-colors"
             title="Zoom Out"
+            size="small"
           >
             <SvgIcon name="minus" size={16} strokeWidth={3.5} />
-          </button>
+          </Button>
 
           <input
             type="range"
@@ -44,34 +45,37 @@ export const Footer = ({ editor, onPresentationModeToggle }: FooterProps) => {
             title={`${zoomLevel}%`}
           />
 
-          <button
+          <Button
             onClick={handleZoomIn}
-            className="p-1 text-neutral-700 hover:bg-neutral-200 rounded transition-colors"
             title="Zoom In"
+            size="small"
+
           >
             <SvgIcon name="plus" size={16} strokeWidth={3.5} />
-          </button>
+          </Button>
 
           <div className="h-6 w-px bg-neutral-300" />
 
-          <button
+          <Button
             onClick={handleFitToScreen}
-            className="p-1 text-neutral-700 hover:bg-neutral-200 rounded transition-colors"
             title="Fit to Screen (100%)"
+            size="small"
+
           >
             <SvgIcon name="auto-width" size={16} strokeWidth={3.5} />
-          </button>
+          </Button>
 
           <div className="h-6 w-px bg-neutral-300" />
 
-          <button
+          <Button
             onClick={onPresentationModeToggle}
-            className="flex items-center gap-2 p-1 py-px text-sm text-neutral-700 hover:bg-neutral-200 rounded transition-colors"
+            className="flex items-center gap-2 py-px"
             title="Enter Presentation Mode"
+            size="small"
           >
             <SvgIcon name="preview" strokeWidth={3.5} />
             <span>Present</span>
-          </button>
+          </Button>
         </div>
       </div>
 
