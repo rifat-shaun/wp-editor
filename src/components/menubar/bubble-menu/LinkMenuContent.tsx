@@ -4,7 +4,7 @@ import type { Editor } from "@tiptap/react";
 import { Popover } from "antd";
 import { LinkForm } from "@/components/toolbar/insert/LinkForm";
 import { useLinks } from "@/hooks/useLinks";
-import { LINK_FORM_MODES } from "@/constants/TinkConstants";
+import { LINK_FORM_MODES } from "@/constants/LinkConstants";
 
 export const LinkMenuContent = ({ editor }: { editor: Editor }) => {
 	const [isEditPopoverOpen, setIsEditPopoverOpen] = useState(false);

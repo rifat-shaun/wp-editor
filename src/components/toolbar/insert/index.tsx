@@ -3,13 +3,12 @@ import { Editor } from "@tiptap/react";
 import SvgIcon from "@/components/common/SvgIcon";
 import { Popover } from "antd";
 import { LinkForm } from "./LinkForm";
-import { LINK_FORM_MODES } from "../../../constants/TinkConstants";
+import { LINK_FORM_MODES } from "../../../constants/LinkConstants";
 import { ArrowDropDownOutlined } from "@mui/icons-material";
 import { useLinks } from "@/hooks/useLinks";
 import { Button } from "@/components/base";
 import { useToolbar } from "@/contexts/ToolbarContext";
 import { TOOLBAR_TYPES_ENUM } from "@/constants/Toolbar";
-import LineStyleIcon from "@mui/icons-material/LineStyle";
 import { DividerDropdownContent } from "./DividerDropdownContent";
 
 export const InsertOptions = ({ editor }: { editor: Editor }) => {
@@ -47,11 +46,11 @@ export const InsertOptions = ({ editor }: { editor: Editor }) => {
           <SvgIcon
             name="link"
             size={isClassicToolbar ? "18px" : "32px"}
-            strokeWidth={2}
+            strokeWidth={1.5}
           />
           <ArrowDropDownOutlined
             sx={{
-              fontSize: isClassicToolbar ? "18px" : "22px",
+              fontSize: isClassicToolbar ? "18px" : "32px",
               color: "inherit",
             }}
           />
@@ -76,12 +75,7 @@ export const InsertOptions = ({ editor }: { editor: Editor }) => {
           title="Insert Divider"
           className="flex items-center gap-1"
         >
-          <LineStyleIcon
-            sx={{
-              fontSize: isClassicToolbar ? "18px" : "32px",
-              color: "inherit",
-            }}
-          />
+          <SvgIcon name="hr" size={isClassicToolbar ? "18px" : "32px"} strokeWidth={4} />
         </Button>
       </Popover>
     </>

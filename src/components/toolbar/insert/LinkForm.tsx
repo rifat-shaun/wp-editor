@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Input, Button } from "antd";
 import type { Editor } from "@tiptap/react";
 import { useLinks } from "@/hooks/useLinks";
-import { LINK_FORM_MODES } from "../../../constants/TinkConstants";
+import { LINK_FORM_MODES } from "@/constants/LinkConstants";
 
 interface LinkFormProps {
 	editor: Editor;
