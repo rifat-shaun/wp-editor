@@ -18,7 +18,7 @@ export const ToolbarDropdown = ({ onToolbarChange }: ToolbarDropdownProps) => {
       placement="bottomRight"
     >
       <div className="flex items-center gap-1 px-3 py-1 text-sm hover:bg-neutral-50 transition-colors cursor-pointer">
-        <SvgIcon name="toolbar" size={16} />
+        <SvgIcon name="toolbar" strokeWidth={2} />
         Toolbar
       </div>
     </Dropdown>
