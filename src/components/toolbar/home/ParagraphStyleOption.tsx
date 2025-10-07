@@ -1,6 +1,6 @@
 import { Editor } from "@tiptap/react";
 import { ItemGroup } from "../ItemGroup";
-import { ToolbarButtonItem } from "../ToolbarButtonItem";
+import { Button } from "@/components/base/Button";
 import SvgIcon from "@/components/common/SvgIcon";
 import { useParagraphStyleMethods } from "@/hooks/useParagraphStyleMethods";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
@@ -17,16 +17,6 @@ type TParagraphStyleOptionsProps = {
 export const ParagraphStyleOptions = ({
   editor,
 }: TParagraphStyleOptionsProps) => {
-  // const handleLineHeightChange = (lineHeight: string | number) => {
-  //   if (
-  //     editor.commands.setLineHeight as unknown as (
-  //       _lineHeight: string | number
-  //     ) => void
-  //   ) {
-  //     editor.chain().focus().setLineHeight(String(lineHeight)).run();
-  //   }
-  // };
-
   const {
     isTaskList,
     canIndent,
@@ -76,18 +66,17 @@ export const ParagraphStyleOptions = ({
         /> */}
 
         <Space.Compact
-          className={`flex items-center ${
-            isUnorderedList ? "bg-black-100" : ""
-          }`}
+          className={`flex items-center ${isUnorderedList ? "bg-black-100" : ""
+            }`}
         >
-          <ToolbarButtonItem
-            tooltip={"Bullet list"}
+          <Button
+            title="Bullet list"
             onClick={handleToggleUnorderedList}
             active={false}
             size="small"
           >
             <SvgIcon name="bullet-list" />
-          </ToolbarButtonItem>
+          </Button>
 
           <Tooltip
             title="Bullet list menu"
@@ -118,14 +107,14 @@ export const ParagraphStyleOptions = ({
         <Space.Compact
           className={`flex items-center ${isOrderedList ? "bg-black-100" : ""}`}
         >
-          <ToolbarButtonItem
-            tooltip={"Numbered list"}
+          <Button
+            title="Numbered list"
             onClick={handleToggleOrderedList}
             active={false}
             size="small"
           >
             <SvgIcon name="ordered-list" />
-          </ToolbarButtonItem>
+          </Button>
 
           <Tooltip
             title="Numbered list menu"
@@ -153,83 +142,83 @@ export const ParagraphStyleOptions = ({
           </Tooltip>
         </Space.Compact>
 
-        <ToolbarButtonItem
-          tooltip={"Checklist"}
+        <Button
+          title="Checklist"
           onClick={handleToggleTaskList}
           disabled={false}
           active={isTaskList}
           size="small"
         >
           <SvgIcon name="task-list" />
-        </ToolbarButtonItem>
+        </Button>
 
-        <ToolbarButtonItem
-          tooltip={"Increase Indent"}
+        <Button
+          title="Increase Indent"
           onClick={handleIndent}
           disabled={!canIndent}
           active={false}
           size="small"
         >
           <SvgIcon name="indent" />
-        </ToolbarButtonItem>
+        </Button>
 
-        <ToolbarButtonItem
-          tooltip={"Decrease Indent"}
+        <Button
+          title="Decrease Indent"
           onClick={handleOutdent}
           disabled={!canOutdent}
           active={false}
           size="small"
         >
           <SvgIcon name="indent" className="rotate-180" />
-        </ToolbarButtonItem>
+        </Button>
       </div>
 
       <div className="flex items-center space-x-2">
-        <ToolbarButtonItem
-          tooltip={"Align Left"}
+        <Button
+          title="Align Left"
           onClick={handleTextAlignLeft}
           active={isTextAlignLeft}
           size="small"
         >
           <SvgIcon name="align-left" />
-        </ToolbarButtonItem>
+        </Button>
 
-        <ToolbarButtonItem
-          tooltip={"Align Center"}
+        <Button
+          title="Align Center"
           onClick={handleTextAlignCenter}
           active={isTextAlignCenter}
           size="small"
         >
           <SvgIcon name="align-center" />
-        </ToolbarButtonItem>
+        </Button>
 
-        <ToolbarButtonItem
-          tooltip={"Align Right"}
+        <Button
+          title="Align Right"
           onClick={handleTextAlignRight}
           active={isTextAlignRight}
           size="small"
         >
           <SvgIcon name="align-right" />
-        </ToolbarButtonItem>
+        </Button>
 
-        <ToolbarButtonItem
-          tooltip={"Justify"}
+        <Button
+          title="Justify"
           onClick={handleTextAlignJustify}
           active={isTextAlignJustify}
           size="small"
         >
           <SvgIcon name="align-justify" />
-        </ToolbarButtonItem>
+        </Button>
 
-        <ToolbarButtonItem
-          tooltip={"Blockquote"}
+        <Button
+          title="Blockquote"
           onClick={handleToggleBlockquote}
           disabled={!canBlockquote}
           active={isBlockquote}
           size="small"
         >
           <SvgIcon name="quote" />
-        </ToolbarButtonItem>
+        </Button>
 
         {/* <ToolbarButtonItem
           tooltip={'Code'}

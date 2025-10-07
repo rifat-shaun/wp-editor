@@ -9,7 +9,7 @@ interface ButtonProps {
 	disabled?: boolean;
 	active?: boolean;
 	buttonRef?: RefObject<HTMLButtonElement>;
-	onClick: () => void;
+	onClick?: () => void;
 }
 
 const sizeClasses = {

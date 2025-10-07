@@ -1,7 +1,8 @@
 import SvgIcon from "@/components/common/SvgIcon";
 import { Editor } from "@tiptap/react";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
-import { Divider, ToolbarButtonItem, ItemGroup } from "@/components/toolbar";
+import { Divider, ItemGroup } from "@/components/toolbar";
+import { Button } from "@/components/base/Button";
 import { FontStyleOptions } from "./FontStyleOptions";
 import { useHomeOptionMethods } from "@/hooks/useHomeOptionMethods";
 import { ParagraphStyleOptions } from "./ParagraphStyleOption";
@@ -31,30 +32,30 @@ export const HomeOptions = ({ editor }: HomeOptionsProps) => {
     <>
       <ItemGroup>
         <div className="flex items-center space-x-1">
-          <ToolbarButtonItem
-            tooltip="Undo"
+          <Button
+            title="Undo"
             onClick={handleUndo}
             disabled={!canUndo}
             active={false}
             size="small"
           >
-            <SvgIcon name="undo" size={18} />
-          </ToolbarButtonItem>
+            <SvgIcon name="undo" strokeWidth={1.5} />
+          </Button>
 
-          <ToolbarButtonItem
-            tooltip="Redo"
+          <Button
+            title="Redo"
             onClick={handleRedo}
             disabled={!canRedo}
             active={false}
             size="small"
           >
-            <SvgIcon name="redo" size={18} />
-          </ToolbarButtonItem>
+            <SvgIcon name="redo" strokeWidth={1.5} />
+          </Button>
         </div>
 
         <div className="flex items-center space-x-1">
-          <ToolbarButtonItem
-            tooltip={
+          <Button
+            title={
               isAIAutocompletionEnabled
                 ? "Disable AI Autocompletion"
                 : "Enable AI Autocompletion"
@@ -64,20 +65,20 @@ export const HomeOptions = ({ editor }: HomeOptionsProps) => {
             size="small"
           >
             {isAIAutocompletionEnabled ? (
-              <SvgIcon name="ai-autocompletion" size={18} />
+              <SvgIcon name="ai-autocompletion" strokeWidth={1.5} />
             ) : (
-              <SvgIcon name="ai-autocompletion-exit" size={18} />
+              <SvgIcon name="ai-autocompletion-exit" strokeWidth={1.5}/>
             )}
-          </ToolbarButtonItem>
+          </Button>
 
-          <ToolbarButtonItem
-            tooltip="Clear Formatting"
+          <Button
+            title="Clear Formatting"
             onClick={handleClearFormatting}
             active={false}
             size="small"
           >
-            <SvgIcon name="clear-format" size={18} />
-          </ToolbarButtonItem>
+            <SvgIcon name="clear-format" strokeWidth={1.5} />
+          </Button>
         </div>
       </ItemGroup>
 
