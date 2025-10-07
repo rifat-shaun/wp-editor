@@ -3,7 +3,7 @@ import { Editor } from "@tiptap/react";
 import SvgIcon from "@/components/common/SvgIcon";
 import { Popover } from "antd";
 import { LinkForm } from "./LinkForm";
-import { LINK_FORM_MODES } from "../../../constants/linkConstants";
+import { LINK_FORM_MODES } from "../../../constants/TinkConstants";
 import { ArrowDropDownOutlined } from "@mui/icons-material";
 import { useLinks } from "@/hooks/useLinks";
 import { Button } from "@/components/base";

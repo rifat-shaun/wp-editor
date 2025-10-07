@@ -3,8 +3,8 @@ import SvgIcon from "@/components/common/SvgIcon";
 import type { Editor } from "@tiptap/react";
 import { Popover } from "antd";
 import { LinkForm } from "@/components/toolbar/insert/LinkForm";
-import { LINK_FORM_MODES } from "@/components/toolbar/insert/linkConstants";
 import { useLinks } from "@/hooks/useLinks";
+import { LINK_FORM_MODES } from "@/constants/TinkConstants";
 
 export const LinkMenuContent = ({ editor }: { editor: Editor }) => {
 	const [isEditPopoverOpen, setIsEditPopoverOpen] = useState(false);
