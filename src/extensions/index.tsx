@@ -29,6 +29,7 @@ import type { EditorConfig } from "@/config/editorConfig";
 import { AI_AUTO_COMPLETION_DEBOUNCE_TIME, AI_AUTO_COMPLETION_TRIGGER_WORD_COUNT } from "@/constants";
 import Link from "@tiptap/extension-link";
 import { HorizontalRuleWithStyle } from "./HorizontalRuleWithStyle";
+import PageMargin from "./PageMargin";
 
 const getEditorExtensions = (config?: EditorConfig) => [
   StarterKit.configure({
@@ -117,6 +118,15 @@ const getEditorExtensions = (config?: EditorConfig) => [
     protocols: ['http', 'https'],
   }),
   HorizontalRuleWithStyle,
+  PageMargin.configure({
+    unit: 'in',
+    defaultMargins: {
+      top: 1,
+      right: 1,
+      bottom: 1,
+      left: 1,
+    },
+  }),
 ];
 
 // Backward compatibility - default extensions without config

@@ -9,8 +9,10 @@ import { Divider } from "../Divider";
 import { useToolbar } from "@/contexts/ToolbarContext";
 import { TOOLBAR_TYPES_ENUM } from "@/constants/Toolbar";
 import PageOrientationSelector from "./PageOrientationSelector";
+import { PageMarginPicker } from "./PageMarginPicker";
+import { Editor } from "@tiptap/react";
 
-export const PageOptions = () => {
+export const PageOptions = ({ editor }: { editor: Editor }) => {
 	const { pageConfig, setPageConfig, currentToolbar, onPresentationModeToggle } = useToolbar();
 	const isClassicToolbar = currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC;
 
@@ -23,7 +25,14 @@ export const PageOptions = () => {
 			<ItemGroup>
 				<Popover
 					content={
-						<div>Hello</div>
+						<PageMarginPicker
+							editor={editor}
+							onClose={() => setIsPageMarginsOpen(false)}
+							pageOrientation={pageConfig.orientation}
+							setPageOrientation={(orientation) => {
+								setPageConfig({ ...pageConfig, orientation });
+							}}
+						/>
 					}
 					trigger="click"
 					placement="bottom"
@@ -50,9 +59,9 @@ export const PageOptions = () => {
 			<ItemGroup>
 				<Popover
 					content={
-						<PageSizeSelector 
-							selectedSize={pageConfig.size} 
-							onSizeChange={(size) => setPageConfig({ ...pageConfig, size })} 
+						<PageSizeSelector
+							selectedSize={pageConfig.size}
+							onSizeChange={(size) => setPageConfig({ ...pageConfig, size })}
 						/>
 					}
 					trigger="click"
@@ -77,9 +86,9 @@ export const PageOptions = () => {
 
 				<Popover
 					content={
-						<PageOrientationSelector 
-							selectedOrientation={pageConfig.orientation} 
-							onOrientationChange={(orientation) => setPageConfig({ ...pageConfig, orientation })} 
+						<PageOrientationSelector
+							selectedOrientation={pageConfig.orientation}
+							onOrientationChange={(orientation) => setPageConfig({ ...pageConfig, orientation })}
 						/>
 					}
 					trigger="click"
