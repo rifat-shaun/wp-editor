@@ -4,12 +4,13 @@ import SvgIcon from '../../common/SvgIcon';
 import { TableSelector } from './TableSelector';
 import { Popover } from 'antd';
 import { ItemGroup } from '../ItemGroup';
-import { ToolbarButtonItem } from '../ToolbarButtonItem';
+import { Button } from '../../base/Button';
 import { Divider } from '../Divider';
 import { useToolbar } from '@/contexts/ToolbarContext';
 import { TOOLBAR_TYPES_ENUM } from '@/constants/Toolbar';
 import { useTiptapEditorState } from '@/hooks/useTiptapEditorState';
 import { useTableMethods } from '@/hooks/useTableMethods';
+import { ArrowDropDownOutlined } from '@mui/icons-material';
 
 type TTableOptionsProps = {
   editor: Editor;
@@ -31,29 +32,31 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
   const tableOptionsItemGroup = (
     <ItemGroup>
       <div className='flex items-center space-x-2'>
-        <ToolbarButtonItem
-          tooltip='Insert Row Above'
+        <Button
           onClick={handleInsertRowAbove}
           disabled={!isTableActive}
           active={false}
-          buttonTitle='Insert Row Above'
           size='small'
-          showChildrenInline
+          title='Insert Row Above'
         >
-          <SvgIcon name='table-add-row-before' />
-        </ToolbarButtonItem>
+          <div className='flex items-center flex-row gap-1'>
+            <SvgIcon name='table-add-row-before' strokeWidth={4} />
+            <span className='text-sm min-w-max'>Insert Row Above</span>
+          </div>
+        </Button>
 
-        <ToolbarButtonItem
-          tooltip='Insert Row Below'
+        <Button
           onClick={handleInsertRowBelow}
           disabled={!isTableActive}
           active={false}
-          buttonTitle='Insert Row Below'
           size='small'
-          showChildrenInline
+          title='Insert Row Below'
         >
-          <SvgIcon name='table-add-row-after' />
-        </ToolbarButtonItem>
+          <div className='flex items-center flex-row gap-1'>
+            <SvgIcon name='table-add-row-after' strokeWidth={4} />
+            <span className='text-sm min-w-max'>Insert Row Below</span>
+          </div>
+        </Button>
 
         {/* <ToolbarButtonItem
 					tooltip='Delete Row'
@@ -69,41 +72,44 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
       </div>
 
       <div className='flex items-center space-x-2'>
-        <ToolbarButtonItem
-          tooltip='Insert Column Left'
+        <Button
           onClick={handleInsertColumnLeft}
           disabled={!isTableActive}
           active={false}
-          buttonTitle='Insert Column Left'
           size='small'
-          showChildrenInline
+          title='Insert Column Left'
         >
-          <SvgIcon name='table-add-column-before' />
-        </ToolbarButtonItem>
+          <div className='flex items-center flex-row gap-1'>
+            <SvgIcon name='table-add-column-before' strokeWidth={4} />
+            <span className='text-sm min-w-max'>Insert Column Left</span>
+          </div>
+        </Button>
 
-        <ToolbarButtonItem
-          tooltip='Insert Column Right'
+        <Button
           onClick={handleInsertColumnRight}
           disabled={!isTableActive}
           active={false}
-          buttonTitle='Insert Column Right'
           size='small'
-          showChildrenInline
+          title='Insert Column Right'
         >
-          <SvgIcon name='table-add-column-after' />
-        </ToolbarButtonItem>
+          <div className='flex items-center flex-row gap-1'>
+            <SvgIcon name='table-add-column-after' strokeWidth={4} />
+            <span className='text-sm min-w-max'>Insert Column Right</span>
+          </div>
+        </Button>
 
-        <ToolbarButtonItem
-          tooltip='Delete Column'
+        <Button
           onClick={handleDeleteColumn}
           disabled={!isTableActive}
           active={false}
-          buttonTitle='Delete Column'
           size='small'
-          showChildrenInline
+          title='Delete Column'
         >
-          <SvgIcon name='table-delete-column' />
-        </ToolbarButtonItem>
+          <div className='flex items-center flex-row gap-1'>
+            <SvgIcon name='table-delete-column' strokeWidth={2} />
+            <span className='text-sm min-w-max'>Delete Column</span>
+          </div>
+        </Button>
       </div>
     </ItemGroup>
   );
@@ -118,7 +124,17 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
         arrow={false}
         style={{ padding: '0px' }}
       >
-        <SvgIcon name='table' size={isClassicToolbar ? '20px' : '40px'} />
+        <Button
+          onClick={() => setOpen(true)}
+          active={false}
+          size='large'
+          title='Insert Table'
+        >
+          <div className='flex items-center flex-row gap-1'>
+            <SvgIcon name='table' size={isClassicToolbar ? '18px' : '32px'} strokeWidth={4} />
+            <ArrowDropDownOutlined sx={{ fontSize: isClassicToolbar ? '18px' : '22px', color: 'inherit' }} />
+          </div>
+        </Button>
       </Popover>
 
       <Divider />
@@ -128,45 +144,48 @@ export const TableOptions = ({ editor }: TTableOptionsProps) => {
       <Divider />
 
       <ItemGroup>
-        <ToolbarButtonItem
-          tooltip='Merge Cells'
+        <Button
           onClick={handleMergeCells}
           disabled={!isTableActive}
           active={false}
-          buttonTitle='Merge Cells'
           size='small'
-          showChildrenInline
+          title='Merge Cells'
         >
-          <SvgIcon name='table-merge-cell' />
-        </ToolbarButtonItem>
+          <div className='flex items-center flex-row gap-1'>
+            <SvgIcon name='table-merge-cell' strokeWidth={4} />
+            <span className='text-sm min-w-max'>Merge Cells</span>
+          </div>
+        </Button>
 
-        <ToolbarButtonItem
-          tooltip='Split Cell'
+        <Button
           onClick={handleSplitCell}
           disabled={!isTableActive}
           active={false}
-          buttonTitle='Split Cell'
           size='small'
-          showChildrenInline
+          title='Split Cell'
         >
-          <SvgIcon name='table-split-cell' />
-        </ToolbarButtonItem>
+          <div className='flex items-center flex-row gap-1'>
+            <SvgIcon name='table-split-cell' strokeWidth={4} />
+            <span className='text-sm min-w-max'>Split Cell</span>
+          </div>
+        </Button>
       </ItemGroup>
 
       <Divider />
 
       <ItemGroup>
-        <ToolbarButtonItem
-          tooltip='Delete Table'
+        <Button
           onClick={handleDeleteTable}
           disabled={!isTableActive}
           active={false}
-          buttonTitle='Delete Table'
           size={isClassicToolbar ? 'small' : 'medium'}
-          showChildrenInline={isClassicToolbar}
+          title='Delete Table'
         >
-          <SvgIcon name='table-delete' size='20px' />
-        </ToolbarButtonItem>
+          <div className={`flex items-center ${isClassicToolbar ? 'flex-row gap-1' : 'flex-col gap-0.5'}`}>
+            <SvgIcon name='table-delete' size='20px' strokeWidth={4} />
+            <span className='text-sm min-w-max'>Delete Table</span>
+          </div>
+        </Button>
       </ItemGroup>
     </>
   );

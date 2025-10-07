@@ -12,10 +12,10 @@ interface ButtonProps {
 }
 
 const sizeClasses = {
-	'extra-small': 'p-0.5 text-xs',
-	'small': 'p-1 text-sm',
-	'medium': 'p-2 text-base',
-	'large': 'p-3 text-lg',
+	'extra-small': 'py-0.5 px-1 text-xs',
+	'small': 'py-1 px-1.5 text-sm',
+	'medium': 'py-1.5 px-1.5 text-base',
+	'large': 'py-2 px-1.5 text-lg',
 };
 
 export const Button = ({ children, onClick, className, title, size = 'medium', disabled = false, active = false, buttonRef }: ButtonProps) => {
