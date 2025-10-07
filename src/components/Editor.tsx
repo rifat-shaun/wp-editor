@@ -1,8 +1,7 @@
 import { useEditor, EditorContent, EditorContext } from "@tiptap/react";
-import { FloatingMenu, BubbleMenu } from "@tiptap/react/menus";
+import { FloatingMenu } from "@tiptap/react/menus";
 import { useMemo, useEffect, useRef } from "react";
 import { usePresentationMode } from "@/hooks/usePresentationMode";
-import BubbleMenuContent from "./menubar/BubbleMenuContent";
 import type { EditorConfig } from "@/config/editorConfig";
 import { defaultEditorConfig } from "@/config/editorConfig";
 import { getEditorExtensions } from "@/extensions";
@@ -10,6 +9,7 @@ import { Toolbar } from "@/components/toolbar/Toolbar";
 import { Footer } from "@/components/footer";
 import { PresentationControls } from "./PresentationControls";
 import { usePageMethods } from "@/hooks/usePageMethods";
+import { BubbleMenus } from "./menubar/bubble-menu";
 
 export interface EditorProps {
   config?: EditorConfig;
@@ -87,7 +87,8 @@ const Editor = ({ config = {} }: EditorProps) => {
           <EditorContext.Provider value={providerValue}>
             <EditorContent editor={editor} />
 
-            {editorConfig.showFloatingMenu && editor && !isPresentationMode && (
+            {/* TODO: Add floating menu */}
+            {false && editor && !isPresentationMode && (
               <FloatingMenu editor={editor}>
                 <div className="bg-white shadow-lg rounded-lg border border-neutral-200 p-2">
                   This is the floating menu
@@ -95,10 +96,8 @@ const Editor = ({ config = {} }: EditorProps) => {
               </FloatingMenu>
             )}
 
-            {editorConfig.showBubbleMenu && editor && !isPresentationMode && (
-              <BubbleMenu editor={editor}>
-                <BubbleMenuContent editor={editor} />
-              </BubbleMenu>
+            {editor && !isPresentationMode && (
+              <BubbleMenus editor={editor} />
             )}
           </EditorContext.Provider>
         </div>
