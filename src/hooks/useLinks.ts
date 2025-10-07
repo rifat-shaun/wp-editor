@@ -28,19 +28,45 @@ export const useLinks = (editor?: Editor) => {
 		editor.chain().focus().unsetLink().run();
 	};
 
+	const normalizeAndValidateUrl = (url: string): string | null => {
+		if (!url || !url.trim()) return null;
+
+		let normalizedUrl = url.trim();
+
+		// Add https:// if no protocol is provided
+		if (!/^https?:\/\//i.test(normalizedUrl)) {
+			normalizedUrl = `https://${normalizedUrl}`;
+		}
+
+		// Basic URL validation
+		try {
+			const urlObj = new URL(normalizedUrl);
+			return urlObj.href;
+		} catch {
+			return null;
+		}
+	};
+
 	const handleInsertLink = (url: string, text?: string) => {
 		if (!editor || !url) return;
 
+		const validatedUrl = normalizeAndValidateUrl(url);
+		if (!validatedUrl) return;
+
 		if (text) {
-			editor.chain().focus().insertContent(`<a href="${url}">${text}</a>`).run();
+			editor.chain().focus().insertContent(`<a href="${validatedUrl}">${text}</a>`).run();
 		} else {
-			editor.chain().focus().setLink({ href: url }).run();
+			editor.chain().focus().setLink({ href: validatedUrl }).run();
 		}
 	};
 
 	const handleEditLink = (url: string) => {
 		if (!editor || !url) return;
-		editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+
+		const validatedUrl = normalizeAndValidateUrl(url);
+		if (!validatedUrl) return;
+
+		editor.chain().focus().extendMarkRange('link').setLink({ href: validatedUrl }).run();
 	};
 
 	const getSelectionLinkValues = () => {
