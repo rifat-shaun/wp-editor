@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { mergeAttributes } from "@tiptap/core";
 import OrderedList from "@tiptap/extension-ordered-list";
 
@@ -46,7 +47,7 @@ export const OrderedListWithType = OrderedList.extend({
     ];
   },
 
-  renderHTML({ HTMLAttributes }: { HTMLAttributes: Record<string, any> }) {
+  renderHTML({ HTMLAttributes }: { HTMLAttributes: Record<string, unknown> }) {
     return [
       "ol",
       mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),

@@ -2,7 +2,8 @@ import { useState } from "react";
 import SvgIcon from "@/components/common/SvgIcon";
 import type { Editor } from "@tiptap/react";
 import { Popover } from "antd";
-import { LINK_FORM_MODES, LinkForm } from "../../toolbar/insert/LinkForm";
+import { LinkForm } from "@/components/toolbar/insert/LinkForm";
+import { LINK_FORM_MODES } from "@/components/toolbar/insert/linkConstants";
 import { useLinks } from "@/hooks/useLinks";
 
 export const LinkMenuContent = ({ editor }: { editor: Editor }) => {

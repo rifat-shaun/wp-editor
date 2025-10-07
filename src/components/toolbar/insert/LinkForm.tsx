@@ -2,11 +2,7 @@ import { useState, useEffect } from "react";
 import { Input, Button } from "antd";
 import type { Editor } from "@tiptap/react";
 import { useLinks } from "@/hooks/useLinks";
-
-export const LINK_FORM_MODES = {
-	INSERT: "insert",
-	EDIT: "edit",
-} as const;
+import { LINK_FORM_MODES } from "../../../constants/linkConstants";
 
 interface LinkFormProps {
 	editor: Editor;

@@ -1,4 +1,4 @@
-import { Checkbox } from 'antd';
+import { Checkbox, type CheckboxChangeEvent } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 
 type TableSelectorProps = {
@@ -48,11 +48,11 @@ export const TableSelector: React.FC<TableSelectorProps> = ({ onSelect, withHead
 			}
 
 			if (newRow < visibleRows - shrinkBuffer && visibleRows > initialRowsSize) {
-				setVisibleRows((_prev) => Math.max(newRow + shrinkBuffer, initialRowsSize));
+				setVisibleRows(() => Math.max(newRow + shrinkBuffer, initialRowsSize));
 			}
 
 			if (newCol < visibleCols - shrinkBuffer && visibleCols > initialColsSize) {
-				setVisibleCols((_prev) => Math.max(newCol + shrinkBuffer, initialColsSize));
+				setVisibleCols(() => Math.max(newCol + shrinkBuffer, initialColsSize));
 			}
 
 			resizeTimeoutRef.current = null;
@@ -84,7 +84,7 @@ export const TableSelector: React.FC<TableSelectorProps> = ({ onSelect, withHead
 		resetGridState();
 	};
 
-	const handleHeaderRowChange = (e: any) => {
+	const handleHeaderRowChange = (e: CheckboxChangeEvent) => {
 		if (onHeaderRowChange) {
 			onHeaderRowChange(e.target.checked);
 		}

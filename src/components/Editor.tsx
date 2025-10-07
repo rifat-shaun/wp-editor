@@ -1,15 +1,15 @@
 import { useEditor, EditorContent, EditorContext } from "@tiptap/react";
-import { FloatingMenu } from "@tiptap/react/menus";
+// import { FloatingMenu } from "@tiptap/react/menus";
 import { useMemo, useEffect, useRef } from "react";
 import { usePresentationMode } from "@/hooks/usePresentationMode";
 import type { EditorConfig } from "@/config/editorConfig";
 import { defaultEditorConfig } from "@/config/editorConfig";
-import { getEditorExtensions } from "@/extensions";
 import { Toolbar } from "@/components/toolbar/Toolbar";
 import { Footer } from "@/components/footer";
 import { PresentationControls } from "./PresentationControls";
 import { usePageMethods } from "@/hooks/usePageMethods";
 import { BubbleMenus } from "./menubar/bubble-menu";
+import { EditorExtensions } from "@/extensions";
 
 export interface EditorProps {
   config?: EditorConfig;
@@ -21,7 +21,7 @@ const Editor = ({ config = {} }: EditorProps) => {
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const editor = useEditor({
-    extensions: getEditorExtensions(editorConfig),
+    extensions: EditorExtensions(editorConfig),
     content: editorConfig.content,
     autofocus: false,
     onUpdate: ({ editor: editorInstance }) => {
@@ -88,13 +88,13 @@ const Editor = ({ config = {} }: EditorProps) => {
             <EditorContent editor={editor} />
 
             {/* TODO: Add floating menu */}
-            {false && editor && !isPresentationMode && (
+            {/* {false && editor && !isPresentationMode && (
               <FloatingMenu editor={editor}>
                 <div className="bg-white shadow-lg rounded-lg border border-neutral-200 p-2">
                   This is the floating menu
                 </div>
               </FloatingMenu>
-            )}
+            )} */}
 
             {editor && !isPresentationMode && (
               <BubbleMenus editor={editor} />

@@ -105,6 +105,8 @@ export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
 		return <span style={style}>{option.label}</span>;
 	}, []);
 
+	const toggleOpen = useCallback(() => setIsOpen(prev => !prev), []);
+
 	if (currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC) {
 		const selectedHeadingTag = selectionHeadingLevel === 'paragraph' ? selectionHeadingLevel : `h${selectionHeadingLevel}`;
 
@@ -146,7 +148,7 @@ export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
 						</ToolbarButtonItem>
 					))}
 
-					<div className='flex items-center justify-center' onClick={useCallback(() => setIsOpen(prev => !prev), [])}>
+					<div className='flex items-center justify-center' onClick={toggleOpen}>
 						<SvgIcon name='arrow-down' className={`cursor-pointer ${isOpen ? 'rotate-180' : ''}`} />
 					</div>
 				</div>

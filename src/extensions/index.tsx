@@ -29,7 +29,7 @@ import type { EditorConfig } from "@/config/editorConfig";
 import { AI_AUTO_COMPLETION_DEBOUNCE_TIME, AI_AUTO_COMPLETION_TRIGGER_WORD_COUNT } from "@/constants";
 import Link from "@tiptap/extension-link";
 
-export const getEditorExtensions = (config?: EditorConfig) => [
+const getEditorExtensions = (config?: EditorConfig) => [
   StarterKit.configure({
     orderedList: false, // Disable default to use our custom one
     bulletList: false, // Disable default to use our custom one
@@ -117,4 +117,4 @@ export const getEditorExtensions = (config?: EditorConfig) => [
 ];
 
 // Backward compatibility - default extensions without config
-export const EditorExtensions = getEditorExtensions();
+export const EditorExtensions = getEditorExtensions;
