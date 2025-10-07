@@ -50,7 +50,7 @@ export const InsertOptions = ({ editor }: { editor: Editor }) => {
           />
           <ArrowDropDownOutlined
             sx={{
-              fontSize: isClassicToolbar ? "18px" : "32px",
+              fontSize: isClassicToolbar ? "18px" : "22px",
               color: "inherit",
             }}
           />
@@ -76,6 +76,12 @@ export const InsertOptions = ({ editor }: { editor: Editor }) => {
           className="flex items-center gap-1"
         >
           <SvgIcon name="hr" size={isClassicToolbar ? "18px" : "32px"} strokeWidth={4} />
+          <ArrowDropDownOutlined
+            sx={{
+              fontSize: isClassicToolbar ? "18px" : "22px",
+              color: "inherit",
+            }}
+          />
         </Button>
       </Popover>
     </>
