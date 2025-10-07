@@ -27,6 +27,7 @@ export const DividerDropdownContent = ({
             key={item.value}
             className="px-2 py-3 hover:bg-gray-100 rounded-md cursor-pointer transition-colors"
             onClick={() => handleDividerClick(item.value)}
+            title={item.label}
           >
             <hr
               className={`hr--${item.value} !m-0`}
