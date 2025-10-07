@@ -2,8 +2,8 @@ import { Editor } from '@tiptap/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { ToolbarButtonItem } from './ToolbarButtonItem';
-import SvgIcon from '../common/SvgIcon';
+import { ToolbarButtonItem } from "../ToolbarButtonItem";
+import SvgIcon from "../../common/SvgIcon";
 import { DROPDOWN_OFFSET, HEADING_OPTIONS, HEADING_STYLES } from '@/constants/Heading';
 import { useTiptapEditorState } from '@/hooks/useTiptapEditorState';
 import { useHeadingStyleMethods } from '@/hooks/useHeadingStyleMethods';

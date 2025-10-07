@@ -1,14 +1,14 @@
 import { Editor } from "@tiptap/react";
-import { ItemGroup } from "./ItemGroup";
-import { ToolbarButtonItem } from "./ToolbarButtonItem";
+import { ItemGroup } from "../ItemGroup";
+import { ToolbarButtonItem } from "../ToolbarButtonItem";
 import SvgIcon from "@/components/common/SvgIcon";
 import { useParagraphStyleMethods } from "@/hooks/useParagraphStyleMethods";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
 import { Dropdown, Space, Tooltip } from "antd";
 import { useState } from "react";
 import { ArrowDropDownOutlined } from "@mui/icons-material";
-import { OrderedListTypeDropdownContent } from "./OrderedListTypeDropdownContent";
 import { UnorderedListTypeDropdownContent } from "./UnorderedListTypeDropdownContent";
+import { OrderedListTypeDropdownContent } from "./OrderedListTypeDropdownContent";
 
 type TParagraphStyleOptionsProps = {
   editor: Editor;

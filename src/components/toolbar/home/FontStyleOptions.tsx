@@ -1,5 +1,5 @@
 import { Dropdown, InputNumber, Space, Tooltip } from "antd";
-import { ItemGroup } from "./ItemGroup";
+import { ItemGroup } from "../ItemGroup";
 import { FONT_FAMILY_OPTIONS, FONT_SIZE_OPTIONS } from "@/constants/Fonts";
 import {
   ArrowDropDownOutlined,
@@ -14,9 +14,9 @@ import {
   TitleOutlined,
 } from "@mui/icons-material";
 import { Editor } from "@tiptap/react";
-import { ToolbarButtonItem } from "./ToolbarButtonItem";
-import { HorizontalLayoutColorPicker } from "../base/ColorPicker";
-import SvgIcon from "../common/SvgIcon";
+import { ToolbarButtonItem } from "../ToolbarButtonItem";
+import { HorizontalLayoutColorPicker } from "../../base/ColorPicker";
+import SvgIcon from "../../common/SvgIcon";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
 import { useFontStyleMethods } from "@/hooks/useFontStyleMethods";
 

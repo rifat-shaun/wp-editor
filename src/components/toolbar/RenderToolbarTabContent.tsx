@@ -1,9 +1,9 @@
 import { Editor } from "@tiptap/react";
-import { HomeOptions } from "./HomeOptions";
 import type { TTabKey } from "@/constants/Toolbar";
 import { TableOptions } from "./table";
 import { PageOptions } from "./page";
 import { InsertOptions } from "./insert";
+import { HomeOptions } from "./home";
 
 interface RenderToolbarTabContentProps {
   activeTab: TTabKey;
