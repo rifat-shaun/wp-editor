@@ -26,18 +26,3 @@ export const TOOLBAR_TYPES = {
     height: 0,
   },
 };
-
-export const TOOLBAR_MENU_ITEMS = [
-  {
-    key: TOOLBAR_TYPES.CLASSIC.name,
-    label: TOOLBAR_TYPES.CLASSIC.label,
-  },
-  {
-    key: TOOLBAR_TYPES.PROFESSIONAL.name,
-    label: TOOLBAR_TYPES.PROFESSIONAL.label,
-  },
-  {
-    key: TOOLBAR_TYPES.NONE.name,
-    label: TOOLBAR_TYPES.NONE.label,
-  },
-];
