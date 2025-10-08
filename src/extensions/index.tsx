@@ -29,6 +29,7 @@ import type { EditorConfig } from "@/config/editorConfig";
 import { AI_AUTO_COMPLETION_DEBOUNCE_TIME, AI_AUTO_COMPLETION_TRIGGER_WORD_COUNT } from "@/constants";
 import Link from "@tiptap/extension-link";
 import { HorizontalRuleWithStyle } from "./HorizontalRuleWithStyle";
+import { CodeBlockWithToolbar } from "./CodeBlockWithToolbar";
 import PageMargin from "./PageMargin";
 import PageBackground from "./PageBackground";
 import PageBreak from "./PageBreak";
@@ -42,6 +43,7 @@ const getEditorExtensions = (config?: EditorConfig) => [
     blockquote: false, // Disable default to use our custom one
     link: false, // Disable default to use our custom one
     horizontalRule: false, // Disable default to use our custom one
+    codeBlock: false, // Disable default to use our custom one with toolbar
   }),
   OrderedListWithType,
   UnorderedListWithType,
@@ -120,6 +122,7 @@ const getEditorExtensions = (config?: EditorConfig) => [
     protocols: ['http', 'https'],
   }),
   HorizontalRuleWithStyle,
+  CodeBlockWithToolbar,
   PageMargin.configure({
     unit: 'in',
     defaultMargins: {
