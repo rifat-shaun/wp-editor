@@ -14,11 +14,11 @@ export const HEADING_OPTIONS = [
 
 // Heading styles configuration
 export const HEADING_STYLES = {
-	h1: { fontSize: '1rem', fontWeight: 'bold', lineHeight: '1.2' },
-	h2: { fontSize: '0.9rem', fontWeight: 'bold', lineHeight: '1.2' },
-	h3: { fontSize: '0.8rem', fontWeight: 'bold', lineHeight: '1.2' },
-	h4: { fontSize: '0.75rem', fontWeight: 'bold', lineHeight: '1.2' },
-	h5: { fontSize: '0.7rem', fontWeight: 'bold', lineHeight: '1.2' },
-	h6: { fontSize: '0.65rem', fontWeight: 'bold', lineHeight: '1.2' },
-	paragraph: { fontSize: '0.7rem', lineHeight: '1.2' },
+	h1: { fontSize: '1rem', fontWeight: 'bold', lineHeight: '1' },
+	h2: { fontSize: '0.9rem', fontWeight: 'bold', lineHeight: '1' },
+	h3: { fontSize: '0.8rem', fontWeight: 'bold', lineHeight: '1' },
+	h4: { fontSize: '0.75rem', fontWeight: 'bold', lineHeight: '1' },
+	h5: { fontSize: '0.7rem', fontWeight: 'bold', lineHeight: '1' },
+	h6: { fontSize: '0.65rem', fontWeight: 'bold', lineHeight: '1' },
+	paragraph: { fontSize: '0.7rem', lineHeight: '1' },
 } as const;
