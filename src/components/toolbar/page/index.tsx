@@ -9,10 +9,15 @@ import { Divider } from "../Divider";
 import { useToolbar } from "@/contexts/ToolbarContext";
 import { TOOLBAR_TYPES_ENUM } from "@/constants/Toolbar";
 import PageOrientationSelector from "./PageOrientationSelector";
+import { PageMarginPicker } from "./PageMarginPicker";
+import { Editor } from "@tiptap/react";
+import { PageBackgroundColorPicker } from "./PageBackgroundColorPicker";
+import { usePageMethods } from "@/hooks/usePageMethods";
 
-export const PageOptions = () => {
+export const PageOptions = ({ editor }: { editor: Editor }) => {
 	const { pageConfig, setPageConfig, currentToolbar, onPresentationModeToggle } = useToolbar();
 	const isClassicToolbar = currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC;
+	const { selectedBGColor, handleSetPageBackgroundColor, handleInsertPageBreak } = usePageMethods(editor);
 
 	const [isPageSizeOpen, setIsPageSizeOpen] = useState(false);
 	const [isPageOrientationOpen, setIsPageOrientationOpen] = useState(false);
@@ -23,7 +28,14 @@ export const PageOptions = () => {
 			<ItemGroup>
 				<Popover
 					content={
-						<div>Hello</div>
+						<PageMarginPicker
+							editor={editor}
+							onClose={() => setIsPageMarginsOpen(false)}
+							pageOrientation={pageConfig.orientation}
+							setPageOrientation={(orientation) => {
+								setPageConfig({ ...pageConfig, orientation });
+							}}
+						/>
 					}
 					trigger="click"
 					placement="bottom"
@@ -33,16 +45,31 @@ export const PageOptions = () => {
 				>
 					<Button
 						onClick={() => setIsPageMarginsOpen(true)}
-						title="Insert Link"
-						className="flex items-center gap-1"
+						title="Page Margin"
+						size={isClassicToolbar ? "small" : "medium"}
 					>
-						<SvgIcon
-							name="page-margin"
-							strokeWidth={1.5}
-							size={isClassicToolbar ? "18px" : "32px"}
-						/>
-						<span className="text-xs">Margin</span>
-						<ArrowDropDownOutlined sx={{ fontSize: isClassicToolbar ? "18px" : "22px", color: "inherit" }} />
+						{isClassicToolbar ? (
+							<div className="relative flex items-center gap-1">
+								<SvgIcon
+									name="page-margin"
+									strokeWidth={1.5}
+								/>
+								<span className="text-xs">Margin</span>
+								<ArrowDropDownOutlined sx={{ fontSize: "14px", color: "inherit" }} />
+							</div>
+						) : (
+							<div className="relative flex flex-col items-center gap-1">
+								<div className="flex items-center gap-1">
+									<SvgIcon
+										name="page-margin"
+										strokeWidth={1.5}
+										size={20}
+									/>
+									<ArrowDropDownOutlined sx={{ fontSize: "16px", color: "inherit" }} />
+								</div>
+								<span className="text-xs">Margin</span>
+							</div>
+						)}
 					</Button>
 				</Popover>
 			</ItemGroup>
@@ -50,9 +77,9 @@ export const PageOptions = () => {
 			<ItemGroup>
 				<Popover
 					content={
-						<PageSizeSelector 
-							selectedSize={pageConfig.size} 
-							onSizeChange={(size) => setPageConfig({ ...pageConfig, size })} 
+						<PageSizeSelector
+							selectedSize={pageConfig.size}
+							onSizeChange={(size) => setPageConfig({ ...pageConfig, size })}
 						/>
 					}
 					trigger="click"
@@ -77,9 +104,9 @@ export const PageOptions = () => {
 
 				<Popover
 					content={
-						<PageOrientationSelector 
-							selectedOrientation={pageConfig.orientation} 
-							onOrientationChange={(orientation) => setPageConfig({ ...pageConfig, orientation })} 
+						<PageOrientationSelector
+							selectedOrientation={pageConfig.orientation}
+							onOrientationChange={(orientation) => setPageConfig({ ...pageConfig, orientation })}
 						/>
 					}
 					trigger="click"
@@ -106,13 +133,47 @@ export const PageOptions = () => {
 			<Divider />
 
 			<Button
-				onClick={onPresentationModeToggle}
-				className="flex items-center gap-2 py-px"
-				title="Enter Presentation Mode"
-				size="small"
+				onClick={handleInsertPageBreak}
+				title="Insert Page Break"
+				size={isClassicToolbar ? "small" : "medium"}
 			>
-				<SvgIcon name="preview" strokeWidth={3.5} />
-				<span>Presentation</span>
+				{isClassicToolbar ? (
+					<div className="relative flex items-center gap-1">
+						<SvgIcon name="page-break" strokeWidth={3.5} />
+						<span className="text-xs">Page Break</span>
+					</div>
+				) : (
+					<div className="relative flex flex-col items-center gap-1">
+						<SvgIcon name="page-break" size={20} strokeWidth={3.5} />
+						<span className="text-xs">Page Break</span>
+					</div>
+				)}
+			</Button>
+
+			<PageBackgroundColorPicker
+				id="pageBackgroundColor"
+				selectedBGColor={selectedBGColor}
+				setSelectedBGColor={handleSetPageBackgroundColor}
+			/>
+
+			<Divider />
+
+			<Button
+				onClick={onPresentationModeToggle}
+				title="Enter Presentation Mode"
+				size={isClassicToolbar ? "small" : "medium"}
+			>
+				{isClassicToolbar ? (
+					<div className="relative flex items-center gap-1">
+						<SvgIcon name="preview" strokeWidth={3.5} />
+						<span className="text-xs">Presentation</span>
+					</div>
+				) : (
+					<div className="relative flex flex-col items-center gap-1">
+						<SvgIcon name="preview" size={20} strokeWidth={3.5} />
+						<span className="text-xs">Presentation</span>
+					</div>
+				)}
 			</Button>
 		</>
 	)

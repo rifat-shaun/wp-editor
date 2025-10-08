@@ -30,7 +30,9 @@ import { AI_AUTO_COMPLETION_DEBOUNCE_TIME, AI_AUTO_COMPLETION_TRIGGER_WORD_COUNT
 import Link from "@tiptap/extension-link";
 import { HorizontalRuleWithStyle } from "./HorizontalRuleWithStyle";
 import { CodeBlockWithToolbar } from "./CodeBlockWithToolbar";
-
+import PageMargin from "./PageMargin";
+import PageBackground from "./PageBackground";
+import PageBreak from "./PageBreak";
 
 const getEditorExtensions = (config?: EditorConfig) => [
   StarterKit.configure({
@@ -121,6 +123,17 @@ const getEditorExtensions = (config?: EditorConfig) => [
   }),
   HorizontalRuleWithStyle,
   CodeBlockWithToolbar,
+  PageMargin.configure({
+    unit: 'in',
+    defaultMargins: {
+      top: 1,
+      right: 1,
+      bottom: 1,
+      left: 1,
+    },
+  }),
+  PageBackground,
+  PageBreak
 ];
 
 // Backward compatibility - default extensions without config

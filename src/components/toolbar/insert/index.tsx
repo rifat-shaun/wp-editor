@@ -38,24 +38,28 @@ export const InsertOptions = ({ editor }: { editor: Editor }) => {
         onOpenChange={setIsLinkFormOpen}
       >
         <Button
-          size={isClassicToolbar ? "medium" : "large"}
+          size={isClassicToolbar ? "small" : "medium"}
           onClick={() => setIsLinkFormOpen(true)}
           title="Insert Link"
-          className="flex items-center gap-1"
         >
-          <SvgIcon
-            name="link"
-            size={isClassicToolbar ? "18px" : "32px"}
-            strokeWidth={1.5}
-          />
-          <ArrowDropDownOutlined
-            sx={{
-              fontSize: isClassicToolbar ? "18px" : "22px",
-              color: "inherit",
-            }}
-          />
+          {isClassicToolbar ? (
+            <div className="relative flex items-center gap-1">
+              <SvgIcon name="link" strokeWidth={1.5} />
+              <span className="text-xs">Link</span>
+              <ArrowDropDownOutlined sx={{ fontSize: "14px", color: "inherit" }} />
+            </div>
+          ) : (
+            <div className="relative flex flex-col items-center gap-1">
+              <div className="flex items-center gap-1">
+                <SvgIcon name="link" size={20} strokeWidth={1.5} />
+                <ArrowDropDownOutlined sx={{ fontSize: "16px", color: "inherit" }} />
+              </div>
+              <span className="text-xs">Link</span>
+            </div>
+          )}
         </Button>
       </Popover>
+
       <Popover
         content={
           <DividerDropdownContent
@@ -70,18 +74,25 @@ export const InsertOptions = ({ editor }: { editor: Editor }) => {
         onOpenChange={setIsDividerOpen}
       >
         <Button
-          size={isClassicToolbar ? "medium" : "large"}
+          size={isClassicToolbar ? "small" : "medium"}
           onClick={() => setIsDividerOpen(true)}
           title="Insert Divider"
-          className="flex items-center gap-1"
         >
-          <SvgIcon name="hr" size={isClassicToolbar ? "18px" : "32px"} strokeWidth={4} />
-          <ArrowDropDownOutlined
-            sx={{
-              fontSize: isClassicToolbar ? "18px" : "22px",
-              color: "inherit",
-            }}
-          />
+          {isClassicToolbar ? (
+            <div className="relative flex items-center gap-1">
+              <SvgIcon name="hr" strokeWidth={4} />
+              <span className="text-xs">Divider</span>
+              <ArrowDropDownOutlined sx={{ fontSize: "14px", color: "inherit" }} />
+            </div>
+          ) : (
+            <div className="relative flex flex-col items-center gap-1">
+              <div className="flex items-center gap-1">
+                <SvgIcon name="hr" size={20} strokeWidth={4} />
+                <ArrowDropDownOutlined sx={{ fontSize: "16px", color: "inherit" }} />
+              </div>
+              <span className="text-xs">Divider</span>
+            </div>
+          )}
         </Button>
       </Popover>
       <Button

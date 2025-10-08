@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import SvgIcon from "../common/SvgIcon";
+import { Button } from "../base";
 
 interface ScrollableContentProps {
   contentScrollerRef: React.RefObject<HTMLDivElement>;
@@ -27,13 +28,13 @@ export const ScrollableContent = ({
   return (
     <div className={`relative flex-grow flex items-center ${className}`}>
       {showScrollButtons && canScrollLeft && (
-        <button
+        <Button
           onClick={onScrollLeft}
-          className="absolute left-0 bottom-0 z-10 bg-gray-100 px-0.5 rounded-sm shadow-sm hover:bg-primary-500 hover:text-white h-full flex items-center"
-          aria-label="Scroll left"
+          title="Scroll left"
+          className="absolute left-0 bottom-0 z-10 rounded-sm shadow-sm h-full flex items-center bg-neutral-200 hover:bg-primary-600 hover:text-white border border-neutral-300 hover:border-primary-600"
         >
-          <SvgIcon name="arrow-down" className="rotate-90" />
-        </button>
+          <SvgIcon name="arrow-down" className="rotate-90" strokeWidth={4} />
+        </Button>
       )}
       <div
         ref={contentScrollerRef}
@@ -41,8 +42,8 @@ export const ScrollableContent = ({
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
-          marginLeft: showScrollButtons ? "1.5rem" : "0",
-          marginRight: showScrollButtons ? "1.5rem" : "0",
+          marginLeft: showScrollButtons ? "2rem" : "0",
+          marginRight: showScrollButtons ? "2rem" : "0",
           scrollBehavior: "smooth",
         }}
         onScroll={onScroll}
@@ -50,13 +51,13 @@ export const ScrollableContent = ({
         <div className="w-full flex items-center space-x-2">{children}</div>
       </div>
       {showScrollButtons && canScrollRight && (
-        <button
+        <Button
           onClick={onScrollRight}
-          className="absolute right-0 bottom-0 z-10 bg-gray-100 px-0.5 rounded-sm shadow-sm hover:bg-primary-500 hover:text-white h-full flex items-center"
-          aria-label="Scroll right"
+          title="Scroll right"
+          className="absolute right-0 bottom-0 z-10 rounded-sm shadow-sm h-full flex items-center bg-neutral-200 hover:bg-primary-600 hover:text-white border border-neutral-300 hover:border-primary-600"
         >
-          <SvgIcon name="arrow-down" className="rotate-[-90deg]" />
-        </button>
+          <SvgIcon name="arrow-down" className="rotate-[-90deg]" strokeWidth={4} />
+        </Button>
       )}
     </div>
   );

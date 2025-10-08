@@ -33,6 +33,8 @@ export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
 		setIsOpen(false);
 	}, [handleHeadingChange]);
 
+	const selectedHeadingTag = selectionHeadingLevel === 'paragraph' ? selectionHeadingLevel : `h${selectionHeadingLevel}`;
+
 	const updatePosition = useCallback(() => {
 		if (isOpen && headingsContainerRef.current) {
 			const rect = headingsContainerRef.current.getBoundingClientRect();
@@ -108,8 +110,6 @@ export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
 	const toggleOpen = useCallback(() => setIsOpen(prev => !prev), []);
 
 	if (currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC) {
-		const selectedHeadingTag = selectionHeadingLevel === 'paragraph' ? selectionHeadingLevel : `h${selectionHeadingLevel}`;
-
 		return (
 			<Dropdown
 				menu={{
@@ -131,7 +131,7 @@ export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
 
 	return (
 		<div className={`flex items-center relative h-12 min-w-fit bg-gray-100`}>
-			<div ref={headingsContainerRef} className={`flex flex-col items-center bg-gray-100 rounded-md p-2 ${isOpen ? 'rounded-b-none' : ''}`}>
+			<div ref={headingsContainerRef} className={`flex flex-col items-center bg-gray-100 rounded-sm p-2 ${isOpen ? 'rounded-b-none' : ''}`}>
 				<div className='flex items-center gap-2'>
 					{HEADING_OPTIONS?.slice(0, 4)?.map((option) => (
 						<Button
@@ -139,7 +139,7 @@ export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
 							title={option.label}
 							onClick={() => handleHeadingChange(option.value)}
 							active={selectionHeadingLevel === option.value}
-							className={`rounded-md h-9 w-fit ${selectionHeadingLevel === option.value ? 'bg-primary-100' : 'bg-white'}`}
+							className={`rounded-md h-10 w-fit bg-white border border-neutral-200 hover:bg-white hover:border-1 hover:border-primary-300 ${selectedHeadingTag === option.value ? '!border-1 !border-primary-400' : ''}`}
 						>
 							<div className='w-24 h-full flex flex-col items-center justify-between'>
 								{headingRenderer(option)}
@@ -149,7 +149,7 @@ export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
 					))}
 
 					<div className='flex items-center justify-center' onClick={toggleOpen}>
-						<SvgIcon name='arrow-down' className={`cursor-pointer ${isOpen ? 'rotate-180' : ''}`} />
+						<SvgIcon name='arrow-down' className={`cursor-pointer ${isOpen ? 'rotate-180' : ''}`} strokeWidth={4} />
 					</div>
 				</div>
 			</div>
@@ -172,7 +172,7 @@ export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
 									title={option.label}
 									onClick={() => handleDropdownItemClick(option.value)}
 									active={selectionHeadingLevel === option.value}
-									className={`rounded-md h-9 w-fit ${selectionHeadingLevel === option.value ? 'bg-primary-100' : 'bg-white'}`}
+									className={`rounded-md h-10 w-fit bg-white border border-neutral-200 hover:bg-white hover:border-1 hover:border-primary-300 ${selectedHeadingTag === option.value ? '!border-1 !border-primary-400' : ''}`}
 								>
 									<div className='w-24 h-full flex flex-col items-center justify-between'>
 										{headingRenderer(option)}

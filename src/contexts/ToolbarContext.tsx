@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
 import { TOOLBAR_TYPES_ENUM } from "@/constants/Toolbar";
 import type { PageConfig } from "@/components/toolbar/page/PageSizeSelector";
+import type { EditorConfig } from "@/config/editorConfig";
 
 export interface ToolbarContextType {
   currentToolbar: string;
@@ -13,30 +14,31 @@ export interface ToolbarContextType {
   onPresentationModeToggle: () => void;
   pageConfig: PageConfig;
   setPageConfig: (config: PageConfig) => void;
+  editorConfig: EditorConfig;
 }
 
 const ToolbarContext = createContext<ToolbarContextType | undefined>(undefined);
 
 interface ToolbarProviderProps {
   children: ReactNode;
-  defaultToolbar?: string;
+  editorConfig: EditorConfig;
   onPresentationModeToggle: () => void;
   pageConfig: PageConfig;
   setPageConfig: (config: PageConfig) => void;
 }
 
 export const ToolbarProvider = ({
+  editorConfig,
   children,
-  defaultToolbar = TOOLBAR_TYPES_ENUM.PROFESSIONAL,
   onPresentationModeToggle,
   pageConfig,
   setPageConfig
 }: ToolbarProviderProps) => {
   const { HIDE_TOOLBAR } = TOOLBAR_TYPES_ENUM;
 
-  const [currentToolbar, setCurrentToolbar] = useState<string>(defaultToolbar);
+  const [currentToolbar, setCurrentToolbar] = useState<string>(editorConfig.defaultToolbar || TOOLBAR_TYPES_ENUM.PROFESSIONAL);
   const [lastVisibleToolbar, setLastVisibleToolbar] =
-    useState<string>(defaultToolbar);
+    useState<string>(editorConfig.defaultToolbar || TOOLBAR_TYPES_ENUM.PROFESSIONAL);
 
   const handleToolbarChange = (toolbarType: string) => {
     // If hiding the toolbar, remember the current visible toolbar
@@ -67,7 +69,8 @@ export const ToolbarProvider = ({
         handleShowToolbar,
         onPresentationModeToggle,
         pageConfig,
-        setPageConfig
+        setPageConfig,
+        editorConfig
       }}
     >
       {children}

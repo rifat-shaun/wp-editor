@@ -76,7 +76,7 @@ const Editor = ({ config = {} }: EditorProps) => {
       {/* Toolbar */}
       {!isPresentationMode && (
         <Toolbar 
-          initialToolbar={editorConfig.defaultToolbar} 
+          editorConfig={editorConfig}
           editor={editor} 
           onPresentationModeToggle={onPresentationModeToggle}
           pageConfig={pageConfig}

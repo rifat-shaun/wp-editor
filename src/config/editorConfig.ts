@@ -31,6 +31,8 @@ export interface EditorConfig {
   enableVariableText?: boolean;
   /** Variable values mapping (key: variable name, value: display text) */
   variableValues?: Record<string, string>;
+  /** Callback when share is clicked */
+  onShare?: () => void;
   /** Callback when content changes */
   onContentChange?: (editor: Editor) => void;
 }
@@ -49,4 +51,5 @@ export const defaultEditorConfig: EditorConfig = {
   enableVariableText: false,
   variableValues: {},
   debounceTimeForContentChange: DEFAULT_DEBOUNCE_TIME_FOR_CONTENT_CHANGE,
+  onShare: undefined,
 };
