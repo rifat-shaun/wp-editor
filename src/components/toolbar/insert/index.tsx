@@ -3,6 +3,7 @@ import { Editor } from "@tiptap/react";
 import SvgIcon from "@/components/common/SvgIcon";
 import { Popover } from "antd";
 import { LinkForm } from "./LinkForm";
+import { ImageUploadForm } from "./ImageUploadForm";
 import { LINK_FORM_MODES } from "../../../constants/LinkConstants";
 import { ArrowDropDownOutlined } from "@mui/icons-material";
 import { useLinks } from "@/hooks/useLinks";
@@ -18,6 +19,7 @@ export const InsertOptions = ({ editor }: { editor: Editor }) => {
 
   const [isLinkFormOpen, setIsLinkFormOpen] = useState(false);
   const [isDividerOpen, setIsDividerOpen] = useState(false);
+  const [isImageFormOpen, setIsImageFormOpen] = useState(false);
 
   return (
     <>
@@ -103,6 +105,29 @@ export const InsertOptions = ({ editor }: { editor: Editor }) => {
       >
         <SvgIcon name="code" size={isClassicToolbar ? "18px" : "32px"} strokeWidth={4} />
       </Button>
+      <Popover
+        content={
+          <ImageUploadForm
+            editor={editor}
+            onSubmit={() => setIsImageFormOpen(false)}
+            onCancel={() => setIsImageFormOpen(false)}
+          />
+        }
+        trigger="click"
+        placement="bottom"
+        arrow={false}
+        open={isImageFormOpen}
+        onOpenChange={setIsImageFormOpen}
+      >
+        <Button
+          size={isClassicToolbar ? "medium" : "large"}
+          onClick={() => setIsImageFormOpen(true)}
+          title="Insert Image"
+          className="flex items-center gap-1"
+        >
+          <SvgIcon name="image" size={isClassicToolbar ? "18px" : "32px"} strokeWidth={3} />
+        </Button>
+      </Popover>
     </>
   );
 };

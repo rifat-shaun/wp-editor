@@ -33,6 +33,7 @@ import { CodeBlockWithToolbar } from "./CodeBlockWithToolbar";
 import PageMargin from "./PageMargin";
 import PageBackground from "./PageBackground";
 import PageBreak from "./PageBreak";
+import Image from '@tiptap/extension-image'
 
 const getEditorExtensions = (config?: EditorConfig) => [
   StarterKit.configure({
@@ -133,7 +134,10 @@ const getEditorExtensions = (config?: EditorConfig) => [
     },
   }),
   PageBackground,
-  PageBreak
+  PageBreak,
+  Image.configure({
+    inline: true,
+  })
 ];
 
 // Backward compatibility - default extensions without config
