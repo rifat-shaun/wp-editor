@@ -1,12 +1,12 @@
 import { NodeViewContent, NodeViewWrapper } from '@tiptap/react';
 import { useState, useEffect, useMemo } from 'react';
 import { Select } from 'antd';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteIcon from '@mui/icons-material/Delete';
 import type { Node as ProseMirrorNode } from '@tiptap/pm/model';
 import type { Editor } from '@tiptap/react';
 import { LANGUAGES, THEMES } from '@/constants/CodeBlock';
 import { all, createLowlight } from 'lowlight';
+import SvgIcon from '@/components/common/SvgIcon';
 
 const lowlight = createLowlight(all);
 
@@ -47,6 +47,32 @@ const toHtml = (nodes: LowlightNode[]): string => {
 export const CodeBlockToolbar = ({ node, updateAttributes, deleteNode, editor }: NodeViewProps) => {
   const [language, setLanguage] = useState(node.attrs.language || 'plaintext');
   const [theme, setTheme] = useState(node.attrs.theme || 'dark');
+  const [isCopied, setIsCopied] = useState(false);
+
+  const handleLanguageChange = (value: string) => {
+    setLanguage(value);
+    updateAttributes({ language: value });
+  };
+
+  const handleThemeChange = (value: string) => {
+    setTheme(value);
+    updateAttributes({ theme: value });
+  };
+
+  const handleCopy = () => {
+    const code = node.textContent;
+    if (code) {
+      navigator.clipboard.writeText(code);
+      setIsCopied(true);
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 1500);
+    }
+  };
+
+  const handleDelete = () => {
+    deleteNode();
+  };
 
   useEffect(() => {
     setLanguage(node.attrs.language || 'plaintext');
@@ -66,27 +92,6 @@ export const CodeBlockToolbar = ({ node, updateAttributes, deleteNode, editor }:
       return code;
     }
   }, [node.textContent, language]);
-
-  const handleLanguageChange = (value: string) => {
-    setLanguage(value);
-    updateAttributes({ language: value });
-  };
-
-  const handleThemeChange = (value: string) => {
-    setTheme(value);
-    updateAttributes({ theme: value });
-  };
-
-  const handleCopy = () => {
-    const code = node.textContent;
-    navigator.clipboard.writeText(code).then(() => {
-    //   toast.success('Code copied to clipboard!');
-    });
-  };
-
-  const handleDelete = () => {
-    deleteNode();
-  };
 
   return (
     <NodeViewWrapper className="code-block-wrapper">
@@ -139,9 +144,9 @@ export const CodeBlockToolbar = ({ node, updateAttributes, deleteNode, editor }:
             onClick={handleCopy}
             onMouseDown={(e) => e.stopPropagation()}
             className="code-block-action-btn"
-            title="Copy Code"
+            title={isCopied ? "Copied!" : "Copy Code"}
           >
-            <ContentCopyIcon sx={{ fontSize: 18 }} />
+            <SvgIcon name={isCopied ? "check" : "copy"} size={18} className={isCopied ? "text-green-400" : ""} strokeWidth={3} />
           </button>
           <button
             onClick={handleDelete}
