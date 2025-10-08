@@ -35,7 +35,6 @@ export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
 
 	const selectedHeadingTag = selectionHeadingLevel === 'paragraph' ? selectionHeadingLevel : `h${selectionHeadingLevel}`;
 
-
 	const updatePosition = useCallback(() => {
 		if (isOpen && headingsContainerRef.current) {
 			const rect = headingsContainerRef.current.getBoundingClientRect();

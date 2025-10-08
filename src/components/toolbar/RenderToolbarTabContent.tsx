@@ -4,6 +4,7 @@ import { TableOptions } from "./table";
 import { PageOptions } from "./page";
 import { InsertOptions } from "./insert";
 import { HomeOptions } from "./home";
+import { ExportOptions } from "./export";
 
 interface RenderToolbarTabContentProps {
   activeTab: TTabKey;
@@ -24,7 +25,7 @@ export const RenderToolbarTabContent = ({
     case "Page":
       return <PageOptions editor={editor} />;
     case "Export":
-      return <div>Export</div>;
+      return <ExportOptions editor={editor} />;
     default:
       return null;
   }
