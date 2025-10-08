@@ -52,13 +52,33 @@ export const ImageUploadForm = ({
     }
 
     setUploading(true);
-    // Insert image into editor
-    editor.chain().focus().setImage({ src: previewUrl }).run();
 
-    // Clear form and close
-    clearForm();
-    onSubmit?.();
-    setUploading(false);
+    try {
+      let finalUrl = imageUrl;
+
+      // If a file is selected, use its preview URL (base64)
+      // In production, you should upload to your server/CDN and use that URL
+      if (selectedFile) {
+        finalUrl = previewUrl;
+        message.success("Image loaded successfully");
+      }
+
+      // Insert image into editor with default width and alignment
+      editor.chain().focus().setImage({ 
+        src: finalUrl, 
+        width: 300, 
+        align: "left" as "left" | "center" | "right"
+      } as { src: string; alt?: string; title?: string; width?: number; align?: "left" | "center" | "right" }).run();
+
+      // Clear form and close
+      clearForm();
+      onSubmit?.();
+    } catch (error) {
+      console.error("Upload failed:", error);
+      message.error("Failed to insert image");
+    } finally {
+      setUploading(false);
+    }
   };
 
   const clearForm = () => {
