@@ -11,22 +11,17 @@ import { TOOLBAR_TYPES_ENUM } from "@/constants/Toolbar";
 import PageOrientationSelector from "./PageOrientationSelector";
 import { PageMarginPicker } from "./PageMarginPicker";
 import { Editor } from "@tiptap/react";
-import { PAGE_BACKGROUND_COLORS } from "@/constants/PageBackground";
 import { PageBackgroundColorPicker } from "./PageBackgroundColorPicker";
+import { usePageMethods } from "@/hooks/usePageMethods";
 
 export const PageOptions = ({ editor }: { editor: Editor }) => {
 	const { pageConfig, setPageConfig, currentToolbar, onPresentationModeToggle } = useToolbar();
 	const isClassicToolbar = currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC;
+	const { selectedBGColor, handleSetPageBackgroundColor, handleInsertPageBreak } = usePageMethods(editor);
 
 	const [isPageSizeOpen, setIsPageSizeOpen] = useState(false);
 	const [isPageOrientationOpen, setIsPageOrientationOpen] = useState(false);
 	const [isPageMarginsOpen, setIsPageMarginsOpen] = useState(false);
-	const [selectedBGColor, setSelectedBGColor] = useState(PAGE_BACKGROUND_COLORS[0].value);
-
-	const handleSetPageBackgroundColor = (color: string) => {
-		setSelectedBGColor(color);
-		editor.chain().focus().setPageBackgroundColor(color).run();
-	}
 
 	return (
 		<>
@@ -136,6 +131,24 @@ export const PageOptions = ({ editor }: { editor: Editor }) => {
 			</ItemGroup>
 
 			<Divider />
+
+			<Button
+				onClick={handleInsertPageBreak}
+				title="Insert Page Break"
+				size={isClassicToolbar ? "small" : "medium"}
+			>
+				{isClassicToolbar ? (
+					<div className="relative flex items-center gap-1">
+						<SvgIcon name="page-break" strokeWidth={3.5} />
+						<span className="text-xs">Page Break</span>
+					</div>
+				) : (
+					<div className="relative flex flex-col items-center gap-1">
+						<SvgIcon name="page-break" size={20} strokeWidth={3.5} />
+						<span className="text-xs">Page Break</span>
+					</div>
+				)}
+			</Button>
 
 			<PageBackgroundColorPicker
 				id="pageBackgroundColor"

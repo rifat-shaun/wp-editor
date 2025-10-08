@@ -31,6 +31,7 @@ import Link from "@tiptap/extension-link";
 import { HorizontalRuleWithStyle } from "./HorizontalRuleWithStyle";
 import PageMargin from "./PageMargin";
 import PageBackground from "./PageBackground";
+import PageBreak from "./PageBreak";
 
 const getEditorExtensions = (config?: EditorConfig) => [
   StarterKit.configure({
@@ -129,6 +130,7 @@ const getEditorExtensions = (config?: EditorConfig) => [
     },
   }),
   PageBackground,
+  PageBreak
 ];
 
 // Backward compatibility - default extensions without config

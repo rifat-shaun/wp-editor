@@ -47,6 +47,43 @@
     background-color: #bbdefb;
     border-color: #64b5f6;
   }
+
+  .editor-page-break {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin: 1.5rem 0;
+    text-align: center;
+    cursor: default;
+    page-break-after: always;
+    break-after: page;
+  }
+  
+  .editor-page-break::before {
+    content: 'PAGE BREAK';
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7280;
+    background-color: #f3f4f6;
+    padding: 0.125rem 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px dashed #d1d5db;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .editor-page-break-line {
+    border: none;
+    height: 1px;
+    background-color: #d1d5db;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    z-index: 0;
+  }
 }
 
 /* Disable variable-text styling in presentation mode */
