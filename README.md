@@ -2,12 +2,48 @@
 
 A modern, feature-rich WordPress-style editor built with React and TipTap. This editor provides a clean, intuitive interface for rich text editing with customizable toolbars and extensive formatting options.
 
+## Table of Contents
+
+- [Recent Updates](#recent-updates)
+- [Features](#features)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Configuration](#configuration)
+  - [Basic Configuration](#basic-configuration)
+  - [AI Autocompletion](#ai-autocompletion)
+  - [Export Functionality](#export-functionality)
+  - [Configuration Options Reference](#configuration-options-reference)
+- [Components](#components)
+- [Hooks](#hooks)
+- [API Reference](#api-reference)
+- [Examples](#examples)
+- [Development](#development)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Recent Updates
+
+### v2.0.0 - Latest Release
+
+#### ✨ Export Functionality
+- Added comprehensive export system with support for multiple formats
+- Export your content as Text (.txt), JSON (.json), Markdown (.md), or HTML (.html)
+- New **Export** tab in the toolbar for quick access to all export options
+- `useExport` hook for programmatic export functionality
+
+#### 🎨 Toolbar Enhancements
+- Improved toolbar dropdown with visual icons for each mode
+- Better visual distinction between Professional, Classic, and Hide Toolbar modes
+- Enhanced toolbar tab interface with 5 tabs: Home, Insert, Table, Page, and Export
+- Smoother transitions between toolbar types
+
 ## Features
 
 - 🎨 **Modern UI**: Clean, responsive design with customizable themes
 - 📝 **Rich Text Editing**: Full-featured WYSIWYG editor with TipTap
-- 🛠️ **Flexible Toolbars**: Professional and Classic toolbar modes
+- 🛠️ **Flexible Toolbars**: Professional and Classic toolbar modes with tabbed interface
 - 📄 **Page Management**: Multiple page sizes and orientations
+- 📤 **Export Options**: Export your content as Text, HTML, Markdown, or JSON
 - 🎯 **Customizable**: Easy to integrate and customize
 - 📱 **Responsive**: Works seamlessly on desktop and mobile
 - 🔧 **TypeScript**: Full TypeScript support with type definitions
@@ -131,6 +167,43 @@ function App() {
 - `Tab` - Accept suggestion
 - `Escape` - Dismiss suggestion
 - `Ctrl+Shift+Space` (Windows/Linux) or `Cmd+Shift+Space` (Mac) - Toggle autocompletion on/off
+
+### Export Functionality
+
+The editor includes a comprehensive export system that allows users to download their content in multiple formats:
+
+```tsx
+import { Editor, useExport } from 'lax-wp-editor';
+
+function MyEditorComponent({ editor }) {
+  const { 
+    downloadTextFile, 
+    downloadJsonFile, 
+    downloadMarkdownFile, 
+    downloadHtmlFile 
+  } = useExport(editor);
+
+  return (
+    <div>
+      <button onClick={downloadTextFile}>Export as Text</button>
+      <button onClick={downloadJsonFile}>Export as JSON</button>
+      <button onClick={downloadMarkdownFile}>Export as Markdown</button>
+      <button onClick={downloadHtmlFile}>Export as HTML</button>
+    </div>
+  );
+}
+```
+
+**Available Export Formats:**
+
+| Format | Description | Method |
+|--------|-------------|--------|
+| **Text** | Plain text (.txt) | `downloadTextFile()` |
+| **JSON** | TipTap JSON format (.json) | `downloadJsonFile()` |
+| **Markdown** | Markdown format (.md) | `downloadMarkdownFile()` |
+| **HTML** | HTML format (.html) | `downloadHtmlFile()` |
+
+> **💡 Tip:** The Export tab is built into the toolbar and provides quick access to all export formats. You can also use the `useExport` hook to create custom export buttons.
 
 ### Configuration Options Reference
 
@@ -264,6 +337,12 @@ function MyEditor() {
 
 ### Different Toolbar Types
 
+The editor supports three toolbar modes:
+
+1. **Professional** - Multi-row toolbar with all options visible
+2. **Classic** - Single-row compact toolbar with grouped controls
+3. **Hide Toolbar** - No toolbar (presentation mode)
+
 ```tsx
 import { Editor, ToolbarProvider, TOOLBAR_TYPES_ENUM } from 'lax-wp-editor';
 import 'lax-wp-editor/styles';
@@ -277,15 +356,31 @@ function MyEditor() {
 }
 ```
 
+Users can switch between toolbar modes using the built-in toolbar dropdown menu, which includes icons for each mode:
+- 📊 **Classic** - Compact view
+- 🎛️ **Professional** - Full view
+- 👁️ **Hide Toolbar** - Hidden view
+
 ## Components
 
 ### Main Components
 
 - **`Editor`**: The main editor component
 - **`ToolbarProvider`**: Context provider for toolbar state
-- **`Toolbar`**: Main toolbar component
-- **`ProfessionalToolbar`**: Professional-style toolbar
-- **`ClassicToolbar`**: Classic-style toolbar
+- **`Toolbar`**: Main toolbar component with tabbed interface
+- **`ProfessionalToolbar`**: Professional-style toolbar (multi-row layout)
+- **`ClassicToolbar`**: Classic-style toolbar (single-row layout)
+- **`ToolbarDropdown`**: Dropdown to switch between toolbar modes
+
+### Toolbar Tabs
+
+The editor includes a tabbed toolbar interface with the following tabs:
+
+- **`Home`**: Basic formatting options (bold, italic, underline, alignment, etc.)
+- **`Insert`**: Insert elements (tables, images, dividers, etc.)
+- **`Table`**: Table-specific operations (add/remove rows/columns, merge cells, etc.)
+- **`Page`**: Page settings (size, orientation, margins, background)
+- **`Export`**: Export content in multiple formats (Text, JSON, Markdown, HTML)
 
 ### Individual Toolbar Components
 
@@ -293,11 +388,16 @@ function MyEditor() {
 - **`HomeOptions`**: Basic formatting options
 - **`FontStyleOptions`**: Font styling options
 - **`ParagraphStyleOption`**: Paragraph styling
+- **`ExportOptions`**: Export functionality for multiple file formats
+- **`TableOptions`**: Table manipulation controls
+- **`InsertOptions`**: Insert various elements into the document
 
 ### Utility Components
 
 - **`SvgIcon`**: SVG icon component
 - **`PageSizeSelector`**: Page size and orientation selector
+- **`Button`**: Base button component
+- **`ColorPicker`**: Color picker for text and background colors
 
 ## Hooks
 
@@ -306,7 +406,12 @@ function MyEditor() {
 - **`useFontStyleMethods`**: Font styling methods
 - **`useHomeOptionMethods`**: Basic formatting methods
 - **`useParagraphStyleMethods`**: Paragraph styling methods
-- **`usePageSize`**: Page size management
+- **`usePageMethods`**: Page size and layout management
+- **`useExport`**: Export content in multiple formats (Text, JSON, Markdown, HTML)
+- **`useTableMethods`**: Table manipulation methods
+- **`useLinks`**: Link management methods
+- **`usePresentationMode`**: Presentation mode controls
+- **`useZoom`**: Zoom controls for the editor
 
 ## Configuration
 
@@ -326,9 +431,17 @@ const config: EditorConfig = {
 import { TOOLBAR_TYPES_ENUM } from 'lax-wp-editor';
 
 // Available toolbar types:
-TOOLBAR_TYPES_ENUM.PROFESSIONAL  // Professional toolbar
-TOOLBAR_TYPES_ENUM.CLASSIC       // Classic toolbar
+TOOLBAR_TYPES_ENUM.PROFESSIONAL  // Professional toolbar (multi-row, all options visible)
+TOOLBAR_TYPES_ENUM.CLASSIC       // Classic toolbar (single-row, compact)
+TOOLBAR_TYPES_ENUM.HIDE_TOOLBAR  // Hide toolbar completely
 ```
+
+The toolbar includes 5 tabs:
+- **Home**: Text formatting, alignment, lists, etc.
+- **Insert**: Tables, images, dividers, and other insertable elements
+- **Table**: Table-specific operations (add/remove rows/columns, merge cells)
+- **Page**: Page layout settings (size, orientation, margins, background)
+- **Export**: Download content in various formats (Text, JSON, Markdown, HTML)
 
 ## Styling
 
@@ -365,6 +478,23 @@ import { Editor, EditorConfig, PageSize } from 'lax-wp-editor';
 | `initialToolbar` | `ToolbarType` | `PROFESSIONAL` | Initial toolbar type |
 | `children` | `ReactNode` | - | Child components |
 
+### ToolbarDropdown Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `onToolbarChange` | `(toolbarType: string) => void` | - | Callback when toolbar type changes |
+
+### useExport Hook
+
+Returns an object with the following methods:
+
+| Method | Description |
+|--------|-------------|
+| `downloadTextFile()` | Downloads content as plain text (.txt) |
+| `downloadJsonFile()` | Downloads content as TipTap JSON format (.json) |
+| `downloadMarkdownFile()` | Downloads content as Markdown (.md) |
+| `downloadHtmlFile()` | Downloads content as HTML (.html) |
+
 ## Examples
 
 ### Custom Toolbar
@@ -388,16 +518,59 @@ function CustomEditor() {
 ### Page Size Management
 
 ```tsx
-import { Editor, PageSizeSelector, usePageSize } from 'lax-wp-editor';
+import { Editor, PageSizeSelector, usePageMethods } from 'lax-wp-editor';
 
 function EditorWithPageSize() {
-  const { pageSize, setPageSize } = usePageSize();
+  const { pageSize, setPageSize } = usePageMethods();
   
   return (
     <div>
       <PageSizeSelector />
       <Editor />
     </div>
+  );
+}
+```
+
+### Export Functionality
+
+```tsx
+import { Editor, useExport } from 'lax-wp-editor';
+
+function EditorWithExport() {
+  const editorRef = useRef(null);
+  const { 
+    downloadTextFile, 
+    downloadJsonFile, 
+    downloadMarkdownFile, 
+    downloadHtmlFile 
+  } = useExport(editorRef.current);
+  
+  return (
+    <div>
+      <div className="export-buttons">
+        <button onClick={downloadTextFile}>Download as Text</button>
+        <button onClick={downloadJsonFile}>Download as JSON</button>
+        <button onClick={downloadMarkdownFile}>Download as Markdown</button>
+        <button onClick={downloadHtmlFile}>Download as HTML</button>
+      </div>
+      <Editor ref={editorRef} />
+    </div>
+  );
+}
+```
+
+### Switching Toolbar Modes
+
+```tsx
+import { Editor, ToolbarProvider, ToolbarDropdown } from 'lax-wp-editor';
+
+function EditorWithToolbarSwitch() {
+  return (
+    <ToolbarProvider>
+      <ToolbarDropdown onToolbarChange={(type) => console.log('Toolbar changed to:', type)} />
+      <Editor />
+    </ToolbarProvider>
   );
 }
 ```
@@ -422,7 +595,13 @@ npm run storybook
 npm run lint
 ```
 
+## Keywords
+
+`wysiwyg`, `editor`, `react`, `tiptap`, `wordpress`, `rich-text`, `text-editor`, `markdown`, `html-editor`, `document-editor`, `export`, `typescript`
+
 ## Contributing
+
+Contributions are welcome! Here's how you can help:
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
@@ -430,10 +609,25 @@ npm run lint
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
+Please make sure to:
+- Follow the existing code style
+- Add tests for new features
+- Update documentation as needed
+- Test your changes thoroughly
+
 ## License
 
-MIT © [Your Name]
+MIT © Rifat Hasan Shaun
+
+## Author
+
+**Rifat Hasan Shaun**
+- Email: mdrifathasanshaun@gmail.com
+- GitHub: [@rifat-shaun](https://github.com/rifat-shaun)
 
 ## Support
 
-If you have any questions or need help, please open an issue on GitHub.
+If you have any questions or need help, please:
+- Open an issue on [GitHub](https://github.com/rifat-shaun/wp-editor/issues)
+- Check the [documentation](https://github.com/rifat-shaun/wp-editor#readme)
+- Review the examples in this README
