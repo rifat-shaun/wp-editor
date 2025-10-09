@@ -14,9 +14,19 @@ import { DividerDropdownContent } from "./DividerDropdownContent";
 
 type ToolbarType = "classic" | "professional" | null;
 
-export const InsertOptions = ({ editor }: { editor: Editor }) => {
+export const InsertOptions = ({ 
+  editor,
+  toolbarType
+}: { 
+  editor: Editor;
+  toolbarType?: ToolbarType;
+}) => {
   const { currentToolbar } = useToolbar();
-  const isClassicToolbar = currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC;
+  const effectiveToolbarType = toolbarType !== undefined 
+    ? toolbarType 
+    : (currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC ? "classic" : "professional");
+  const isClassicToolbar = effectiveToolbarType === "classic";
+  const isBubbleMenu = effectiveToolbarType === null;
   const [isDividerOpen, setIsDividerOpen] = useState(false);
   const [isImageFormOpen, setIsImageFormOpen] = useState(false);
 
@@ -24,7 +34,7 @@ export const InsertOptions = ({ editor }: { editor: Editor }) => {
     <>
       <InsertLinkOptions
         editor={editor}
-        toolbarType={isClassicToolbar ? "classic" : "professional"}
+        toolbarType={effectiveToolbarType}
       />
 
       <Popover
@@ -41,11 +51,18 @@ export const InsertOptions = ({ editor }: { editor: Editor }) => {
         onOpenChange={setIsDividerOpen}
       >
         <Button
-          size={isClassicToolbar ? "small" : "medium"}
+          size={isBubbleMenu || isClassicToolbar ? "small" : "medium"}
           onClick={() => setIsDividerOpen(true)}
           title="Insert Divider"
         >
-          {isClassicToolbar ? (
+          {isBubbleMenu ? (
+            <div className="relative flex items-center gap-1">
+              <SvgIcon name="hr" strokeWidth={4} />
+              <ArrowDropDownOutlined
+                sx={{ fontSize: "14px", color: "inherit" }}
+              />
+            </div>
+          ) : isClassicToolbar ? (
             <div className="relative flex items-center gap-1">
               <SvgIcon name="hr" strokeWidth={4} />
               <span className="text-xs">Divider</span>
@@ -68,16 +85,23 @@ export const InsertOptions = ({ editor }: { editor: Editor }) => {
       </Popover>
 
       <Button
-        size={isClassicToolbar ? "medium" : "large"}
+        size={isBubbleMenu || isClassicToolbar ? "small" : "medium"}
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
         title="Insert Code Block"
-        className="flex items-center gap-1"
       >
-        <SvgIcon
-          name="code"
-          size={isClassicToolbar ? "18px" : "32px"}
-          strokeWidth={4}
-        />
+        {isBubbleMenu ? (
+          <SvgIcon name="code" strokeWidth={4} />
+        ) : isClassicToolbar ? (
+          <div className="relative flex items-center gap-1">
+            <SvgIcon name="code" strokeWidth={4} />
+            <span className="text-xs">Code Block</span>
+          </div>
+        ) : (
+          <div className="relative flex flex-col items-center gap-1">
+            <SvgIcon name="code" size={20} strokeWidth={4} />
+            <span className="text-xs">Code Block</span>
+          </div>
+        )}
       </Button>
       <Popover
         content={
@@ -94,12 +118,23 @@ export const InsertOptions = ({ editor }: { editor: Editor }) => {
         onOpenChange={setIsImageFormOpen}
       >
         <Button
-          size={isClassicToolbar ? "medium" : "large"}
+          size={isBubbleMenu || isClassicToolbar ? "small" : "medium"}
           onClick={() => setIsImageFormOpen(true)}
           title="Insert Image"
-          className="flex items-center gap-1"
         >
-          <SvgIcon name="image" size={isClassicToolbar ? "18px" : "32px"} strokeWidth={3} />
+          {isBubbleMenu ? (
+            <SvgIcon name="image" strokeWidth={3} />
+          ) : isClassicToolbar ? (
+            <div className="relative flex items-center gap-1">
+              <SvgIcon name="image" strokeWidth={3} />
+              <span className="text-xs">Image</span>
+            </div>
+          ) : (
+            <div className="relative flex flex-col items-center gap-1">
+              <SvgIcon name="image" size={20} strokeWidth={3} />
+              <span className="text-xs">Image</span>
+            </div>
+          )}
         </Button>
       </Popover>
     </>
