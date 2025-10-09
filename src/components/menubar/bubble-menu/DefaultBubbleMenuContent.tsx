@@ -22,7 +22,6 @@ export const DefaultBubbleMenuContent = ({
   return (
     <div className="flex tems-start gap-1 bg-white shadow-lg rounded-lg border border-neutral-200 p-2">
       <BasicFontStyleOptions editor={editor} isBubbleMenu={true} />
-
       <InsertLinkOptions editor={editor} toolbarType={null} />
       <Popover
         content={

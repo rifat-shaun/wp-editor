@@ -27,15 +27,11 @@ export const ImageComponent: React.FC<ImageComponentProps> = ({
   return (
     <NodeViewWrapper
       style={{
-        margin:
-          align === "center"
-            ? "1rem auto"
-            : align === "right"
-            ? "1rem 0 1rem auto"
-            : "1rem 0",
-        userSelect: "none",
         width: currentWidth,
       }}
+      className={`w-fit max-w-full my-4 ${
+        align === "center" ? "mx-auto" : align === "right" ? "ml-auto" : ""
+      }`}
     >
       <div style={containerStyle}>
         <div className="relative inline-block">
