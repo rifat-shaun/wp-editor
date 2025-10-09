@@ -28,9 +28,9 @@ export const ImageComponent: React.FC<ImageComponentProps> = ({
     <NodeViewWrapper
       className="custom-image-wrapper"
       style={{
-        textAlign: align,
-        margin: "1rem 0",
+        margin: align === 'center' ? '1rem auto' : align === 'right' ? '1rem 0 1rem auto' : '1rem 0',
         userSelect: "none",
+        width: currentWidth,
       }}
     >
       <div style={containerStyle}>
@@ -38,7 +38,6 @@ export const ImageComponent: React.FC<ImageComponentProps> = ({
           style={{
             position: "relative",
             display: "inline-block",
-            maxWidth: "100%",
           }}
         >
           <img

@@ -8,9 +8,9 @@ import { ImageMenuContent } from "@/extensions/CustomImage/ImageMenuContent";
 export const BubbleMenus = ({ editor }: { editor: Editor }) => {
 	const { shouldShowLinkOnBubbleMenu } = useLinks();
 
-  const isDefaultBubbleMenuOff = () => {
-    return !editor.isActive('image');
-  };
+	const isDefaultBubbleMenuOff = () => {
+		return !editor.isActive('image');
+	};
 
 	return (
 		<>
@@ -21,13 +21,14 @@ export const BubbleMenus = ({ editor }: { editor: Editor }) => {
 			<BubbleMenu editor={editor} shouldShow={shouldShowLinkOnBubbleMenu} options={{ placement: "bottom", shift: { crossAxis: true } }}>
 				<LinkMenuContent editor={editor} />
 			</BubbleMenu>
-      <BubbleMenu
-        editor={editor}
-        shouldShow={()=> editor.isActive('image')}
-        options={{ placement: "top", shift: { crossAxis: true } }}
-      >
-        <ImageMenuContent editor={editor} />
-      </BubbleMenu>
+			
+		<BubbleMenu
+			editor={editor}
+			shouldShow={() => editor.isActive('image')}
+			options={{ placement: "top", shift: { crossAxis: true } }}
+		>
+			<ImageMenuContent editor={editor} />
+		</BubbleMenu>
 
 		</>
 	)
