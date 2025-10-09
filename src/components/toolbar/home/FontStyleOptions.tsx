@@ -15,14 +15,6 @@ import { useFontStyleMethods } from "@/hooks/useFontStyleMethods";
 
 export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
   const {
-    canBold,
-    isBold,
-    canItalic,
-    isItalic,
-    canStrike,
-    isStrike,
-    canUnderline,
-    isUnderline,
     fontFamily,
     fontSize,
     canSuperscript,
@@ -37,14 +29,8 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
   const {
     handleFontFamilyChange,
     handleFontSizeChange,
-    increaseFontSize,
-    decreaseFontSize,
     handleSuperscriptToggle,
     handleSubscriptToggle,
-    handleToggleBold,
-    handleToggleItalic,
-    handleToggleUnderline,
-    handleToggleStrike,
     handleSetColor,
     handleUnsetColor,
     handleSetBackgroundColor,
@@ -59,20 +45,26 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
         <Dropdown
           menu={{
             items: FONT_FAMILY_OPTIONS.map((item) => ({
-              label: <span style={{ fontFamily: item.value }}>{item.label}</span>,
+              label: (
+                <span style={{ fontFamily: item.value }}>{item.label}</span>
+              ),
               key: item.value,
               onClick: () => handleFontFamilyChange(item.value),
             })),
-            style: { maxHeight: '256px', overflow: 'auto' },
+            style: { maxHeight: "256px", overflow: "auto" },
           }}
-          className='border border-gray-300 rounded px-2 w-36 cursor-pointer'
+          className="border border-gray-300 rounded px-2 w-36 cursor-pointer"
         >
           <div className="flex items-center gap-1 justify-between h-6">
-            <span className="text-sm truncate">{FONT_FAMILY_OPTIONS.find(item => item.value === fontFamily)?.label}</span>
-            <ArrowDropDownOutlined className='text-gray-500 hover:opacity-50' />
+            <span className="text-sm truncate">
+              {
+                FONT_FAMILY_OPTIONS.find((item) => item.value === fontFamily)
+                  ?.label
+              }
+            </span>
+            <ArrowDropDownOutlined className="text-gray-500 hover:opacity-50" />
           </div>
         </Dropdown>
-
 
         <Space.Compact className="border cursor-pointer border-neutral-300 rounded hidden-spin h-6">
           <InputNumber
@@ -100,65 +92,14 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
               </div>
             )}
           >
-            <ArrowDropDownOutlined className='text-gray-500 hover:opacity-50' />
+            <ArrowDropDownOutlined className="text-gray-500 hover:opacity-50" />
           </Dropdown>
         </Space.Compact>
 
-        <Button
-          title="Decrease Font Size"
-          onClick={decreaseFontSize}
-          disabled={!editor.isEditable}
-          active={false}
-        >
-          <SvgIcon name="font-size-decrease" strokeWidth={1.5} />
-        </Button>
-
-        <Button
-          title="Increase Font Size"
-          onClick={increaseFontSize}
-          disabled={!editor.isEditable}
-          active={false}
-        >
-          <SvgIcon name="font-size-increase" strokeWidth={1.5} />
-        </Button>
+        <FontSizeOptions editor={editor} />
       </div>
-
       <div className="flex items-center space-x-1">
-        <Button
-          title="Bold"
-          onClick={handleToggleBold}
-          disabled={!canBold}
-          active={isBold}
-        >
-          <SvgIcon name="bold" strokeWidth={1.5} />
-        </Button>
-
-        <Button
-          title="Italic"
-          onClick={handleToggleItalic}
-          disabled={!canItalic}
-          active={isItalic}
-        >
-          <SvgIcon name="italic" strokeWidth={1.5} />
-        </Button>
-
-        <Button
-          title="Underline"
-          onClick={handleToggleUnderline}
-          disabled={!canUnderline}
-          active={isUnderline}
-        >
-          <SvgIcon name="underline" strokeWidth={1.5} />
-        </Button>
-
-        <Button
-          title="Strikethrough"
-          onClick={handleToggleStrike}
-          disabled={!canStrike}
-          active={isStrike}
-        >
-          <SvgIcon name="strikethrough" strokeWidth={1.5} />
-        </Button>
+        <BasicFontStyleOptions editor={editor} />
 
         <Button
           title="Superscript"
@@ -200,11 +141,109 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
           id="selectionColor"
           showNone={false}
           value={highlightColor}
-          icon={<EditOutlined sx={{ fontSize: "15px"}} />}
+          icon={<EditOutlined sx={{ fontSize: "15px" }} />}
           onColorSelect={(color) => handleSetHighlightColor(color)}
           onResetColor={handleUnsetHighlightColor}
         />
       </div>
     </ItemGroup>
+  );
+};
+
+export const BasicFontStyleOptions = ({
+  editor,
+  isBubbleMenu = false,
+}: {
+  editor: Editor;
+  isBubbleMenu?: boolean;
+}) => {
+  const {
+    canBold,
+    isBold,
+    canItalic,
+    isItalic,
+    canUnderline,
+    isUnderline,
+    canStrike,
+    isStrike,
+  } = useTiptapEditorState(editor);
+
+  const {
+    handleToggleBold,
+    handleToggleItalic,
+    handleToggleUnderline,
+    handleToggleStrike,
+  } = useFontStyleMethods(editor);
+
+  const content = (
+    <div className="flex items-center space-x-1">
+      {isBubbleMenu && <FontSizeOptions editor={editor} />}
+      <Button
+        title="Bold"
+        onClick={handleToggleBold}
+        disabled={!canBold}
+        active={isBold}
+      >
+        <SvgIcon name="bold" strokeWidth={1.5} />
+      </Button>
+
+      <Button
+        title="Italic"
+        onClick={handleToggleItalic}
+        disabled={!canItalic}
+        active={isItalic}
+      >
+        <SvgIcon name="italic" strokeWidth={1.5} />
+      </Button>
+
+      <Button
+        title="Underline"
+        onClick={handleToggleUnderline}
+        disabled={!canUnderline}
+        active={isUnderline}
+      >
+        <SvgIcon name="underline" strokeWidth={1.5} />
+      </Button>
+
+      <Button
+        title="Strikethrough"
+        onClick={handleToggleStrike}
+        disabled={!canStrike}
+        active={isStrike}
+      >
+        <SvgIcon name="strikethrough" strokeWidth={1.5} />
+      </Button>
+    </div>
+  );
+
+  if (isBubbleMenu) {
+    return content;
+  }
+
+  return <ItemGroup>{content}</ItemGroup>;
+};
+
+const FontSizeOptions = ({ editor }: { editor: Editor }) => {
+  const { decreaseFontSize, increaseFontSize } = useFontStyleMethods(editor);
+
+  return (
+    <div className="flex items-center space-x-1">
+      <Button
+        title="Decrease Font Size"
+        onClick={decreaseFontSize}
+        disabled={!editor.isEditable}
+        active={false}
+      >
+        <SvgIcon name="font-size-decrease" strokeWidth={1.5} />
+      </Button>
+      <Button
+        title="Increase Font Size"
+        onClick={increaseFontSize}
+        disabled={!editor.isEditable}
+        active={false}
+      >
+        <SvgIcon name="font-size-increase" strokeWidth={1.5} />
+      </Button>
+    </div>
   );
 };

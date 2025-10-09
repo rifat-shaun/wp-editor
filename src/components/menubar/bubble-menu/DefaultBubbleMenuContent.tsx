@@ -1,47 +1,57 @@
 import { Editor } from "@tiptap/core";
 import SvgIcon from "../../common/SvgIcon";
+import { Button } from "../../base/Button";
+import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
+import { Popover } from "antd";
+import { ParagraphAlignOptions } from "@/components/toolbar/home/ParagraphStyleOption";
+import { BasicFontStyleOptions } from "@/components/toolbar/home/FontStyleOptions";
+import { InsertLinkOptions } from "@/components/toolbar/insert";
+import { ArrowDropDownOutlined } from "@mui/icons-material";
 
 interface DefaultBubbleMenuContentProps {
   editor: Editor;
 }
 
-export const DefaultBubbleMenuContent = ({ editor }: DefaultBubbleMenuContentProps) => {
+export const DefaultBubbleMenuContent = ({
+  editor,
+}: DefaultBubbleMenuContentProps) => {
+  // Get current alignment for dynamic icon
+  const { isTextAlignCenter, isTextAlignRight, isTextAlignJustify } =
+    useTiptapEditorState(editor);
+
   return (
-    <div className="flex items-center gap-1 bg-white shadow-lg rounded-lg border border-neutral-200 p-2">
-      <button
-        onClick={() => editor.chain().focus().toggleBold().run()}
-        className={`p-2 rounded transition-colors ${editor.isActive("bold")
-            ? "bg-primary-100 text-primary-700"
-            : "hover:bg-neutral-100"
-          }`}
-        title="Bold (Ctrl+B)"
-      >
-        <SvgIcon name="bold" />
-      </button>
+    <div className="flex tems-start gap-1 bg-white shadow-lg rounded-lg border border-neutral-200 p-2">
+      <BasicFontStyleOptions editor={editor} isBubbleMenu={true} />
 
-      <button
-        onClick={() => editor.chain().focus().toggleItalic().run()}
-        className={`p-2 rounded transition-colors ${editor.isActive("italic")
-            ? "bg-primary-100 text-primary-700"
-            : "hover:bg-neutral-100"
-          }`}
-        title="Italic (Ctrl+I)"
+      <InsertLinkOptions editor={editor} toolbarType={null} />
+      <Popover
+        content={
+          <div className="p-1 bg-white">
+            <ParagraphAlignOptions editor={editor} isBubbleMenu={true} />
+          </div>
+        }
+        trigger="click"
+        arrow={false}
+        placement="bottom"
       >
-        <SvgIcon name="italic" />
-      </button>
-
-      <button
-        onClick={() => editor.chain().focus().toggleStrike().run()}
-        className={`p-2 rounded transition-colors ${editor.isActive("strike")
-            ? "bg-primary-100 text-primary-700"
-            : "hover:bg-neutral-100"
-          }`}
-        title="Strikethrough"
-      >
-        <SvgIcon name="strikethrough" />
-      </button>
-
-      <div className="w-px h-6 bg-neutral-300 mx-1" />
+        <Button title="Text Alignment">
+          <SvgIcon
+            name={
+              isTextAlignCenter
+                ? "align-center"
+                : isTextAlignRight
+                ? "align-right"
+                : isTextAlignJustify
+                ? "align-justify"
+                : "align-left"
+            }
+            strokeWidth={1.5}
+          />
+           <ArrowDropDownOutlined
+                sx={{ fontSize: "16px", color: "inherit" }}
+              />
+        </Button>
+      </Popover>
 
       <button
         onClick={() => editor.chain().focus().unsetAllMarks().run()}
