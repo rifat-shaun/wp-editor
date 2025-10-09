@@ -9,6 +9,8 @@ export const TOOLBAR_TYPES_ENUM = {
   HIDE_TOOLBAR: "hide toolbar",
 };
 
+export type TToolbarType = (typeof TOOLBAR_TYPES_ENUM)[keyof typeof TOOLBAR_TYPES_ENUM];
+
 export const TOOLBAR_TYPES = {
   CLASSIC: {
     name: TOOLBAR_TYPES_ENUM.CLASSIC,

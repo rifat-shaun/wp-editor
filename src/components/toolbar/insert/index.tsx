@@ -1,30 +1,27 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { Editor } from "@tiptap/react";
 import SvgIcon from "@/components/common/SvgIcon";
 import { Popover } from "antd";
-import { LinkForm } from "./LinkForm";
-import { LINK_FORM_MODES } from "../../../constants/LinkConstants";
+import { ImageUploadForm } from "./ImageUploadForm";
 import { ArrowDropDownOutlined } from "@mui/icons-material";
-import { useLinks } from "@/hooks/useLinks";
 import { Button } from "@/components/base";
 import { useToolbar } from "@/contexts/ToolbarContext";
 import { TOOLBAR_TYPES_ENUM } from "@/constants/Toolbar";
 import { DividerDropdownContent } from "./DividerDropdownContent";
+import { InsertLinkButton } from "@/components/shared/InsertLinkButton";
 
-type ToolbarType = "classic" | "professional" | null;
-
-export const InsertOptions = ({ editor }: { editor: Editor }) => {
+export const InsertOptions = ({
+  editor,
+}: {
+  editor: Editor;
+}) => {
   const { currentToolbar } = useToolbar();
   const isClassicToolbar = currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC;
   const [isDividerOpen, setIsDividerOpen] = useState(false);
-
+  const [isImageFormOpen, setIsImageFormOpen] = useState(false);
   return (
     <>
-      <InsertLinkOptions
-        editor={editor}
-        toolbarType={isClassicToolbar ? "classic" : "professional"}
-      />
-
+      <InsertLinkButton editor={editor} activeToolbarType={currentToolbar} />
       <Popover
         content={
           <DividerDropdownContent
@@ -66,78 +63,62 @@ export const InsertOptions = ({ editor }: { editor: Editor }) => {
       </Popover>
 
       <Button
-        size={isClassicToolbar ? "medium" : "large"}
+        size={isClassicToolbar ? "small" : "medium"}
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
         title="Insert Code Block"
-        className="flex items-center gap-1"
       >
-        <SvgIcon
-          name="code"
-          size={isClassicToolbar ? "18px" : "32px"}
-          strokeWidth={4}
-        />
-      </Button>
-    </>
-  );
-};
-
-export const InsertLinkOptions = ({
-  editor,
-  toolbarType,
-}: {
-  editor: Editor;
-  toolbarType: ToolbarType;
-}) => {
-  const { getSelectionLinkValues } = useLinks(editor);
-  const [isLinkFormOpen, setIsLinkFormOpen] = useState(false);
-
-  const handleClose = useCallback(() => setIsLinkFormOpen(false), []);
-  const handleOpen = useCallback(() => setIsLinkFormOpen(true), []);
-
-  const isClassic = toolbarType === "classic";
-  const isBubbleMenu = toolbarType === null;
-  const buttonSize = isBubbleMenu || isClassic ? "small" : "medium";
-
-  return (
-    <Popover
-      content={
-        <LinkForm
-          editor={editor}
-          mode={LINK_FORM_MODES.INSERT}
-          {...getSelectionLinkValues()}
-          onSubmit={handleClose}
-          onCancel={handleClose}
-        />
-      }
-      trigger="click"
-      placement="bottom"
-      arrow={false}
-      open={isLinkFormOpen}
-      onOpenChange={setIsLinkFormOpen}
-    >
-      <Button size={buttonSize} onClick={handleOpen} title="Insert Link">
-        {isBubbleMenu ? (
-          <SvgIcon name="link" strokeWidth={1.5} />
-        ) : isClassic ? (
+        {isClassicToolbar ? (
           <div className="relative flex items-center gap-1">
-            <SvgIcon name="link" strokeWidth={1.5} />
-            <span className="text-xs">Link</span>
-            <ArrowDropDownOutlined
-              sx={{ fontSize: "14px", color: "inherit" }}
-            />
+            <SvgIcon name="code" strokeWidth={4} />
+            <span className="text-xs">Code Block</span>
           </div>
         ) : (
           <div className="relative flex flex-col items-center gap-1">
-            <div className="flex items-center gap-1">
-              <SvgIcon name="link" size={20} strokeWidth={1.5} />
-              <ArrowDropDownOutlined
-                sx={{ fontSize: "16px", color: "inherit" }}
-              />
-            </div>
-            <span className="text-xs">Link</span>
+            <SvgIcon name="code" size={20} strokeWidth={4} />
+            <span className="text-xs">Code Block</span>
           </div>
         )}
       </Button>
-    </Popover>
+      <Popover
+        content={
+          <ImageUploadForm
+            editor={editor}
+            onSubmit={() => setIsImageFormOpen(false)}
+            onCancel={() => setIsImageFormOpen(false)}
+          />
+        }
+        trigger="click"
+        placement="bottom"
+        arrow={false}
+        open={isImageFormOpen}
+        onOpenChange={setIsImageFormOpen}
+      >
+        <Button
+          size={isClassicToolbar ? "small" : "medium"}
+          onClick={() => setIsImageFormOpen(true)}
+          title="Insert Image"
+        >
+          {isClassicToolbar ? (
+            <div className="relative flex items-center gap-1">
+              <SvgIcon name="image" strokeWidth={3} />
+              <span className="text-xs">Image</span>
+              <ArrowDropDownOutlined
+                sx={{ fontSize: "14px", color: "inherit" }}
+              />
+            </div>
+          ) : (
+            <div className="relative flex flex-col items-center gap-1">
+              <div className="flex items-center gap-1">
+                <SvgIcon name="image" size={20} strokeWidth={3} />
+                <ArrowDropDownOutlined
+                  sx={{ fontSize: "14px", color: "inherit" }}
+                />
+              </div>
+              <span className="text-xs">Image</span>
+            </div>
+          )}
+        </Button>
+      </Popover>
+    </>
   );
 };

@@ -34,6 +34,7 @@ import { CodeBlockWithToolbar } from "./CodeBlockWithToolbar";
 import PageMargin from "./PageMargin";
 import PageBackground from "./PageBackground";
 import PageBreak from "./PageBreak";
+import { CustomImageExtension } from "./CustomImageExtension";
 import Bold from "@tiptap/extension-bold";
 import Italic from "@tiptap/extension-italic";
 import Strike from "@tiptap/extension-strike";
@@ -134,6 +135,10 @@ const getEditorExtensions = (config?: EditorConfig) => [
   }),
   PageBackground,
   PageBreak,
+  CustomImageExtension.configure({
+    inline: true,
+    allowBase64: true,
+  }),
   Bold,
   Italic,
   Strike,

@@ -9,6 +9,7 @@ import { ParagraphStyleOptions } from "./ParagraphStyleOption";
 import { HeadingOptions } from "./HeadingOptions";
 import { useToolbar } from "@/contexts/ToolbarContext";
 import { TOOLBAR_TYPES_ENUM } from "@/constants/Toolbar";
+import { ClearTextFormatButton } from "@/components/shared/ClearTextFormatButton";
 
 interface HomeOptionsProps {
   editor: Editor;
@@ -25,7 +26,6 @@ export const HomeOptions = ({ editor }: HomeOptionsProps) => {
     handleUndo,
     handleRedo,
     handleToggleAIAutocompletion,
-    handleClearFormatting,
   } = useHomeOptionMethods(editor);
 
   return (
@@ -67,18 +67,11 @@ export const HomeOptions = ({ editor }: HomeOptionsProps) => {
             {isAIAutocompletionEnabled ? (
               <SvgIcon name="ai-autocompletion" strokeWidth={1.5} />
             ) : (
-              <SvgIcon name="ai-autocompletion-exit" strokeWidth={1.5}/>
+              <SvgIcon name="ai-autocompletion-exit" strokeWidth={1.5} />
             )}
           </Button>
 
-          <Button
-            title="Clear Formatting"
-            onClick={handleClearFormatting}
-            active={false}
-            size="small"
-          >
-            <SvgIcon name="clear-format" strokeWidth={1.5} />
-          </Button>
+          <ClearTextFormatButton editor={editor} />
         </div>
       </ItemGroup>
 
