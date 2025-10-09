@@ -1,22 +1,54 @@
 import { Editor } from "@tiptap/react";
 import { ALIGNMENT_BUTTONS } from "@/constants/Image";
 import type { AlignType } from "@/constants/Image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const ImageMenuContent = ({ editor }: { editor: Editor }) => {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
+  const [imageAttrs, setImageAttrs] = useState<{ align: AlignType; width: number }>({
+    align: "left",
+    width: 300,
+  });
 
-  // Get current alignment from the selected image node
-  const getCurrentAlign = (): AlignType => {
-    const selection = editor.state.selection as { node?: { type: { name: string }; attrs: { align?: AlignType } } };
-    const { node } = selection;
-    if (node && node.type.name === "image") {
-      return node.attrs.align || "left";
-    }
-    return "left";
-  };
+  // Update attributes whenever editor state changes
+  useEffect(() => {
+    // Get current image attributes from the selected image node
+    const getImageAttributes = () => {
+      const selection = editor.state.selection as { 
+        node?: { 
+          type: { name: string }; 
+          attrs: { align?: AlignType; width?: number } 
+        } 
+      };
+      const { node } = selection;
+      if (node && node.type.name === "image") {
+        return {
+          align: node.attrs.align || "left" as AlignType,
+          width: node.attrs.width || 300,
+        };
+      }
+      return { align: "left" as AlignType, width: 300 };
+    };
 
-  const currentAlign = getCurrentAlign();
+    const updateAttrs = () => {
+      setImageAttrs(getImageAttributes());
+    };
+
+    // Initial update
+    updateAttrs();
+
+    // Listen to editor transactions (any state change)
+    editor.on("transaction", updateAttrs);
+    editor.on("selectionUpdate", updateAttrs);
+
+    return () => {
+      editor.off("transaction", updateAttrs);
+      editor.off("selectionUpdate", updateAttrs);
+    };
+  }, [editor]);
+
+  const { align: currentAlign, width: currentWidth } = imageAttrs;
+  console.log("currentWidth", currentWidth, "currentAlign", currentAlign);
 
   const handleAlignChange = (newAlign: AlignType) => {
     editor.chain().focus().updateAttributes("image", { align: newAlign }).run();
