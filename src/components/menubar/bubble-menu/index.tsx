@@ -4,7 +4,7 @@ import type { EditorState } from "@tiptap/pm/state";
 import { DefaultBubbleMenuContent } from "./DefaultBubbleMenuContent";
 import { LinkMenuContent } from "./LinkMenuContent";
 import { useLinks } from "@/hooks/useLinks";
-import { ImageMenuContent } from "@/extensions/CustomImage/ImageMenuContent";
+import { ImageMenuContent } from "@/components/menubar/bubble-menu/ImageMenuContent";
 
 export const BubbleMenus = ({ editor }: { editor: Editor }) => {
   const { shouldShowLinkOnBubbleMenu } = useLinks();

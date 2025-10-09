@@ -21,9 +21,11 @@ export const useHomeOptionMethods = (editor: Editor) => {
   };
 
   const handleToggleAIAutocompletion = () => {
-    isAIAutocompletionEnabled
-      ? editor.commands.disableAutocompletion()
-      : editor.commands.enableAutocompletion();
+    if (isAIAutocompletionEnabled) {
+      editor.commands.disableAutocompletion();
+    } else {
+      editor.commands.enableAutocompletion();
+    }
   };
 
   const handleClearFormatting = () => {

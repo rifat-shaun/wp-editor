@@ -3,10 +3,12 @@ import SvgIcon from "../../common/SvgIcon";
 import { Button } from "../../base/Button";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
 import { Popover } from "antd";
-import { ParagraphAlignOptions } from "@/components/toolbar/home/ParagraphStyleOption";
-import { BasicFontStyleOptions } from "@/components/toolbar/home/FontStyleOptions";
-import { InsertLinkOptions } from "@/components/toolbar/insert";
+import { ParagraphAlignmentOptions } from "@/components/shared/ParagraphAlignmentOptions";
+import { BasicFontStyleOptions } from "@/components/shared/BasicFontStyleOptions";
 import { ArrowDropDownOutlined } from "@mui/icons-material";
+import { FontSizeStepper } from "@/components/shared/FontSizeStepper";
+import { InsertLinkButton } from "@/components/shared/InsertLinkButton";
+import { ClearTextFormatButton } from "@/components/shared/ClearTextFormatButton";
 
 interface DefaultBubbleMenuContentProps {
   editor: Editor;
@@ -20,13 +22,14 @@ export const DefaultBubbleMenuContent = ({
     useTiptapEditorState(editor);
 
   return (
-    <div className="flex tems-start gap-1 bg-white shadow-lg rounded-lg border border-neutral-200 p-2">
-      <BasicFontStyleOptions editor={editor} isBubbleMenu={true} />
-      <InsertLinkOptions editor={editor} toolbarType={null} />
+    <div className="flex tems-start gap-1 bg-white shadow-lg rounded-lg border border-neutral-200 p-1 space-x-1">
+      <FontSizeStepper editor={editor} />
+      <BasicFontStyleOptions editor={editor} />
+      <InsertLinkButton editor={editor} />
       <Popover
         content={
-          <div className="p-1 bg-white">
-            <ParagraphAlignOptions editor={editor} isBubbleMenu={true} />
+          <div className="flex items-center space-x-2 bg-white">
+            <ParagraphAlignmentOptions editor={editor} />
           </div>
         }
         trigger="click"
@@ -39,26 +42,19 @@ export const DefaultBubbleMenuContent = ({
               isTextAlignCenter
                 ? "align-center"
                 : isTextAlignRight
-                ? "align-right"
-                : isTextAlignJustify
-                ? "align-justify"
-                : "align-left"
+                  ? "align-right"
+                  : isTextAlignJustify
+                    ? "align-justify"
+                    : "align-left"
             }
             strokeWidth={1.5}
           />
-           <ArrowDropDownOutlined
-                sx={{ fontSize: "16px", color: "inherit" }}
-              />
+          <ArrowDropDownOutlined
+            sx={{ fontSize: "16px", color: "inherit" }}
+          />
         </Button>
       </Popover>
-
-      <button
-        onClick={() => editor.chain().focus().unsetAllMarks().run()}
-        className="p-2 rounded hover:bg-neutral-100 transition-colors"
-        title="Clear formatting"
-      >
-        <SvgIcon name="clear-format" />
-      </button>
+      <ClearTextFormatButton editor={editor} />
     </div>
   );
 };

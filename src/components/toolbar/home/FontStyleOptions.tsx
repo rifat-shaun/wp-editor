@@ -12,6 +12,8 @@ import { HorizontalLayoutColorPicker } from "../../base/ColorPicker";
 import SvgIcon from "../../common/SvgIcon";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
 import { useFontStyleMethods } from "@/hooks/useFontStyleMethods";
+import { FontSizeStepper } from "@/components/shared/FontSizeStepper";
+import { BasicFontStyleOptions } from "@/components/shared/BasicFontStyleOptions";
 
 export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
   const {
@@ -41,7 +43,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
 
   return (
     <ItemGroup>
-      <div className="flex items-center space-x-1">
+      <div className="flex items-center space-x-2">
         <Dropdown
           menu={{
             items: FONT_FAMILY_OPTIONS.map((item) => ({
@@ -96,9 +98,10 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
           </Dropdown>
         </Space.Compact>
 
-        <FontSizeOptions editor={editor} />
+        <FontSizeStepper editor={editor} />
       </div>
-      <div className="flex items-center space-x-1">
+
+      <div className="flex items-center space-x-2">
         <BasicFontStyleOptions editor={editor} />
 
         <Button
@@ -150,100 +153,3 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
   );
 };
 
-export const BasicFontStyleOptions = ({
-  editor,
-  isBubbleMenu = false,
-}: {
-  editor: Editor;
-  isBubbleMenu?: boolean;
-}) => {
-  const {
-    canBold,
-    isBold,
-    canItalic,
-    isItalic,
-    canUnderline,
-    isUnderline,
-    canStrike,
-    isStrike,
-  } = useTiptapEditorState(editor);
-
-  const {
-    handleToggleBold,
-    handleToggleItalic,
-    handleToggleUnderline,
-    handleToggleStrike,
-  } = useFontStyleMethods(editor);
-
-  const content = (
-    <div className="flex items-center space-x-1">
-      {isBubbleMenu && <FontSizeOptions editor={editor} />}
-      <Button
-        title="Bold"
-        onClick={handleToggleBold}
-        disabled={!canBold}
-        active={isBold}
-      >
-        <SvgIcon name="bold" strokeWidth={1.5} />
-      </Button>
-
-      <Button
-        title="Italic"
-        onClick={handleToggleItalic}
-        disabled={!canItalic}
-        active={isItalic}
-      >
-        <SvgIcon name="italic" strokeWidth={1.5} />
-      </Button>
-
-      <Button
-        title="Underline"
-        onClick={handleToggleUnderline}
-        disabled={!canUnderline}
-        active={isUnderline}
-      >
-        <SvgIcon name="underline" strokeWidth={1.5} />
-      </Button>
-
-      <Button
-        title="Strikethrough"
-        onClick={handleToggleStrike}
-        disabled={!canStrike}
-        active={isStrike}
-      >
-        <SvgIcon name="strikethrough" strokeWidth={1.5} />
-      </Button>
-    </div>
-  );
-
-  if (isBubbleMenu) {
-    return content;
-  }
-
-  return <ItemGroup>{content}</ItemGroup>;
-};
-
-const FontSizeOptions = ({ editor }: { editor: Editor }) => {
-  const { decreaseFontSize, increaseFontSize } = useFontStyleMethods(editor);
-
-  return (
-    <div className="flex items-center space-x-1">
-      <Button
-        title="Decrease Font Size"
-        onClick={decreaseFontSize}
-        disabled={!editor.isEditable}
-        active={false}
-      >
-        <SvgIcon name="font-size-decrease" strokeWidth={1.5} />
-      </Button>
-      <Button
-        title="Increase Font Size"
-        onClick={increaseFontSize}
-        disabled={!editor.isEditable}
-        active={false}
-      >
-        <SvgIcon name="font-size-increase" strokeWidth={1.5} />
-      </Button>
-    </div>
-  );
-};

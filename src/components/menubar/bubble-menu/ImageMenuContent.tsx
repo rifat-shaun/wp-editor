@@ -1,16 +1,33 @@
 import { Editor } from "@tiptap/react";
-import { ALIGNMENT_BUTTONS } from "@/constants/Image";
-import type { AlignType } from "@/constants/Image";
+import { ALIGNMENT_OPTIONS, type AlignType } from "@/constants/Common";
 import { useState, useEffect } from "react";
+import SvgIcon from "@/components/common/SvgIcon";
+import { Button } from "@/components/base";
+import { IMAGE_DEFAULT_WIDTH } from "@/constants/Image";
 
 export const ImageMenuContent = ({ editor }: { editor: Editor }) => {
   const [imageAttrs, setImageAttrs] = useState<{
     align: AlignType;
     width: number;
   }>({
-    align: "left",
-    width: 300,
+    align: ALIGNMENT_OPTIONS.LEFT,
+    width: IMAGE_DEFAULT_WIDTH,
   });
+
+  // Alignment button configurations
+  const ALIGNMENT_BUTTONS = [
+    { align: ALIGNMENT_OPTIONS.LEFT, Icon: <SvgIcon name="align-left" />, title: "Align Left" },
+    {
+      align: ALIGNMENT_OPTIONS.CENTER,
+      Icon: <SvgIcon name="align-center" />,
+      title: "Align Center",
+    },
+    {
+      align: ALIGNMENT_OPTIONS.RIGHT,
+      Icon: <SvgIcon name="align-right" />,
+      title: "Align Right",
+    },
+  ] as const;
 
   // Update attributes whenever editor state changes
   useEffect(() => {
@@ -25,11 +42,11 @@ export const ImageMenuContent = ({ editor }: { editor: Editor }) => {
       const { node } = selection;
       if (node && node.type.name === "image") {
         return {
-          align: node.attrs.align || ("left" as AlignType),
-          width: node.attrs.width || 300,
+          align: node.attrs.align || ALIGNMENT_OPTIONS.LEFT,
+          width: node.attrs.width || IMAGE_DEFAULT_WIDTH,
         };
       }
-      return { align: "left" as AlignType, width: 300 };
+      return { align: ALIGNMENT_OPTIONS.LEFT, width: IMAGE_DEFAULT_WIDTH };
     };
 
     const updateAttrs = () => {
@@ -57,27 +74,19 @@ export const ImageMenuContent = ({ editor }: { editor: Editor }) => {
 
   return (
     <div
-      className="flex gap-[4px] bg-white p-[4px] rounded-lg shadow-lg border border-neutral-200"
+      className="flex gap-1 bg-white p-1 rounded-md shadow-lg border border-neutral-200"
       onMouseDown={(e) => e.preventDefault()}
     >
-      {ALIGNMENT_BUTTONS.map(({ align: btnAlign, Icon, title }) => {
-        const isActive = currentAlign === btnAlign;
-        return (
-          <button
-            key={btnAlign}
-            onClick={() => handleAlignChange(btnAlign)}
-            className={`flex items-center justify-center p-2 border-none rounded-md ${
-              isActive ? "bg-primary-500 text-white" : "hover:bg-neutral-100"
-            }
-            ${
-              isActive ? "text-white" : "text-neutral-700"
-            } cursor-pointer transition-all duration-200 outline-none`}
-            title={title}
-          >
-            <Icon sx={{ fontSize: 18 }} />
-          </button>
-        );
-      })}
+      {ALIGNMENT_BUTTONS.map(({ align: btnAlign, Icon, title }) => (
+        <Button
+          key={btnAlign}
+          onClick={() => handleAlignChange(btnAlign)}
+          title={title}
+          active={btnAlign === currentAlign}
+        >
+          {Icon}
+        </Button>
+      ))}
     </div>
   );
 };

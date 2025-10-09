@@ -3,10 +3,12 @@ import type { NodeViewProps } from "@tiptap/react";
 import {
   HANDLE_CURSORS,
   RESIZE_MULTIPLIERS,
-  MIN_WIDTH,
-  MAX_WIDTH,
-  type ResizeHandle,
+  IMAGE_MIN_WIDTH,
+  IMAGE_MAX_WIDTH,
+  type ResizeCursorPositionType,
+  RESIZE_CURSOR_POSITION_OPTIONS,
 } from "@/constants/Image";
+import { ALIGNMENT_OPTIONS } from "@/constants/Common";
 
 interface UseImageResizeProps {
   node: NodeViewProps["node"];
@@ -22,13 +24,13 @@ export const useImageResize = ({
   const [resizeStartX, setResizeStartX] = useState(0);
   const [resizeStartY, setResizeStartY] = useState(0);
   const [resizeStartWidth, setResizeStartWidth] = useState(0);
-  const [resizeHandle, setResizeHandle] = useState<ResizeHandle | "">("");
+  const [resizeHandle, setResizeHandle] = useState<ResizeCursorPositionType | "">("");
   const [currentWidth, setCurrentWidth] = useState(node.attrs.width || 300);
 
   const { align = "left" } = node.attrs;
 
   const handleMouseDown = useCallback(
-    (e: React.MouseEvent, handle: ResizeHandle) => {
+    (e: React.MouseEvent, handle: ResizeCursorPositionType) => {
       e.preventDefault();
       e.stopPropagation();
       setIsResizing(true);
@@ -47,14 +49,14 @@ export const useImageResize = ({
       maxWidth: "100%",
     };
 
-    if (align === "center") {
+    if (align === ALIGNMENT_OPTIONS.CENTER) {
       return {
         ...baseStyle,
         display: "block",
         marginLeft: "auto",
         marginRight: "auto",
       };
-    } else if (align === "right") {
+    } else if (align === ALIGNMENT_OPTIONS.RIGHT) {
       return {
         ...baseStyle,
         display: "block",
@@ -67,16 +69,16 @@ export const useImageResize = ({
 
   const imgCursor = useMemo(() => {
     if (!isResizing || !resizeHandle) return "default";
-    return HANDLE_CURSORS[resizeHandle as ResizeHandle];
+    return HANDLE_CURSORS[resizeHandle as ResizeCursorPositionType];
   }, [isResizing, resizeHandle]);
 
   const getHandleStyle = useCallback(
-    (handle: ResizeHandle): React.CSSProperties => {
-      const positions: Record<ResizeHandle, Partial<React.CSSProperties>> = {
-        "top-left": { left: "-6px", top: "-6px" },
-        "top-right": { right: "-6px", top: "-6px" },
-        "bottom-left": { left: "-6px", bottom: "-6px" },
-        "bottom-right": { right: "-6px", bottom: "-6px" },
+    (handle: ResizeCursorPositionType): React.CSSProperties => {
+      const positions: Record<ResizeCursorPositionType, Partial<React.CSSProperties>> = {
+        [RESIZE_CURSOR_POSITION_OPTIONS.TOP_LEFT]: { left: "-6px", top: "-6px" },
+        [RESIZE_CURSOR_POSITION_OPTIONS.TOP_RIGHT]: { right: "-6px", top: "-6px" },
+        [RESIZE_CURSOR_POSITION_OPTIONS.BOTTOM_LEFT]: { left: "-6px", bottom: "-6px" },
+        [RESIZE_CURSOR_POSITION_OPTIONS.BOTTOM_RIGHT]: { right: "-6px", bottom: "-6px" },
       };
 
       return {
@@ -107,14 +109,14 @@ export const useImageResize = ({
     if (!isResizing || !resizeHandle) return;
 
     const handleMouseMove = (e: MouseEvent) => {
-      const multiplier = RESIZE_MULTIPLIERS[resizeHandle as ResizeHandle];
+      const multiplier = RESIZE_MULTIPLIERS[resizeHandle as ResizeCursorPositionType];
       const diffX = (e.clientX - resizeStartX) * multiplier.x;
       const diffY = (e.clientY - resizeStartY) * multiplier.y;
       const avgDiff = (diffX + diffY) / 2;
 
       const newWidth = Math.max(
-        MIN_WIDTH,
-        Math.min(MAX_WIDTH, resizeStartWidth + avgDiff)
+        IMAGE_MIN_WIDTH,
+        Math.min(IMAGE_MAX_WIDTH, resizeStartWidth + avgDiff)
       );
       setCurrentWidth(newWidth);
     };

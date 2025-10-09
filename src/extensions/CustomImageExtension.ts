@@ -1,6 +1,8 @@
 import Image from "@tiptap/extension-image";
 import { ReactNodeViewRenderer } from "@tiptap/react";
-import { ImageComponent } from "./ImageComponent";
+import { ALIGNMENT_OPTIONS, type AlignType } from "@/constants";
+import { IMAGE_DEFAULT_WIDTH } from "@/constants/Image";
+import { ImageNode } from "@/components/node/ImageNode";
 
 export interface CustomImageExtensionOptions {
   inline: boolean;
@@ -13,7 +15,7 @@ export interface CustomImageExtensionAttributes {
   alt?: string;
   title?: string;
   width?: number;
-  align?: "left" | "center" | "right";
+  align?: AlignType;
 }
 
 export const CustomImageExtension = Image.extend<CustomImageExtensionOptions>({
@@ -75,9 +77,9 @@ export const CustomImageExtension = Image.extend<CustomImageExtensionOptions>({
         },
       },
       align: {
-        default: "left",
+        default: ALIGNMENT_OPTIONS.LEFT,
         parseHTML: (element) => {
-          return element.getAttribute("data-align") || "left";
+          return element.getAttribute("data-align") || ALIGNMENT_OPTIONS.LEFT;
         },
         renderHTML: (attributes) => {
           return { "data-align": attributes.align };
@@ -87,25 +89,25 @@ export const CustomImageExtension = Image.extend<CustomImageExtensionOptions>({
   },
 
   addNodeView() {
-    return ReactNodeViewRenderer(ImageComponent);
+    return ReactNodeViewRenderer(ImageNode);
   },
 
   addCommands() {
     return {
       setImage:
         (options: CustomImageExtensionAttributes) =>
-        ({ commands }) => {
-          return commands.insertContent({
-            type: this.name,
-            attrs: {
-              src: options.src,
-              alt: options.alt || null,
-              title: options.title || null,
-              width: options.width || 300,
-              align: options.align || "left",
-            },
-          });
-        },
+          ({ commands }) => {
+            return commands.insertContent({
+              type: this.name,
+              attrs: {
+                src: options.src,
+                alt: options.alt || null,
+                title: options.title || null,
+                width: options.width || IMAGE_DEFAULT_WIDTH,
+                align: options.align || ALIGNMENT_OPTIONS.LEFT,
+              },
+            });
+          },
     };
   },
 
@@ -116,14 +118,14 @@ export const CustomImageExtension = Image.extend<CustomImageExtensionOptions>({
         getAttrs: (node) => {
           if (typeof node === "string") return {};
           const element = node as HTMLElement;
-          
+
           return {
             src: element.getAttribute("src"),
             alt: element.getAttribute("alt"),
             title: element.getAttribute("title"),
             width: element.getAttribute("width")
               ? parseInt(element.getAttribute("width")!, 10)
-              : 300,
+              : IMAGE_DEFAULT_WIDTH,
             align: element.getAttribute("data-align") || "left",
           };
         },
@@ -133,15 +135,15 @@ export const CustomImageExtension = Image.extend<CustomImageExtensionOptions>({
 
   renderHTML({ HTMLAttributes }) {
     const { width, align, ...otherAttrs } = HTMLAttributes;
-    
+
     return [
       "img",
       {
         ...this.options.HTMLAttributes,
         ...otherAttrs,
-        width: width || 300,
-        "data-align": align || "left",
-        style: `width: ${width || 300}px;`,
+        width: width || IMAGE_DEFAULT_WIDTH,
+        "data-align": align || ALIGNMENT_OPTIONS.LEFT,
+        style: `width: ${width || IMAGE_DEFAULT_WIDTH}px;`,
       },
     ];
   },
