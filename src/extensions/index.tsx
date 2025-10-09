@@ -39,6 +39,7 @@ import Italic from "@tiptap/extension-italic";
 import Strike from "@tiptap/extension-strike";
 import Underline from "@tiptap/extension-underline";
 import Paragraph from "@tiptap/extension-paragraph";
+import HardBreak from '@tiptap/extension-hard-break'
 
 const getEditorExtensions = (config?: EditorConfig) => [
   Document,
@@ -138,6 +139,7 @@ const getEditorExtensions = (config?: EditorConfig) => [
   Italic,
   Strike,
   Underline,
+  HardBreak,
 ];
 
 // Backward compatibility - default extensions without config
