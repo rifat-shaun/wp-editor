@@ -1,0 +1,72 @@
+/* Single Line */
+hr.hr--single-line {
+  border: none;
+  border-top: 2px solid #000000;
+  margin: 1rem 0;
+}
+
+/* Thick Single Line */
+hr.hr--thick-single-line {
+  border: none;
+  border-top: 4px solid #000000;
+  margin: 1rem 0;
+}
+
+/* Double Line */
+hr.hr--double-line {
+  border: none;
+  border-top: 5px double #000000;
+  margin: 1rem 0;
+}
+
+/* Dotted Line */
+hr.hr--dotted-line {
+  border: none;
+  border-top: 2px dotted #000000;
+  margin: 1rem 0;
+}
+
+/* Dashed Line */
+hr.hr--dashed-line {
+  border: none;
+  border-top: 2px dashed #000000;
+  margin: 1rem 0;
+}
+
+/* Double Dashed Line */
+hr.hr--double-dashed-line {
+  border: none;
+  border-top: 2px dashed #000000;
+  border-bottom: 2px dashed #000000;
+  height: 4px;
+  margin: 1rem 0;
+}
+
+/* Thick and Thick Line Top */
+hr.hr--thick-and-thick-line-top {
+  border: none;
+  border-top: 4px solid #000000;
+  border-bottom: 1px solid #000000;
+  height: 4px;
+  margin: 1rem 0;
+}
+
+/* Thick and Thick Line Bottom */
+hr.hr--thick-and-thick-line-bottom {
+  border: none;
+  border-top: 1px solid #000000;
+  border-bottom: 4px solid #000000;
+  height: 4px;
+  margin: 1rem 0;
+}
+
+/* Wavy Line */
+hr.hr--wavy-line {
+  border: none;
+  height: 12px;
+  margin: 1rem 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 12' preserveAspectRatio='none'%3E%3Cpath d='M0,6 Q5,0 10,6 T20,6 T30,6 T40,6 T50,6 T60,6 T70,6 T80,6 T90,6 T100,6 T110,6 T120,6 T130,6 T140,6 T150,6 T160,6 T170,6 T180,6 T190,6 T200,6 T210,6 T220,6 T230,6 T240,6 T250,6 T260,6 T270,6 T280,6 T290,6 T300,6 T310,6 T320,6 T330,6 T340,6 T350,6 T360,6 T370,6 T380,6 T390,6 T400,6 T410,6 T420,6 T430,6 T440,6 T450,6 T460,6 T470,6 T480,6 T490,6 T500,6 T510,6 T520,6 T530,6 T540,6 T550,6 T560,6 T570,6 T580,6 T590,6 T600,6 T610,6 T620,6 T630,6 T640,6 T650,6 T660,6 T670,6 T680,6 T690,6 T700,6 T710,6 T720,6 T730,6 T740,6 T750,6 T760,6 T770,6 T780,6 T790,6 T800,6 T810,6 T820,6 T830,6 T840,6 T850,6 T860,6 T870,6 T880,6 T890,6 T900,6 T910,6 T920,6 T930,6 T940,6 T950,6 T960,6 T970,6 T980,6 T990,6 T1000,6 T1010,6 T1020,6 T1030,6 T1040,6 T1050,6 T1060,6 T1070,6 T1080,6 T1090,6 T1100,6 T1110,6 T1120,6 T1130,6 T1140,6 T1150,6 T1160,6 T1170,6 T1180,6 T1190,6 T1200,6' stroke='%23000000' stroke-width='3' fill='none'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 100% 8px;
+  background-position: center;
+}

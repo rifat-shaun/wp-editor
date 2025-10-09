@@ -1,0 +1,104 @@
+import type { OrderedListType } from "@/extensions/OrderedListWithType";
+import type { UnorderedListType } from "@/extensions/UnorderedListWithType";
+import { Editor } from "@tiptap/react";
+
+export const useParagraphStyleMethods = (editor: Editor) => {
+  const handleToggleTaskList = () => {
+    if (!editor) return;
+    editor.chain().focus().toggleTaskList().run();
+  };
+
+  const handleIndent = () => {
+    if (!editor) return;
+
+    // Try to indent different list types, otherwise indent paragraph
+    if (editor.isActive("taskItem")) {
+      editor.chain().focus().sinkListItem("taskItem").run();
+    } else if (editor.isActive("listItem")) {
+      editor.chain().focus().sinkListItem("listItem").run();
+    } else {
+      // Use the custom indent command for paragraphs, headings, etc.
+      editor.commands.indent();
+    }
+  };
+
+  const handleOutdent = () => {
+    if (!editor) return;
+
+    // Try to outdent different list types, otherwise outdent paragraph
+    if (editor.isActive("taskItem")) {
+      editor.chain().focus().liftListItem("taskItem").run();
+    } else if (editor.isActive("listItem")) {
+      editor.chain().focus().liftListItem("listItem").run();
+    } else {
+      // Use the custom outdent command for paragraphs, headings, etc.
+      editor.commands.outdent();
+    }
+  };
+
+  const handleToggleOrderedList = () => {
+    if (!editor) return;
+    editor.chain().focus().toggleList("orderedList", "listItem").run();
+  };
+
+  const handleListTypeChange = (listType: OrderedListType) => {
+    if (!editor) return;
+    // First, ensure we're in a list
+    if (!editor.isActive("orderedList")) {
+      editor.chain().focus().toggleList("orderedList", "listItem").run();
+    }
+
+    // Then set the list type
+    editor.chain().focus().updateAttributes("orderedList", { listType }).run();
+  };
+
+  const handleToggleUnorderedList = () => {
+    if (!editor) return;
+    editor.chain().focus().toggleList("bulletList", "listItem").run();
+  };
+
+  const handleUnorderedListTypeChange = (listType: UnorderedListType) => {
+    if (!editor) return;
+    editor.chain().focus().updateAttributes("bulletList", { listType }).run();
+  };
+
+  const handleTextAlignLeft = () => {
+    if (!editor) return;
+    editor.chain().focus().setTextAlign("left").run();
+  };
+
+  const handleTextAlignCenter = () => {
+    if (!editor) return;
+    editor.chain().focus().setTextAlign("center").run();
+  };
+
+  const handleTextAlignRight = () => {
+    if (!editor) return;
+    editor.chain().focus().setTextAlign("right").run();
+  };
+
+  const handleTextAlignJustify = () => {
+    if (!editor) return;
+    editor.chain().focus().setTextAlign("justify").run();
+  };
+
+  const handleToggleBlockquote = () => {
+    if (!editor) return;
+    editor.chain().focus().toggleBlockquote().run();
+  };
+
+  return {
+    handleToggleTaskList,
+    handleIndent,
+    handleOutdent,
+    handleToggleOrderedList,
+    handleListTypeChange,
+    handleToggleUnorderedList,
+    handleUnorderedListTypeChange,
+    handleTextAlignLeft,
+    handleTextAlignCenter,
+    handleTextAlignRight,
+    handleTextAlignJustify,
+    handleToggleBlockquote,
+  };
+};

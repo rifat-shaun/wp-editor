@@ -1,0 +1,41 @@
+.tiptap {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-weight: bold;
+    }
+
+    h1 {
+        font-size: 32px;
+        line-height: 41px;
+    }
+
+    h2 {
+        font-size: 27px;
+        line-height: 35px;
+    }
+
+    h3 {
+        font-size: 21px;
+        line-height: 28px;
+    }
+
+    h4 {
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    h5 {
+        font-size: 16px;
+        line-height: 21px;
+    }
+
+    h6 {
+        font-size: 15px;
+        line-height: 17px;
+    }
+
+}

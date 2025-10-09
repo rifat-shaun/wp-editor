@@ -1,0 +1,130 @@
+.ProseMirror {
+  height: 100%;
+}
+
+.ProseMirror-focused {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+/* Placeholder styles */
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+
+.tiptap {
+  .blur-highlight {
+    background-color: rgba(212, 212, 212, 0.8);
+    padding: 2px 0;
+  }
+
+  /* Variable text styling */
+  .variable-text {
+    display: inline-block;
+    padding: 0 2px;
+    margin: 0;
+    background-color: #e3f2fd;
+    border: 1px solid #90caf9;
+    border-radius: 4px;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: default;
+    user-select: none;
+    white-space: nowrap;
+    scale: 0.95;
+  }
+
+  .variable-text:hover {
+    background-color: #bbdefb;
+    border-color: #64b5f6;
+  }
+
+  .editor-page-break {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin: 1.5rem 0;
+    text-align: center;
+    cursor: default;
+    page-break-after: always;
+    break-after: page;
+  }
+  
+  .editor-page-break::before {
+    content: 'PAGE BREAK';
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7280;
+    background-color: #f3f4f6;
+    padding: 0.125rem 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px dashed #d1d5db;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .editor-page-break-line {
+    border: none;
+    height: 1px;
+    background-color: #d1d5db;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    z-index: 0;
+  }
+}
+
+/* Disable variable-text styling in presentation mode */
+.editor-presentation-mode .variable-text {
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0;
+  scale: 1;
+  user-select: text;
+}
+
+.editor-presentation-mode .variable-text:hover {
+  background-color: transparent;
+  border: none !important;
+}
+
+/* Laser Pointer */
+.editor-laser-pointer {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 20%, rgba(255, 0, 0, 0.9) 40%, rgba(255, 0, 0, 0.6) 70%, rgba(255, 0, 0, 0.2) 100%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow: 0 0 8px rgba(255, 0, 0, 0.6), 0 0 15px rgba(255, 0, 0, 0.3);
+  display: block;
+}
+
+/* Hide cursor when laser is active */
+.laser-active,
+.laser-active * {
+  cursor: none !important;
+}
+
+/* Ensure cursor is hidden in fullscreen mode with laser */
+:fullscreen.laser-active,
+:fullscreen.laser-active *,
+:-webkit-full-screen.laser-active,
+:-webkit-full-screen.laser-active *,
+:-moz-full-screen.laser-active,
+:-moz-full-screen.laser-active * {
+  cursor: none !important;
+}

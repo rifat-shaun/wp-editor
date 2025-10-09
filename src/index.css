@@ -1,0 +1,67 @@
+@import "./styles/content/page-sizes.css";
+@import "./styles/content/list-items.css";
+@import "./styles/content/quote.css";
+@import "./styles/content/heading.css";
+@import "./styles/editor/index.css";
+@import "./styles/content/table.css";
+@import "./styles/content/link.css";
+@import "./styles/content/divider.css";
+@import "./styles/content/codeblock.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --white: #fff;
+  --neutral-900: #101828;
+  --shadow-menu: 0px 10px 30px rgba(152, 162, 179, 0.5);
+  --scroll-bar-size: 5px;
+}
+
+::-webkit-scrollbar {
+  width: var(--scroll-bar-size);
+  height: var(--scroll-bar-size);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark ::-webkit-scrollbar {
+  width: var(--scroll-bar-size);
+  height: var(--scroll-bar-size);
+  background-color: #141414;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #98a2b3;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #454545;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #667085;
+}
+
+/* Chrome, Safari, Edge, Opera */
+.hidden-spin input::-webkit-outer-spin-button,
+.hidden-spin input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.hidden-spin input {
+  -moz-appearance: textfield;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
+}
