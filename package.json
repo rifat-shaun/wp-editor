@@ -1,6 +1,6 @@
 {
   "name": "lax-wp-editor",
-  "version": "2.2.0",
+  "version": "2.2.2",
   "description": "A modern, feature-rich WordPress-style editor built with React and TipTap",
   "keywords": [
     "editor",
