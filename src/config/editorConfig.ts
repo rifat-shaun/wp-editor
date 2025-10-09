@@ -35,6 +35,8 @@ export interface EditorConfig {
   onShare?: () => void;
   /** Callback when content changes */
   onContentChange?: (editor: Editor) => void;
+  /** Callback when editor is ready with helper methods */
+  onEditorReady?: (methods: { insertVariable: (key: string, value?: string) => void }) => void;
 }
 
 export const defaultEditorConfig: EditorConfig = {

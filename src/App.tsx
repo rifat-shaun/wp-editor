@@ -1,6 +1,9 @@
+/* eslint-disable */
 import Editor from "./components/Editor";
+import { useState } from "react";
 
 function App() {
+  const [_insertVariable, setInsertVariable] = useState<((key: string, value?: string) => void) | null>(null);
 
   const fetchAICompletion = async (text: string): Promise<string> => {
     try {
@@ -56,6 +59,9 @@ function App() {
           },
           onShare: () => {
             console.log('Share');
+          },
+          onEditorReady: ({ insertVariable }) => {
+            setInsertVariable(() => insertVariable);
           },
         }} />
       </div>

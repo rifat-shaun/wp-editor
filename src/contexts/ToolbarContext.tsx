@@ -78,6 +78,7 @@ export const ToolbarProvider = ({
   );
 };
 
+/* eslint-disable react-refresh/only-export-components */
 export const useToolbar = () => {
   const context = useContext(ToolbarContext);
   if (!context) {

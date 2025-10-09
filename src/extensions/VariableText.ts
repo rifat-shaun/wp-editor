@@ -136,6 +136,7 @@ export const VariableText = Node.create<VariableOptions>({
   },
 
   addProseMirrorPlugins() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const extension = this;
 
     return [
