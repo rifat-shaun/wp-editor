@@ -1,7 +1,8 @@
-import StarterKit from "@tiptap/starter-kit";
 import CharacterCount from "@tiptap/extension-character-count";
-import { Placeholder } from "@tiptap/extensions";
+import { Placeholder, UndoRedo } from "@tiptap/extensions";
 import Typography from "@tiptap/extension-typography";
+import Document from "@tiptap/extension-document";
+import Text from "@tiptap/extension-text";
 import { OrderedListWithType } from "./OrderedListWithType";
 import { UnorderedListWithType } from "./UnorderedListWithType";
 import {
@@ -33,18 +34,17 @@ import { CodeBlockWithToolbar } from "./CodeBlockWithToolbar";
 import PageMargin from "./PageMargin";
 import PageBackground from "./PageBackground";
 import PageBreak from "./PageBreak";
+import Bold from "@tiptap/extension-bold";
+import Italic from "@tiptap/extension-italic";
+import Strike from "@tiptap/extension-strike";
+import Underline from "@tiptap/extension-underline";
+import Paragraph from "@tiptap/extension-paragraph";
 
 const getEditorExtensions = (config?: EditorConfig) => [
-  StarterKit.configure({
-    orderedList: false, // Disable default to use our custom one
-    bulletList: false, // Disable default to use our custom one
-    listItem: false, // Disable default to use our custom one with depth limit
-    heading: false, // Disable default to use our custom one
-    blockquote: false, // Disable default to use our custom one
-    link: false, // Disable default to use our custom one
-    horizontalRule: false, // Disable default to use our custom one
-    codeBlock: false, // Disable default to use our custom one with toolbar
-  }),
+  Document,
+  Text,
+  Paragraph,
+  UndoRedo,
   OrderedListWithType,
   UnorderedListWithType,
   ListItemWithDepthLimit.configure({
@@ -133,7 +133,11 @@ const getEditorExtensions = (config?: EditorConfig) => [
     },
   }),
   PageBackground,
-  PageBreak
+  PageBreak,
+  Bold,
+  Italic,
+  Strike,
+  Underline,
 ];
 
 // Backward compatibility - default extensions without config
