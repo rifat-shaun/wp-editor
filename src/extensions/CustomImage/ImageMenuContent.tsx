@@ -47,8 +47,7 @@ export const ImageMenuContent = ({ editor }: { editor: Editor }) => {
     };
   }, [editor]);
 
-  const { align: currentAlign, width: currentWidth } = imageAttrs;
-  console.log("currentWidth", currentWidth, "currentAlign", currentAlign);
+  const { align: currentAlign } = imageAttrs;
 
   const handleAlignChange = (newAlign: AlignType) => {
     editor.chain().focus().updateAttributes("image", { align: newAlign }).run();
