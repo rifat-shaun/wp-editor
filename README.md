@@ -12,6 +12,7 @@ A modern, feature-rich WordPress-style editor built with React and TipTap. This 
   - [Basic Configuration](#basic-configuration)
   - [AI Autocompletion](#ai-autocompletion)
   - [Export Functionality](#export-functionality)
+  - [Variable Text Feature](#variable-text-feature)
   - [Configuration Options Reference](#configuration-options-reference)
 - [Components](#components)
 - [Hooks](#hooks)
@@ -31,11 +32,24 @@ A modern, feature-rich WordPress-style editor built with React and TipTap. This 
 - New **Export** tab in the toolbar for quick access to all export options
 - `useExport` hook for programmatic export functionality
 
+#### 📝 Variable Text Feature
+- Dynamic variable text support for mail merge and templates
+- Insert variables programmatically from your application
+- `onEditorReady` callback provides `insertVariable` method
+- Variables display actual values or `{{variableName}}` placeholders
+- Supports manual typing with `{{variableName}}` syntax
+
 #### 🎨 Toolbar Enhancements
 - Improved toolbar dropdown with visual icons for each mode
 - Better visual distinction between Professional, Classic, and Hide Toolbar modes
 - Enhanced toolbar tab interface with 5 tabs: Home, Insert, Table, Page, and Export
 - Smoother transitions between toolbar types
+
+#### 🖼️ Custom Image Support
+- Resizable images with drag handles
+- Image alignment (left, center, right)
+- Bubble menu for image options
+- Inline and block image support
 
 ## Features
 
@@ -44,6 +58,8 @@ A modern, feature-rich WordPress-style editor built with React and TipTap. This 
 - 🛠️ **Flexible Toolbars**: Professional and Classic toolbar modes with tabbed interface
 - 📄 **Page Management**: Multiple page sizes and orientations
 - 📤 **Export Options**: Export your content as Text, HTML, Markdown, or JSON
+- 📝 **Variable Text**: Dynamic variables for mail merge and template systems
+- 🖼️ **Image Support**: Resizable images with alignment and custom styling
 - 🎯 **Customizable**: Easy to integrate and customize
 - 📱 **Responsive**: Works seamlessly on desktop and mobile
 - 🔧 **TypeScript**: Full TypeScript support with type definitions
@@ -205,6 +221,83 @@ function MyEditorComponent({ editor }) {
 
 > **💡 Tip:** The Export tab is built into the toolbar and provides quick access to all export formats. You can also use the `useExport` hook to create custom export buttons.
 
+### Variable Text Feature
+
+The editor supports dynamic variable text that can be inserted programmatically from your application. Variables are displayed as placeholders that get replaced with actual values.
+
+**Enable Variable Text:**
+
+```tsx
+import { useState } from 'react';
+import { Editor } from 'lax-wp-editor';
+
+function App() {
+  const [insertVariable, setInsertVariable] = useState<((key: string, value?: string) => void) | null>(null);
+
+  const handleInsertName = () => {
+    insertVariable?.('userName');
+  };
+
+  const handleInsertEmailWithValue = () => {
+    insertVariable?.('email', 'newemail@example.com');
+  };
+
+  return (
+    <div>
+      <button onClick={handleInsertName}>Insert User Name</button>
+      <button onClick={handleInsertEmailWithValue}>Insert Email</button>
+      
+      <Editor 
+        config={{
+          enableVariableText: true,
+          variableValues: {
+            userName: 'John Doe',
+            email: 'john@example.com',
+            company: 'Acme Inc',
+          },
+          onEditorReady: ({ insertVariable: insert }) => {
+            // Store the insertVariable method when editor is ready
+            setInsertVariable(() => insert);
+          },
+        }}
+      />
+    </div>
+  );
+}
+```
+
+**Variable Text Configuration:**
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `enableVariableText` | `boolean` | Enable/disable variable text feature |
+| `variableValues` | `Record<string, string>` | Key-value pairs for variable replacements |
+| `onEditorReady` | `(methods) => void` | Callback that provides editor methods including `insertVariable` |
+
+**Insert Variable Method:**
+
+```tsx
+insertVariable(key: string, value?: string)
+```
+
+- **`key`**: The variable name/key
+- **`value`**: (Optional) Update the variable value before inserting
+
+**How Variables Work:**
+
+1. Variables are inserted as special nodes in the editor
+2. They display the value from `variableValues` config
+3. If no value exists, they display as `{{variableName}}`
+4. Variables can be typed manually using `{{variableName}}` syntax (if enabled)
+5. Users can insert variables programmatically from outside the editor
+
+**Example Use Cases:**
+
+- Mail merge functionality
+- Template systems
+- Dynamic content generation
+- Personalized documents
+
 ### Configuration Options Reference
 
 | Option | Type | Default | Description |
@@ -217,6 +310,10 @@ function MyEditorComponent({ editor }) {
 | `enablePagination` | `boolean` | `true` | Enable pagination |
 | `debounceTimeForContentChange` | `number` | `300` | Debounce time (ms) for `onContentChange` callback |
 | `onContentChange` | `(editor: Editor) => void` | `undefined` | Callback when content changes (debounced) |
+| `enableVariableText` | `boolean` | `false` | Enable variable text feature |
+| `variableValues` | `Record<string, string>` | `{}` | Variable name to value mappings |
+| `onEditorReady` | `(methods) => void` | `undefined` | Callback with editor methods when ready |
+| `onShare` | `() => void` | `undefined` | Callback when share button is clicked |
 | `aiAutocompletion` | `AIAutocompletionConfig` | See below | AI autocompletion configuration |
 
 **AIAutocompletionConfig:**
