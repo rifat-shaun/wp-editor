@@ -6,6 +6,7 @@ import { Popover } from "antd";
 import { ParagraphAlignOptions } from "@/components/toolbar/home/ParagraphStyleOption";
 import { BasicFontStyleOptions } from "@/components/toolbar/home/FontStyleOptions";
 import { InsertLinkOptions } from "@/components/toolbar/insert";
+import { ArrowDropDownOutlined } from "@mui/icons-material";
 
 interface DefaultBubbleMenuContentProps {
   editor: Editor;
@@ -31,6 +32,7 @@ export const DefaultBubbleMenuContent = ({
         }
         trigger="click"
         arrow={false}
+        placement="bottom"
       >
         <Button title="Text Alignment">
           <SvgIcon
@@ -45,6 +47,9 @@ export const DefaultBubbleMenuContent = ({
             }
             strokeWidth={1.5}
           />
+           <ArrowDropDownOutlined
+                sx={{ fontSize: "16px", color: "inherit" }}
+              />
         </Button>
       </Popover>
 
