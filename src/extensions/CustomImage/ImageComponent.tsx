@@ -26,37 +26,34 @@ export const ImageComponent: React.FC<ImageComponentProps> = ({
 
   return (
     <NodeViewWrapper
-      className="custom-image-wrapper"
       style={{
-        margin: align === 'center' ? '1rem auto' : align === 'right' ? '1rem 0 1rem auto' : '1rem 0',
+        margin:
+          align === "center"
+            ? "1rem auto"
+            : align === "right"
+            ? "1rem 0 1rem auto"
+            : "1rem 0",
         userSelect: "none",
         width: currentWidth,
       }}
     >
       <div style={containerStyle}>
-        <div
-          style={{
-            position: "relative",
-            display: "inline-block",
-          }}
-        >
+        <div className="relative inline-block">
           <img
             ref={imgRef}
             src={src}
             alt={alt || ""}
             title={title || ""}
-            style={{
-              width: `${currentWidth}px`,
-              
-              height: "auto",
-              display: "block",
-              border: selected
-                ? "2px solid #3b82f6"
-                : "2px solid transparent",
-              borderRadius: "4px",
-              transition: isResizing ? "none" : "border-color 0.2s",
-              cursor: imgCursor,
-            }}
+            className={`w-[${currentWidth}px] h-auto block ${
+              selected
+                ? "border-2 border-blue-500"
+                : "border-2 border-transparent"
+            } 
+            rounded-[4px] ${
+              isResizing
+                ? "border-none"
+                : "transition-border-color duration-200"
+            } cursor-${imgCursor}`}
             draggable={false}
           />
 
