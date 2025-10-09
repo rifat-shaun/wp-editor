@@ -14,17 +14,20 @@ import { DividerDropdownContent } from "./DividerDropdownContent";
 
 type ToolbarType = "classic" | "professional" | null;
 
-export const InsertOptions = ({ 
+export const InsertOptions = ({
   editor,
-  toolbarType
-}: { 
+  toolbarType,
+}: {
   editor: Editor;
   toolbarType?: ToolbarType;
 }) => {
   const { currentToolbar } = useToolbar();
-  const effectiveToolbarType = toolbarType !== undefined 
-    ? toolbarType 
-    : (currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC ? "classic" : "professional");
+  const effectiveToolbarType =
+    toolbarType !== undefined
+      ? toolbarType
+      : currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC
+      ? "classic"
+      : "professional";
   const isClassicToolbar = effectiveToolbarType === "classic";
   const isBubbleMenu = effectiveToolbarType === null;
   const [isDividerOpen, setIsDividerOpen] = useState(false);
@@ -32,10 +35,7 @@ export const InsertOptions = ({
 
   return (
     <>
-      <InsertLinkOptions
-        editor={editor}
-        toolbarType={effectiveToolbarType}
-      />
+      <InsertLinkOptions editor={editor} toolbarType={effectiveToolbarType} />
 
       <Popover
         content={
@@ -128,10 +128,18 @@ export const InsertOptions = ({
             <div className="relative flex items-center gap-1">
               <SvgIcon name="image" strokeWidth={3} />
               <span className="text-xs">Image</span>
+              <ArrowDropDownOutlined
+                sx={{ fontSize: "14px", color: "inherit" }}
+              />
             </div>
           ) : (
             <div className="relative flex flex-col items-center gap-1">
-              <SvgIcon name="image" size={20} strokeWidth={3} />
+              <div className="flex items-center">
+                <SvgIcon name="image" size={20} strokeWidth={3} />
+                <ArrowDropDownOutlined
+                  sx={{ fontSize: "14px", color: "inherit" }}
+                />
+              </div>
               <span className="text-xs">Image</span>
             </div>
           )}
