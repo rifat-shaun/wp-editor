@@ -77,6 +77,18 @@ export const InsertOptions = ({ editor }: { editor: Editor }) => {
           strokeWidth={4}
         />
       </Button>
+      <Button
+        size={isClassicToolbar ? "medium" : "large"}
+        onClick={() => editor.chain().focus().setHardBreak().run()}
+        title="Insert Line Break"
+        className="flex items-center gap-1"
+      >
+        <SvgIcon
+          name="break-marks"
+          size={isClassicToolbar ? "18px" : "32px"}
+          strokeWidth={4}
+        />
+      </Button>
     </>
   );
 };
