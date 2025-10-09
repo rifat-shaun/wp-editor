@@ -23,12 +23,6 @@ export const ParagraphStyleOptions = ({
     canOutdent,
     isOrderedList,
     isUnorderedList,
-    isTextAlignJustify,
-    isTextAlignCenter,
-    isTextAlignRight,
-    isTextAlignLeft,
-    isBlockquote,
-    canBlockquote,
   } = useTiptapEditorState(editor);
 
   const {
@@ -37,11 +31,6 @@ export const ParagraphStyleOptions = ({
     handleOutdent,
     handleToggleOrderedList,
     handleToggleUnorderedList,
-    handleTextAlignLeft,
-    handleTextAlignCenter,
-    handleTextAlignRight,
-    handleTextAlignJustify,
-    handleToggleBlockquote,
   } = useParagraphStyleMethods(editor);
 
   const [orderedListDropdownOpen, setOrderedListDropdownOpen] = useState(false);
@@ -172,64 +161,104 @@ export const ParagraphStyleOptions = ({
           <SvgIcon name="indent" className="rotate-180" />
         </Button>
       </div>
-
-      <div className="flex items-center space-x-2">
-        <Button
-          title="Align Left"
-          onClick={handleTextAlignLeft}
-          active={isTextAlignLeft}
-          size="small"
-        >
-          <SvgIcon name="align-left" />
-        </Button>
-
-        <Button
-          title="Align Center"
-          onClick={handleTextAlignCenter}
-          active={isTextAlignCenter}
-          size="small"
-        >
-          <SvgIcon name="align-center" />
-        </Button>
-
-        <Button
-          title="Align Right"
-          onClick={handleTextAlignRight}
-          active={isTextAlignRight}
-          size="small"
-        >
-          <SvgIcon name="align-right" />
-        </Button>
-
-        <Button
-          title="Justify"
-          onClick={handleTextAlignJustify}
-          active={isTextAlignJustify}
-          size="small"
-        >
-          <SvgIcon name="align-justify" />
-        </Button>
-
-        <Button
-          title="Blockquote"
-          onClick={handleToggleBlockquote}
-          disabled={!canBlockquote}
-          active={isBlockquote}
-          size="small"
-        >
-          <SvgIcon name="quote" />
-        </Button>
-
-        {/* <ToolbarButtonItem
-          tooltip={'Code'}
-          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-          disabled={!editor.can().chain().focus().toggleCodeBlock().run()}
-          active={editor.isActive('codeBlock')}
-          size='small'
-        >
-          <SvgIcon name='code' />
-        </ToolbarButtonItem> */}
-      </div>
+      <ParagraphAlignOptions editor={editor} />
     </ItemGroup>
   );
+};
+
+type TParagraphAlignOptionsProps = {
+  editor: Editor;
+  isBubbleMenu?: boolean;
+};
+
+export const ParagraphAlignOptions = ({
+  editor,
+  isBubbleMenu = false,
+}: TParagraphAlignOptionsProps) => {
+  const {
+    isTextAlignLeft,
+    isTextAlignCenter,
+    isTextAlignRight,
+    isTextAlignJustify,
+    isBlockquote,
+    canBlockquote,
+  } = useTiptapEditorState(editor);
+
+  const {
+    handleTextAlignLeft,
+    handleTextAlignCenter,
+    handleTextAlignRight,
+    handleTextAlignJustify,
+    handleToggleBlockquote,
+  } = useParagraphStyleMethods(editor);
+
+  const content = (
+    <div className="flex items-center space-x-2">
+      <Button
+        title="Align Left"
+        onClick={handleTextAlignLeft}
+        active={isTextAlignLeft}
+        size="small"
+      >
+        <SvgIcon name="align-left" />
+      </Button>
+
+      <Button
+        title="Align Center"
+        onClick={handleTextAlignCenter}
+        active={isTextAlignCenter}
+        size="small"
+      >
+        <SvgIcon name="align-center" />
+      </Button>
+
+      <Button
+        title="Align Right"
+        onClick={handleTextAlignRight}
+        active={isTextAlignRight}
+        size="small"
+      >
+        <SvgIcon name="align-right" />
+      </Button>
+
+      <Button
+        title="Justify"
+        onClick={handleTextAlignJustify}
+        active={isTextAlignJustify}
+        size="small"
+      >
+        <SvgIcon name="align-justify" />
+      </Button>
+
+      {!isBubbleMenu && (
+      <Button
+        title="Blockquote"
+        onClick={handleToggleBlockquote}
+        disabled={!canBlockquote}
+        active={isBlockquote}
+        size="small"
+      >
+          <SvgIcon name="quote" />
+        </Button>
+      )}
+
+      {/* <ToolbarButtonItem
+        tooltip={'Code'}
+        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+        disabled={!editor.can().chain().focus().toggleCodeBlock().run()}
+        active={editor.isActive('codeBlock')}
+        size='small'
+      >
+        <SvgIcon name='code' />
+      </ToolbarButtonItem> */}
+    </div>
+  );
+
+  // If isBubbleMenu mode, return without ItemGroup wrapper
+  if (isBubbleMenu) {
+    return content;
+  }
+
+  // Otherwise, wrap in ItemGroup for toolbar usage
+  return <ItemGroup>{content}</ItemGroup>;
 };
