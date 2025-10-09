@@ -30,6 +30,12 @@ export const EditorShellProvider = ({ children, editor, editorConfig }: EditorSh
 		}
 	}, [editor, editorConfig]);
 
+	useEffect(() => {
+		if (editor && editorConfig?.variableValues) {
+			editor.commands.updateVariableValues(editorConfig.variableValues);
+		}
+	}, [editor, editorConfig?.variableValues]);
+
 	return (
 		<EditorShellContext.Provider value={{ editor, editorConfig }}>
 			{children}
