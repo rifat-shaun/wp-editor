@@ -1,25 +1,21 @@
 {
-  "name": "lax-wp-editor",
-  "version": "2.3.5",
-  "description": "A modern, feature-rich WordPress-style editor built with React and TipTap",
+  "name": "@lax-wp/editor",
+  "version": "0.0.1",
+  "description": "A modern, feature-rich editor built with React and TipTap",
   "keywords": [
     "editor",
     "wysiwyg",
     "react",
     "tiptap",
-    "wordpress",
-    "rich-text"
+    "rich-text",
+    "lax-wp",
+    "lax-wp-editor",
+    "lax",
+    "wp-editor",
+    "wp",
+    "lax-editor"
   ],
-  "author": "Rifat Hasan Shaun <mdrifathasanshaun@gmail.com>",
-  "license": "MIT",
-  "homepage": "https://github.com/rifat-shaun/wp-editor#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/rifat-shaun/wp-editor.git"
-  },
-  "bugs": {
-    "url": "https://github.com/rifat-shaun/wp-editor/issues"
-  },
+  "author": "Cognitus Consulting LLC",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.es.js",
   "types": "./dist/index.d.ts",

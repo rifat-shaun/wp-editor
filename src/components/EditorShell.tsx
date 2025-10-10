@@ -38,7 +38,7 @@ export const EditorShell = () => {
 	}, [editorConfig.editable, editorConfig.asViewer, isPresentationMode]);
 
 	return (
-		<div className={`h-full flex flex-col bg-neutral-200 editor-container ${isPresentationMode ? "editor-presentation-mode" : ""} ${isLaserActive ? "laser-active" : ""}`}>
+		<div className={`h-full relative flex flex-col bg-neutral-200 editor-container ${isPresentationMode ? "editor-presentation-mode" : ""} ${isLaserActive ? "laser-active" : ""}`}>
 			{isEditorEditable && (
 				<Toolbar
 					editorConfig={editorConfig}

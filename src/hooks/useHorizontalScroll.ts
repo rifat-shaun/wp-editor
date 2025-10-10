@@ -13,7 +13,7 @@ interface UseHorizontalScrollReturn {
 }
 
 export const useHorizontalScroll = (
-  dependency?: any
+  dependency?: unknown
 ): UseHorizontalScrollReturn => {
   const contentScrollerRef = useRef<HTMLDivElement>(null);
   const [showScrollButtons, setShowScrollButtons] = useState(false);

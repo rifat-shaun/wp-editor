@@ -1,5 +1,5 @@
 import { ClassicToolbar } from "./ClassicToolbar";
-import Button from "../base/Button1";
+import { Button } from "../base/Button";
 import SvgIcon from "../common/SvgIcon";
 import { ProfessionalToolbar } from "./ProfessionalToolbar";
 import { TOOLBAR_TYPES_ENUM } from "../../constants/Toolbar";
@@ -47,10 +47,8 @@ const ToolbarContent = ({ editor }: ToolbarContentProps) => {
         <div className="fixed top-1 right-6 z-50">
           <Button
             id="show-toolbar"
-            status="secondary-neutral"
-            appearance="outline"
             onClick={handleShowToolbar}
-            className="px-[4px] py-[3px]"
+            className="px-[4px] py-[3px] bg-white"
           >
             <SvgIcon name="toolbar" size={16} />
           </Button>
