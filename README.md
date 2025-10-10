@@ -680,12 +680,6 @@ function EditorWithToolbarSwitch() {
 npm run build
 ```
 
-### Running Storybook
-
-```bash
-npm run storybook
-```
-
 ### Linting
 
 ```bash
