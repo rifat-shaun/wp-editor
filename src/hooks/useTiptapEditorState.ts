@@ -1,6 +1,8 @@
-import { Editor, getMarkAttributes, useEditorState } from "@tiptap/react";
+import { getMarkAttributes, useEditorState } from "@tiptap/react";
+import { useEditorShell } from "@/contexts/EditorShellContext";
 
-export const useTiptapEditorState = (editor: Editor) => {
+export const useTiptapEditorState = () => {
+  const { editor } = useEditorShell();
   const editorState = useEditorState({
     editor,
     selector: (ctx) => {

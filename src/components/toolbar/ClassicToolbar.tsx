@@ -1,6 +1,5 @@
 import { Dropdown } from "antd";
 import { TOOLBAR_TYPES, TABS, type TTabKey } from "@/constants/Toolbar";
-import { Editor } from "@tiptap/react";
 import { useState } from "react";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { useHorizontalScroll } from "@/hooks/useHorizontalScroll";
@@ -14,14 +13,12 @@ import { useToolbar } from "@/contexts/ToolbarContext";
 
 interface ClassicToolbarProps {
   onToolbarChange?: (toolbarType: string) => void;
-  editor: Editor;
   activeTab: TTabKey;
   setActiveTab: (tab: TTabKey) => void;
 }
 
 export const ClassicToolbar = ({
   onToolbarChange,
-  editor,
   activeTab,
   setActiveTab,
 }: ClassicToolbarProps) => {
@@ -87,7 +84,7 @@ export const ClassicToolbar = ({
           onScrollRight={handleScrollRight}
           className="w-0"
         >
-          <RenderToolbarTabContent activeTab={activeTab} editor={editor} />
+          <RenderToolbarTabContent activeTab={activeTab} />
         </ScrollableContent>
       </div>
 

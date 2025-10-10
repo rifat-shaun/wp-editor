@@ -1,6 +1,7 @@
-import { Editor } from "@tiptap/react";
+import { useEditorShell } from "@/contexts/EditorShellContext";
 
-export const useHeadingStyleMethods = (editor: Editor) => {
+export const useHeadingStyleMethods = () => {
+	const { editor } = useEditorShell();
 	const handleHeadingChange = (headingType: string | number) => {
 		if (!editor) return;
 

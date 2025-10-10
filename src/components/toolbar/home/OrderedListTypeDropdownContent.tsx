@@ -2,20 +2,17 @@ import type { OrderedListType } from "@/extensions/OrderedListWithType";
 import { useParagraphStyleMethods } from "@/hooks/useParagraphStyleMethods";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
 import { LIST_TYPE_OPTIONS } from "@/constants/Paragraphs";
-import { Editor } from "@tiptap/react";
 import { SkeletonLine } from "@/components/common/SkeletonLine";
 
 type OrderedListTypeDropdownContentProps = {
-  editor: Editor;
   onClose: () => void;
 };
 
 export const OrderedListTypeDropdownContent = ({
-  editor,
   onClose,
 }: OrderedListTypeDropdownContentProps) => {
-  const { isOrderedList, currentOrderedListType } = useTiptapEditorState(editor);
-  const { handleListTypeChange } = useParagraphStyleMethods(editor);
+  const { isOrderedList, currentOrderedListType } = useTiptapEditorState();
+  const { handleListTypeChange } = useParagraphStyleMethods();
 
   return (
     <div

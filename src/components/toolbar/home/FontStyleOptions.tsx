@@ -6,7 +6,6 @@ import {
   EditOutlined,
   TitleOutlined,
 } from "@mui/icons-material";
-import { Editor } from "@tiptap/react";
 import { Button } from "../../base/Button";
 import { HorizontalLayoutColorPicker } from "../../base/ColorPicker";
 import SvgIcon from "../../common/SvgIcon";
@@ -15,7 +14,7 @@ import { useFontStyleMethods } from "@/hooks/useFontStyleMethods";
 import { FontSizeStepper } from "@/components/shared/FontSizeStepper";
 import { BasicFontStyleOptions } from "@/components/shared/BasicFontStyleOptions";
 
-export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
+export const FontStyleOptions = () => {
   const {
     fontFamily,
     fontSize,
@@ -26,7 +25,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
     selectionColor,
     selectionBackgroundColor,
     highlightColor,
-  } = useTiptapEditorState(editor);
+  } = useTiptapEditorState();
 
   const {
     handleFontFamilyChange,
@@ -39,7 +38,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
     handleUnsetBackgroundColor,
     handleSetHighlightColor,
     handleUnsetHighlightColor,
-  } = useFontStyleMethods(editor);
+  } = useFontStyleMethods();
 
   return (
     <ItemGroup>
@@ -98,11 +97,11 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
           </Dropdown>
         </Space.Compact>
 
-        <FontSizeStepper editor={editor} />
+        <FontSizeStepper />
       </div>
 
       <div className="flex items-center space-x-2">
-        <BasicFontStyleOptions editor={editor} />
+        <BasicFontStyleOptions />
 
         <Button
           title="Superscript"
@@ -124,6 +123,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
 
         <HorizontalLayoutColorPicker
           id="selectionColor"
+          title="TextColor"
           showNone={false}
           value={selectionColor}
           icon={<TitleOutlined sx={{ fontSize: "15px" }} />}
@@ -133,6 +133,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
 
         <HorizontalLayoutColorPicker
           id="selectionBackgroundColor"
+          title="Background Color"
           showNone={false}
           value={selectionBackgroundColor}
           icon={<SvgIcon name="color-fill" />}
@@ -142,6 +143,7 @@ export const FontStyleOptions = ({ editor }: { editor: Editor }) => {
 
         <HorizontalLayoutColorPicker
           id="selectionColor"
+          title="Highlight Color"
           showNone={false}
           value={highlightColor}
           icon={<EditOutlined sx={{ fontSize: "15px" }} />}

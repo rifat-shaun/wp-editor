@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Editor } from "@tiptap/react";
 import SvgIcon from "@/components/common/SvgIcon";
 import { Popover } from "antd";
 import { ImageUploadForm } from "./ImageUploadForm";
@@ -11,19 +10,18 @@ import { DividerDropdownContent } from "./DividerDropdownContent";
 import { InsertLinkButton } from "@/components/shared/InsertLinkButton";
 import { useInsertOptionMethods } from "@/hooks/useInsertOptionMethods";
 
-export const InsertOptions = ({ editor }: { editor: Editor }) => {
+export const InsertOptions = () => {
   const { currentToolbar } = useToolbar();
   const isClassicToolbar = currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC;
   const [isDividerOpen, setIsDividerOpen] = useState(false);
   const [isImageFormOpen, setIsImageFormOpen] = useState(false);
-  const { handleInsertLineBreak, handleInsertCodeBlock } = useInsertOptionMethods(editor);
+  const { handleInsertLineBreak, handleInsertCodeBlock } = useInsertOptionMethods();
   return (
     <>
-      <InsertLinkButton editor={editor} activeToolbarType={currentToolbar} />
+      <InsertLinkButton activeToolbarType={currentToolbar} />
       <Popover
         content={
           <DividerDropdownContent
-            editor={editor}
             onClose={() => setIsDividerOpen(false)}
           />
         }
@@ -80,7 +78,6 @@ export const InsertOptions = ({ editor }: { editor: Editor }) => {
       <Popover
         content={
           <ImageUploadForm
-            editor={editor}
             onSubmit={() => setIsImageFormOpen(false)}
             onCancel={() => setIsImageFormOpen(false)}
           />
@@ -122,7 +119,17 @@ export const InsertOptions = ({ editor }: { editor: Editor }) => {
         onClick={() => handleInsertLineBreak()}
         title="Line Break"
       >
-        <SvgIcon name="break-marks" size={20} strokeWidth={3} />
+        {isClassicToolbar ? (
+          <div className="relative flex items-center gap-1">
+            <SvgIcon name="break-marks" strokeWidth={3} />
+            <span className="text-xs">Line Break</span>
+          </div>
+        ) : (
+          <div className="relative flex flex-col items-center gap-1">
+            <SvgIcon name="break-marks" size={20} strokeWidth={3} />
+            <span className="text-xs">Line Break</span>
+          </div>
+        )}
       </Button>
     </>
   );

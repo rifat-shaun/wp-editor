@@ -1,8 +1,9 @@
-import { Editor } from "@tiptap/react";
 import { useTiptapEditorState } from "./useTiptapEditorState";
+import { useEditorShell } from "@/contexts/EditorShellContext";
 
-export const useHomeOptionMethods = (editor: Editor) => {
-  const { isAIAutocompletionEnabled } = useTiptapEditorState(editor);
+export const useHomeOptionMethods = () => {
+  const { editor } = useEditorShell();
+  const { isAIAutocompletionEnabled } = useTiptapEditorState();
 
   if (!editor) {
     return {

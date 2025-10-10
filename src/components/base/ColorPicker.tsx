@@ -10,6 +10,7 @@ import { Button } from "./Button";
 
 interface HorizontalLayoutColorPickerProps {
   id: string;
+  title?: string;
   value?: string;
   icon?: ReactNode;
   showNone?: boolean;
@@ -21,6 +22,7 @@ interface HorizontalLayoutColorPickerProps {
 
 export const HorizontalLayoutColorPicker = ({
   id,
+  title,
   value,
   icon,
   showNone = true,
@@ -139,6 +141,7 @@ export const HorizontalLayoutColorPicker = ({
     >
       <Button
         id={id}
+        title={title}
         className="relative flex items-center w-[26px] h-6"
         onClick={() => setOpen(true)}
       >

@@ -1,4 +1,3 @@
-import type { Editor } from "@tiptap/react";
 import { message } from "antd";
 import { useCallback } from "react";
 import PageSizesStyles from "@/styles/content/page-sizes.css?inline";
@@ -9,8 +8,11 @@ import TableStyles from "@/styles/content/table.css?inline";
 import LinkStyles from "@/styles/content/link.css?inline";
 import DividerStyles from "@/styles/content/divider.css?inline";
 import CodeblockStyles from "@/styles/content/codeblock.css?inline";
+import { useEditorShell } from "@/contexts/EditorShellContext";
 
-export const useExport = (editor: Editor) => {
+export const useExport = () => {
+	const { editor } = useEditorShell();
+
 	const downloadTextFile = () => {
 		if (!editor?.getText) return;
 

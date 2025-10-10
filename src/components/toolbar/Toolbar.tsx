@@ -3,7 +3,6 @@ import { Button } from "../base/Button";
 import SvgIcon from "../common/SvgIcon";
 import { ProfessionalToolbar } from "./ProfessionalToolbar";
 import { TOOLBAR_TYPES_ENUM } from "../../constants/Toolbar";
-import { Editor } from "@tiptap/react";
 import { ToolbarProvider, useToolbar } from "@/contexts/ToolbarContext";
 import { useState } from "react";
 import { TABS, type TTabKey } from "@/constants/Toolbar";
@@ -13,17 +12,12 @@ import type { EditorConfig } from "@/config/editorConfig";
 
 interface ToolbarProps {
   editorConfig: EditorConfig;
-  editor: Editor;
   onPresentationModeToggle: () => void;
   pageConfig: PageConfig;
   setPageConfig: (config: PageConfig) => void;
 }
 
-interface ToolbarContentProps {
-  editor: Editor;
-}
-
-const ToolbarContent = ({ editor }: ToolbarContentProps) => {
+const ToolbarContent = () => {
   const [activeTab, setActiveTab] = useState<TTabKey>(TABS[0]);
   const { CLASSIC, PROFESSIONAL, HIDE_TOOLBAR } = TOOLBAR_TYPES_ENUM;
   const { currentToolbar, handleToolbarChange, handleShowToolbar } =
@@ -31,12 +25,11 @@ const ToolbarContent = ({ editor }: ToolbarContentProps) => {
 
   switch (currentToolbar) {
     case CLASSIC:
-      return <ClassicToolbar onToolbarChange={handleToolbarChange} editor={editor} activeTab={activeTab} setActiveTab={setActiveTab} />;
+      return <ClassicToolbar onToolbarChange={handleToolbarChange} activeTab={activeTab} setActiveTab={setActiveTab} />;
     case PROFESSIONAL:
       return (
         <ProfessionalToolbar
           onToolbarChange={handleToolbarChange}
-          editor={editor}
           activeTab={activeTab}
           setActiveTab={setActiveTab}
         />
@@ -59,7 +52,6 @@ const ToolbarContent = ({ editor }: ToolbarContentProps) => {
 
 export const Toolbar = ({
   editorConfig,
-  editor,
   onPresentationModeToggle,
   pageConfig,
   setPageConfig
@@ -72,7 +64,7 @@ export const Toolbar = ({
       pageConfig={pageConfig}
       setPageConfig={setPageConfig}
     >
-      <ToolbarContent editor={editor} />
+      <ToolbarContent />
     </ToolbarProvider>
   );
 };

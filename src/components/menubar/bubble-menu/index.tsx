@@ -3,20 +3,17 @@ import { BubbleMenu } from "@tiptap/react/menus";
 import type { EditorState } from "@tiptap/pm/state";
 import { DefaultBubbleMenuContent } from "./DefaultBubbleMenuContent";
 import { LinkMenuContent } from "./LinkMenuContent";
-import { useLinks } from "@/hooks/useLinks";
 import { ImageMenuContent } from "@/components/menubar/bubble-menu/ImageMenuContent";
 
 export const BubbleMenus = ({ editor }: { editor: Editor }) => {
-  const { shouldShowLinkOnBubbleMenu } = useLinks();
-
-  const isDefaultBubbleMenuOff = ({ state }: { state: EditorState }) => {
-	if(editor.isActive("image")) {
-		return false;
-	}
-	const { from, to } = state.selection;
-	if(from !== to) {
-		return true;
-	}
+  const shouldShowDefaultBubbleMenu = ({ state }: { state: EditorState }) => {
+    if (editor.isActive("image") || editor.isActive("codeBlock")) {
+      return false;
+    }
+    const { from, to } = state.selection;
+    if (from !== to && !editor.isActive("link")) {
+      return true;
+    }
     return false;
   };
 
@@ -24,18 +21,18 @@ export const BubbleMenus = ({ editor }: { editor: Editor }) => {
     <>
       <BubbleMenu
         editor={editor}
-        shouldShow={isDefaultBubbleMenuOff}
+        shouldShow={shouldShowDefaultBubbleMenu}
         options={{ placement: "bottom", shift: { crossAxis: true } }}
       >
-        <DefaultBubbleMenuContent editor={editor} />
+        <DefaultBubbleMenuContent />
       </BubbleMenu>
 
       <BubbleMenu
         editor={editor}
-        shouldShow={shouldShowLinkOnBubbleMenu}
+        shouldShow={() => editor.isActive("link")}
         options={{ placement: "bottom", shift: { crossAxis: true } }}
       >
-        <LinkMenuContent editor={editor} />
+        <LinkMenuContent />
       </BubbleMenu>
 
       <BubbleMenu
@@ -43,7 +40,7 @@ export const BubbleMenus = ({ editor }: { editor: Editor }) => {
         shouldShow={() => editor.isActive("image")}
         options={{ placement: "top", shift: { crossAxis: true } }}
       >
-        <ImageMenuContent editor={editor} />
+        <ImageMenuContent />
       </BubbleMenu>
     </>
   );

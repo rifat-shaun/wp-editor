@@ -1,8 +1,9 @@
 import type { OrderedListType } from "@/extensions/OrderedListWithType";
 import type { UnorderedListType } from "@/extensions/UnorderedListWithType";
-import { Editor } from "@tiptap/react";
+import { useEditorShell } from "@/contexts/EditorShellContext";
 
-export const useParagraphStyleMethods = (editor: Editor) => {
+export const useParagraphStyleMethods = () => {
+  const { editor } = useEditorShell();
   const handleToggleTaskList = () => {
     if (!editor) return;
     editor.chain().focus().toggleTaskList().run();

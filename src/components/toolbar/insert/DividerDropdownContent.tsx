@@ -1,15 +1,14 @@
-import { Editor } from "@tiptap/react";
 import { DIVIDER_LINE_TYPES } from "@/constants/DividerLineTypes";
+import { useEditorShell } from "@/contexts/EditorShellContext";
 
 interface DividerDropdownContentProps {
-  editor: Editor;
   onClose: () => void;
 }
 
 export const DividerDropdownContent = ({
-  editor,
   onClose,
 }: DividerDropdownContentProps) => {
+  const { editor } = useEditorShell();
   const handleDividerClick = (type: string) => {
     editor.commands.setHorizontalRule({ styleType: type });
     onClose();

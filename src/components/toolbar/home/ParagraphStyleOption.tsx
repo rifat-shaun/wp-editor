@@ -1,4 +1,4 @@
-import { Editor } from "@tiptap/react";
+
 import { ItemGroup } from "../ItemGroup";
 import { Button } from "@/components/base/Button";
 import SvgIcon from "@/components/common/SvgIcon";
@@ -11,13 +11,7 @@ import { UnorderedListTypeDropdownContent } from "./UnorderedListTypeDropdownCon
 import { OrderedListTypeDropdownContent } from "./OrderedListTypeDropdownContent";
 import { ParagraphAlignmentOptions } from "@/components/shared/ParagraphAlignmentOptions";
 
-type TParagraphStyleOptionsProps = {
-  editor: Editor;
-};
-
-export const ParagraphStyleOptions = ({
-  editor,
-}: TParagraphStyleOptionsProps) => {
+export const ParagraphStyleOptions = () => {
   const {
     isTaskList,
     canIndent,
@@ -26,7 +20,7 @@ export const ParagraphStyleOptions = ({
     isUnorderedList,
     isBlockquote,
     canBlockquote,
-  } = useTiptapEditorState(editor);
+  } = useTiptapEditorState();
 
   const {
     handleToggleTaskList,
@@ -35,7 +29,7 @@ export const ParagraphStyleOptions = ({
     handleToggleOrderedList,
     handleToggleUnorderedList,
     handleToggleBlockquote,
-  } = useParagraphStyleMethods(editor);
+  } = useParagraphStyleMethods();
 
   const [orderedListDropdownOpen, setOrderedListDropdownOpen] = useState(false);
   const [unorderedListDropdownOpen, setUnorderedListDropdownOpen] =
@@ -61,9 +55,9 @@ export const ParagraphStyleOptions = ({
         <Space.Compact
           className={`flex items-center ${isUnorderedList ? "bg-black-100" : ""
             }`}
+          title="Bullet list"
         >
           <Button
-            title="Bullet list"
             onClick={handleToggleUnorderedList}
             active={false}
             size="small"
@@ -72,16 +66,14 @@ export const ParagraphStyleOptions = ({
           </Button>
 
           <Tooltip
-            title="Bullet list menu"
             placement="top"
             arrow={false}
             color="black"
             mouseEnterDelay={0.3}
           >
-            <Dropdown
+            <Dropdown            
               popupRender={() => (
                 <UnorderedListTypeDropdownContent
-                  editor={editor}
                   onClose={() => setUnorderedListDropdownOpen(false)}
                 />
               )}
@@ -99,9 +91,9 @@ export const ParagraphStyleOptions = ({
 
         <Space.Compact
           className={`flex items-center ${isOrderedList ? "bg-black-100" : ""}`}
+          title="Numbered list"
         >
           <Button
-            title="Numbered list"
             onClick={handleToggleOrderedList}
             active={false}
             size="small"
@@ -110,7 +102,7 @@ export const ParagraphStyleOptions = ({
           </Button>
 
           <Tooltip
-            title="Numbered list menu"
+            // title="Numbered list menu"
             placement="top"
             arrow={false}
             color="black"
@@ -119,7 +111,6 @@ export const ParagraphStyleOptions = ({
             <Dropdown
               popupRender={() => (
                 <OrderedListTypeDropdownContent
-                  editor={editor}
                   onClose={() => setOrderedListDropdownOpen(false)}
                 />
               )}
@@ -166,7 +157,7 @@ export const ParagraphStyleOptions = ({
         </Button>
       </div>
       <div className="flex items-center space-x-2">
-        <ParagraphAlignmentOptions editor={editor} />
+        <ParagraphAlignmentOptions />
         <Button
           title="Blockquote"
           onClick={handleToggleBlockquote}

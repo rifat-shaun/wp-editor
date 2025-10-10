@@ -9,20 +9,15 @@
     position: relative;
   }
 
-  .code-block-wrapper:has(.theme-dark),
-  .code-block-wrapper:has(.theme-github-dark),
-  .code-block-wrapper:has(.theme-monokai),
-  .code-block-wrapper:has(.theme-dracula),
-  .code-block-wrapper:has(.theme-nord) {
-    border: 1px solid #333;
-    background: #1e1e1e;
-  }
+.code-block-wrapper:has(.theme-dark) {
+  border: 1px solid #333;
+  background: #1e1e1e;
+}
 
-  .code-block-wrapper:has(.theme-light),
-  .code-block-wrapper:has(.theme-github-light) {
-    border: 1px solid #e0e0e0;
-    background: #f5f5f5;
-  }
+.code-block-wrapper:has(.theme-light) {
+  border: 1px solid #e0e0e0;
+  background: #f5f5f5;
+}
 
   /* Toolbar Styles */
   .code-block-wrapper .code-block-toolbar {
@@ -48,22 +43,17 @@
     align-items: center;
   }
 
-  /* Dark Toolbar Themes */
-  .code-block-wrapper .code-block-toolbar.theme-dark,
-  .code-block-wrapper .code-block-toolbar.theme-github-dark,
-  .code-block-wrapper .code-block-toolbar.theme-monokai,
-  .code-block-wrapper .code-block-toolbar.theme-dracula,
-  .code-block-wrapper .code-block-toolbar.theme-nord {
-    background: #2d2d2d;
-    border-bottom: 1px solid #3d3d3d;
-  }
+/* Dark Toolbar Themes */
+.code-block-wrapper .code-block-toolbar.theme-dark {
+  background: #2d2d2d;
+  border-bottom: 1px solid #3d3d3d;
+}
 
-  /* Light Toolbar Themes */
-  .code-block-wrapper .code-block-toolbar.theme-light,
-  .code-block-wrapper .code-block-toolbar.theme-github-light {
-    background: #f5f5f5;
-    border-bottom: 1px solid #e0e0e0;
-  }
+/* Light Toolbar Themes */
+.code-block-wrapper .code-block-toolbar.theme-light {
+  background: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+}
 
   /* Action Buttons */
   .code-block-wrapper .code-block-action-btn {
@@ -77,37 +67,31 @@
     transition: all 0.2s;
   }
 
-  /* Action Buttons - Dark Themes */
-  .code-block-wrapper .code-block-toolbar.theme-dark .code-block-action-btn,
-  .code-block-wrapper .code-block-toolbar.theme-github-dark .code-block-action-btn,
-  .code-block-wrapper .code-block-toolbar.theme-monokai .code-block-action-btn,
-  .code-block-wrapper .code-block-toolbar.theme-dracula .code-block-action-btn,
-  .code-block-wrapper .code-block-toolbar.theme-nord .code-block-action-btn {
-    border: 1px solid #555;
-    color: #e0e0e0;
-  }
+/* Action Buttons - Dark Themes */
+.code-block-wrapper .code-block-toolbar.theme-dark .code-block-action-btn {
+  border: 1px solid #555;
+  color: #e0e0e0;
+}
 
-  .code-block-wrapper .code-block-toolbar.theme-dark .code-block-action-btn:hover,
-  .code-block-wrapper .code-block-toolbar.theme-github-dark .code-block-action-btn:hover,
-  .code-block-wrapper .code-block-toolbar.theme-monokai .code-block-action-btn:hover,
-  .code-block-wrapper .code-block-toolbar.theme-dracula .code-block-action-btn:hover,
-  .code-block-wrapper .code-block-toolbar.theme-nord .code-block-action-btn:hover {
-    background: #3d3d3d;
-    border-color: #777;
-  }
+.code-block-wrapper
+  .code-block-toolbar.theme-dark
+  .code-block-action-btn:hover {
+  background: #3d3d3d;
+  border-color: #777;
+}
 
-  /* Action Buttons - Light Themes */
-  .code-block-wrapper .code-block-toolbar.theme-light .code-block-action-btn,
-  .code-block-wrapper .code-block-toolbar.theme-github-light .code-block-action-btn {
-    border: 1px solid #d0d0d0;
-    color: #333333;
-  }
+/* Action Buttons - Light Themes */
+.code-block-wrapper .code-block-toolbar.theme-light .code-block-action-btn {
+  border: 1px solid #d0d0d0;
+  color: #333333;
+}
 
-  .code-block-wrapper .code-block-toolbar.theme-light .code-block-action-btn:hover,
-  .code-block-wrapper .code-block-toolbar.theme-github-light .code-block-action-btn:hover {
-    background: #e8e8e8;
-    border-color: #999999;
-  }
+.code-block-wrapper
+  .code-block-toolbar.theme-light
+  .code-block-action-btn:hover {
+  background: #e8e8e8;
+  border-color: #999999;
+}
 
   /* Delete Button Hover - All Themes */
   .code-block-wrapper .code-block-delete-btn:hover {
@@ -115,113 +99,124 @@
     border-color: #d32f2f;
   }
 
-  /* Select Dropdowns in Toolbar - Dark Themes */
-  .code-block-wrapper .code-block-toolbar.theme-dark .ant-select-selector,
-  .code-block-wrapper .code-block-toolbar.theme-github-dark .ant-select-selector,
-  .code-block-wrapper .code-block-toolbar.theme-monokai .ant-select-selector,
-  .code-block-wrapper .code-block-toolbar.theme-dracula .ant-select-selector,
-  .code-block-wrapper .code-block-toolbar.theme-nord .ant-select-selector {
-    background: #1e1e1e !important;
-    border: 1px solid #555 !important;
-    color: #e0e0e0 !important;
-  }
+/* Select Dropdowns in Toolbar - Dark Themes */
+.code-block-wrapper .code-block-toolbar.theme-dark .ant-select-selector {
+  background: #1e1e1e !important;
+  border: 1px solid #555 !important;
+  color: #e0e0e0 !important;
+}
 
-  .code-block-wrapper .code-block-toolbar.theme-dark .ant-select-arrow,
-  .code-block-wrapper .code-block-toolbar.theme-github-dark .ant-select-arrow,
-  .code-block-wrapper .code-block-toolbar.theme-monokai .ant-select-arrow,
-  .code-block-wrapper .code-block-toolbar.theme-dracula .ant-select-arrow,
-  .code-block-wrapper .code-block-toolbar.theme-nord .ant-select-arrow {
-    color: #e0e0e0 !important;
-  }
+.code-block-wrapper .code-block-toolbar.theme-dark .ant-select-arrow {
+  color: #e0e0e0 !important;
+}
 
-  .code-block-wrapper .code-block-toolbar.theme-dark .ant-select-selection-item,
-  .code-block-wrapper .code-block-toolbar.theme-github-dark .ant-select-selection-item,
-  .code-block-wrapper .code-block-toolbar.theme-monokai .ant-select-selection-item,
-  .code-block-wrapper .code-block-toolbar.theme-dracula .ant-select-selection-item,
-  .code-block-wrapper .code-block-toolbar.theme-nord .ant-select-selection-item {
-    color: #e0e0e0 !important;
-  }
+.code-block-wrapper .code-block-toolbar.theme-dark .ant-select-selection-item {
+  color: #e0e0e0 !important;
+}
 
-  /* Select Dropdowns in Toolbar - Light Themes */
-  .code-block-wrapper .code-block-toolbar.theme-light .ant-select-selector,
-  .code-block-wrapper .code-block-toolbar.theme-github-light .ant-select-selector {
-    background: #ffffff !important;
-    border: 1px solid #d0d0d0 !important;
-    color: #333333 !important;
-  }
+/* Select Dropdowns in Toolbar - Light Themes */
+.code-block-wrapper .code-block-toolbar.theme-light .ant-select-selector {
+  background: #ffffff !important;
+  border: 1px solid #d0d0d0 !important;
+  color: #333333 !important;
+}
 
-  .code-block-wrapper .code-block-toolbar.theme-light .ant-select-arrow,
-  .code-block-wrapper .code-block-toolbar.theme-github-light .ant-select-arrow {
-    color: #333333 !important;
-  }
+.code-block-wrapper .code-block-toolbar.theme-light .ant-select-arrow {
+  color: #333333 !important;
+}
 
-  .code-block-wrapper .code-block-toolbar.theme-light .ant-select-selection-item,
-  .code-block-wrapper .code-block-toolbar.theme-github-light .ant-select-selection-item {
-    color: #333333 !important;
-  }
+.code-block-wrapper .code-block-toolbar.theme-light .ant-select-selection-item {
+  color: #333333 !important;
+}
 
-  /* Dropdown Menu Styling - Scoped to Code Block */
-  /* Only target dropdowns when code block toolbar is present */
-  body:has(.code-block-wrapper .code-block-toolbar.theme-dark) .ant-select-dropdown,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-github-dark) .ant-select-dropdown,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-monokai) .ant-select-dropdown,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-dracula) .ant-select-dropdown,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-nord) .ant-select-dropdown {
-    background: #1e1e1e !important;
-    border: 1px solid #3d3d3d !important;
-    z-index: 9999 !important;
-  }
+/* Dropdown Menu Styling - Scoped to Code Block */
+/* Only target dropdowns when code block toolbar is present */
+body:has(.code-block-wrapper .code-block-toolbar.theme-dark)
+  .editor-select-dropdown {
+  background: #3a3a3a !important;
+  border: 1px solid #3d3d3d !important;
+  z-index: 9999 !important;
+}
+body:has(.code-block-wrapper .code-block-toolbar.theme-dark)
+  .editor-select-item-option-content {
+  color: #e0e0e0 !important;
+}
 
-  body:has(.code-block-wrapper .code-block-toolbar.theme-dark) .ant-select-dropdown .ant-select-item,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-github-dark) .ant-select-dropdown .ant-select-item,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-monokai) .ant-select-dropdown .ant-select-item,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-dracula) .ant-select-dropdown .ant-select-item,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-nord) .ant-select-dropdown .ant-select-item {
-    color: #e0e0e0 !important;
-    background: transparent !important;
-  }
+body:has(.code-block-wrapper .code-block-toolbar.theme-dark)
+  .editor-select-item-option-selected {
+  color: #d9ff00 !important;
+  background: #3a3a3a !important;
+}
 
-  body:has(.code-block-wrapper .code-block-toolbar.theme-dark) .ant-select-dropdown .ant-select-item:hover,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-github-dark) .ant-select-dropdown .ant-select-item:hover,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-monokai) .ant-select-dropdown .ant-select-item:hover,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-dracula) .ant-select-dropdown .ant-select-item:hover,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-nord) .ant-select-dropdown .ant-select-item:hover {
-    background: #2d2d2d !important;
-  }
+body:has(.code-block-wrapper .code-block-toolbar.theme-dark)
+  .editor-select-item-option-active {
+  color: #d9ff00 !important;
+  background: #4b4b4b !important;
+}
 
-  body:has(.code-block-wrapper .code-block-toolbar.theme-dark) .ant-select-dropdown .ant-select-item-option-selected,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-github-dark) .ant-select-dropdown .ant-select-item-option-selected,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-monokai) .ant-select-dropdown .ant-select-item-option-selected,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-dracula) .ant-select-dropdown .ant-select-item-option-selected,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-nord) .ant-select-dropdown .ant-select-item-option-selected {
-    background: #2d2d2d !important;
-    color: #1890ff !important;
-  }
+body:has(.code-block-wrapper .code-block-toolbar.theme-dark)
+  .editor-select-selector {
+  color: #e0e0e0 !important;
+  background: #4b4b4b !important;
+}
 
-  /* Light theme dropdowns - Scoped */
-  body:has(.code-block-wrapper .code-block-toolbar.theme-light) .ant-select-dropdown,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-github-light) .ant-select-dropdown {
-    background: #ffffff !important;
-    border: 1px solid #e0e0e0 !important;
-    z-index: 9999 !important;
-  }
+body:has(.code-block-wrapper .code-block-toolbar.theme-dark)
+  .editor-select-arrow {
+  color: #e0e0e0 !important;
+}
 
-  body:has(.code-block-wrapper .code-block-toolbar.theme-light) .ant-select-dropdown .ant-select-item,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-github-light) .ant-select-dropdown .ant-select-item {
-    color: #333333 !important;
-    background: transparent !important;
-  }
+body:has(.code-block-wrapper .code-block-toolbar.theme-dark)
+  .editor-select-arrow {
+  color: #e0e0e0 !important;
+}
 
-  body:has(.code-block-wrapper .code-block-toolbar.theme-light) .ant-select-dropdown .ant-select-item:hover,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-github-light) .ant-select-dropdown .ant-select-item:hover {
-    background: #f5f5f5 !important;
-  }
+body:has(.code-block-wrapper .code-block-toolbar.theme-dark)
+  .ant-select-dropdown
+  .ant-select-item {
+  color: #e0e0e0 !important;
+  background: transparent !important;
+}
 
-  body:has(.code-block-wrapper .code-block-toolbar.theme-light) .ant-select-dropdown .ant-select-item-option-selected,
-  body:has(.code-block-wrapper .code-block-toolbar.theme-github-light) .ant-select-dropdown .ant-select-item-option-selected {
-    background: #e6f7ff !important;
-    color: #1890ff !important;
-  }
+body:has(.code-block-wrapper .code-block-toolbar.theme-dark)
+  .ant-select-dropdown
+  .ant-select-item:hover {
+  background: #2d2d2d !important;
+}
+
+body:has(.code-block-wrapper .code-block-toolbar.theme-dark)
+  .ant-select-dropdown
+  .ant-select-item-option-selecte {
+  background: #2d2d2d !important;
+  color: #1890ff !important;
+}
+
+/* Light theme dropdowns - Scoped */
+body:has(.code-block-wrapper .code-block-toolbar.theme-light)
+  .ant-select-dropdown {
+  background: #ffffff !important;
+  border: 1px solid #e0e0e0 !important;
+  z-index: 9999 !important;
+}
+
+body:has(.code-block-wrapper .code-block-toolbar.theme-light)
+  .ant-select-dropdown
+  .ant-select-item {
+  color: #333333 !important;
+  background: transparent !important;
+}
+
+body:has(.code-block-wrapper .code-block-toolbar.theme-light)
+  .ant-select-dropdown
+  .ant-select-item:hover {
+  background: #f5f5f5 !important;
+}
+
+body:has(.code-block-wrapper .code-block-toolbar.theme-light)
+  .ant-select-dropdown
+  .ant-select-item-option-selected {
+  background: #e6f7ff !important;
+  color: #1890ff !important;
+}
 
   /* Code Content */
   .code-block-wrapper .code-block-content {

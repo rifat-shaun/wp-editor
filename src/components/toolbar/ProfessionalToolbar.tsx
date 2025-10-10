@@ -1,5 +1,4 @@
 import { TOOLBAR_TYPES, TABS, type TTabKey } from "@/constants/Toolbar";
-import { Editor } from "@tiptap/react";
 import { useHorizontalScroll } from "@/hooks/useHorizontalScroll";
 import { ScrollableContent } from "./ScrollableContent";
 import { ToolbarDropdown } from "./ToolbarDropdown";
@@ -8,14 +7,12 @@ import SvgIcon from "../common/SvgIcon";
 import { Button } from "../base";
 import { useToolbar } from "@/contexts/ToolbarContext";
 interface ProfessionalToolbarProps {
-  editor: Editor;
   onToolbarChange?: (toolbarType: string) => void;
   activeTab: TTabKey;
   setActiveTab: (tab: TTabKey) => void;
 }
 
 export const ProfessionalToolbar = ({
-  editor,
   onToolbarChange,
   activeTab,
   setActiveTab,
@@ -73,7 +70,7 @@ export const ProfessionalToolbar = ({
         onScrollLeft={handleScrollLeft}
         onScrollRight={handleScrollRight}
       >
-        <RenderToolbarTabContent activeTab={activeTab} editor={editor} />
+        <RenderToolbarTabContent activeTab={activeTab} />
       </ScrollableContent>
     </div>
   );

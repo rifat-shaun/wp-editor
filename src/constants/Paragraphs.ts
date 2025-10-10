@@ -44,42 +44,43 @@ export const LIST_TYPE_OPTIONS = [
   export const BULLET_TYPE_OPTIONS = [
     [
       {
-        key: "disc",
-        main: ["●", "●"],
+        key: "default",
+        main: ["⬤", "⬤"],
         nested: ["○", "○"],
+        deepNested: ["■", "■"],
+      },
+      {
+        key: "diamondArrow",
+        main: ["❖", "❖"],
+        nested: ["➤", "➤"],
         deepNested: ["■", "■"],
       },
       {
         key: "square",
-        main: ["×", "×"],
-        nested: ["▸", "▸"],
-        deepNested: ["■", "■"],
-      },
-      {
-        key: "dash",
-        main: ["■", "■"],
-        nested: ["□", "□"],
-        deepNested: ["■", "■"],
+        main: ["☐", "☐"],
+        nested: ["☐", "☐"],
+        deepNested: ["☐", "☐"],
       },
     ],
     [
       {
-        key: "arrow",
-        main: ["→", "→"],
+        key: "arrowDiamond",
+        main: ["➔", "➔"],
         nested: ["◆", "◆"],
-        deepNested: ["●", "●"],
+        deepNested: ["⬤", "⬤"],
       },
       {
-        key: "checkmark",
-        main: ["✶", "✶"],
+        key: "star",
+        main: ["★", "★"],
         nested: ["○", "○"],
         deepNested: ["■", "■"],
       },
       {
-        key: "circle",
-        main: ["▸", "▸"],
+        key: "arrowCircle",
+        main: ["➤", "➤"],
         nested: ["○", "○"],
         deepNested: ["■", "■"],
       },
     ],
-  ];
+  ]; 
+  

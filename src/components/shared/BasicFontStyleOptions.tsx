@@ -1,14 +1,9 @@
 import { useFontStyleMethods } from "@/hooks/useFontStyleMethods";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
-import type { Editor } from "@tiptap/react";
 import { Button } from "../base";
 import SvgIcon from "../common/SvgIcon";
 
-export const BasicFontStyleOptions = ({
-	editor,
-}: {
-	editor: Editor;
-}) => {
+export const BasicFontStyleOptions = () => {
 	const {
 		canBold,
 		isBold,
@@ -18,14 +13,14 @@ export const BasicFontStyleOptions = ({
 		isUnderline,
 		canStrike,
 		isStrike,
-	} = useTiptapEditorState(editor);
+	} = useTiptapEditorState();
 
 	const {
 		handleToggleBold,
 		handleToggleItalic,
 		handleToggleUnderline,
 		handleToggleStrike,
-	} = useFontStyleMethods(editor);
+	} = useFontStyleMethods();
 
 	return (
 		<>

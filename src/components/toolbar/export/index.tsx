@@ -1,18 +1,23 @@
-import { Editor } from "@tiptap/react";
 import { Button } from "@/components/base";
 import SvgIcon from "@/components/common/SvgIcon";
 import { useToolbar } from "@/contexts/ToolbarContext";
 import { TOOLBAR_TYPES_ENUM } from "@/constants/Toolbar";
 import { useExport } from "@/hooks/useExport";
 
-export const ExportOptions = ({ editor }: { editor: Editor }) => {
-	const { downloadTextFile, downloadJsonFile, downloadMarkdownFile, downloadHtmlFile, downloadPdfFile } = useExport(editor);
+export const ExportOptions = () => {
+	const {
+		downloadTextFile,
+		downloadJsonFile,
+		downloadMarkdownFile,
+		downloadHtmlFile,
+		downloadPdfFile,
+	} = useExport();
 	const { currentToolbar } = useToolbar();
 	const isClassicToolbar = currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC;
 
 	return (
 		<>
-			<Button title='Export PDF' onClick={downloadPdfFile}>
+			<Button title="Export PDF" onClick={downloadPdfFile}>
 				{isClassicToolbar ? (
 					<div className="relative flex items-center gap-1">
 						<SvgIcon name="pdf" strokeWidth={3.5} />
@@ -26,7 +31,7 @@ export const ExportOptions = ({ editor }: { editor: Editor }) => {
 				)}
 			</Button>
 
-			<Button title='Export Text' onClick={downloadTextFile}>
+			<Button title="Export Text" onClick={downloadTextFile}>
 				{isClassicToolbar ? (
 					<div className="relative flex items-center gap-1">
 						<SvgIcon name="text" strokeWidth={3.5} />
@@ -40,7 +45,7 @@ export const ExportOptions = ({ editor }: { editor: Editor }) => {
 				)}
 			</Button>
 
-			<Button title='Export JSON' onClick={downloadJsonFile}>
+			<Button title="Export JSON" onClick={downloadJsonFile}>
 				{isClassicToolbar ? (
 					<div className="relative flex items-center gap-1">
 						<SvgIcon name="json" strokeWidth={3.5} />
@@ -54,7 +59,7 @@ export const ExportOptions = ({ editor }: { editor: Editor }) => {
 				)}
 			</Button>
 
-			<Button title='Export HTML' onClick={downloadHtmlFile}>
+			<Button title="Export HTML" onClick={downloadHtmlFile}>
 				{isClassicToolbar ? (
 					<div className="relative flex items-center gap-1">
 						<SvgIcon name="embed" strokeWidth={3.5} />
@@ -68,7 +73,7 @@ export const ExportOptions = ({ editor }: { editor: Editor }) => {
 				)}
 			</Button>
 
-			<Button title='Export Markdown' onClick={downloadMarkdownFile}>
+			<Button title="Export Markdown" onClick={downloadMarkdownFile}>
 				{isClassicToolbar ? (
 					<div className="relative flex items-center gap-1">
 						<SvgIcon name="markdown" strokeWidth={3.5} />
