@@ -19,6 +19,7 @@ const Editor = ({ config = {} }: EditorProps) => {
     extensions: EditorExtensions(editorConfig),
     content: editorConfig.content,
     autofocus: false,
+    editable: !editorConfig.asViewer && editorConfig.editable,
     onUpdate: ({ editor: editorInstance }) => {
       if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
 

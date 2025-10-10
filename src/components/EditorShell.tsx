@@ -2,7 +2,7 @@ import { useEditorShell } from "@/contexts/EditorShellContext";
 import { usePageMethods } from "@/hooks/usePageMethods";
 import { usePresentationMode } from "@/hooks/usePresentationMode";
 import { Toolbar } from "./toolbar";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { EditorContent } from "@tiptap/react";
 import { BubbleMenus } from "./menubar/bubble-menu";
 import { Footer } from "./footer";
@@ -14,6 +14,7 @@ export const EditorShell = () => {
 	const { pageClass, pageConfig, setPageConfig } = usePageMethods(editor);
 	const { isPresentationMode, isLaserActive, onPresentationModeToggle, handleLaserToggle } = usePresentationMode(editor);
 
+	const [isEditorEditable, setIsEditorEditable] = useState(editorConfig.editable && !editorConfig.asViewer && !isPresentationMode);
 
 	useEffect(() => {
 		if (!editor || !editorPageRef.current) return;
@@ -32,9 +33,13 @@ export const EditorShell = () => {
 		};
 	}, [editor]);
 
+	useEffect(() => {
+		setIsEditorEditable(editorConfig.editable && !editorConfig.asViewer && !isPresentationMode);
+	}, [editorConfig.editable, editorConfig.asViewer, isPresentationMode]);
+
 	return (
 		<div className={`h-full flex flex-col bg-neutral-200 editor-container ${isPresentationMode ? "editor-presentation-mode" : ""} ${isLaserActive ? "laser-active" : ""}`}>
-			{!isPresentationMode && (
+			{isEditorEditable && (
 				<Toolbar
 					editorConfig={editorConfig}
 					editor={editor}
@@ -51,14 +56,14 @@ export const EditorShell = () => {
 						ref={editorPageRef}
 					>
 						<EditorContent editor={editor} />
-						{editor && !isPresentationMode && (
+						{isEditorEditable && (
 							<BubbleMenus editor={editor} />
 						)}
 					</div>
 				</div>
 			</div>
 
-			{!isPresentationMode && (
+			{isEditorEditable && (
 				<Footer editor={editor} onPresentationModeToggle={onPresentationModeToggle} />
 			)}
 

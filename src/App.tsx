@@ -74,6 +74,8 @@ function App() {
           },
           enableVariableText: true,
           variableValues: {},
+          asViewer: false,
+          editable: false,
           onShare: () => {
             console.log('Share');
           },
