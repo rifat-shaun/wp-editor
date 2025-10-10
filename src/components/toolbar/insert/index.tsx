@@ -9,16 +9,14 @@ import { useToolbar } from "@/contexts/ToolbarContext";
 import { TOOLBAR_TYPES_ENUM } from "@/constants/Toolbar";
 import { DividerDropdownContent } from "./DividerDropdownContent";
 import { InsertLinkButton } from "@/components/shared/InsertLinkButton";
+import { useInsertOptionMethods } from "@/hooks/useInsertOptionMethods";
 
-export const InsertOptions = ({
-  editor,
-}: {
-  editor: Editor;
-}) => {
+export const InsertOptions = ({ editor }: { editor: Editor }) => {
   const { currentToolbar } = useToolbar();
   const isClassicToolbar = currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC;
   const [isDividerOpen, setIsDividerOpen] = useState(false);
   const [isImageFormOpen, setIsImageFormOpen] = useState(false);
+  const { handleInsertLineBreak, handleInsertCodeBlock } = useInsertOptionMethods(editor);
   return (
     <>
       <InsertLinkButton editor={editor} activeToolbarType={currentToolbar} />
@@ -64,7 +62,7 @@ export const InsertOptions = ({
 
       <Button
         size={isClassicToolbar ? "small" : "medium"}
-        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+        onClick={() => handleInsertCodeBlock()}
         title="Insert Code Block"
       >
         {isClassicToolbar ? (
@@ -119,6 +117,13 @@ export const InsertOptions = ({
           )}
         </Button>
       </Popover>
+      <Button
+        size={isClassicToolbar ? "small" : "medium"}
+        onClick={() => handleInsertLineBreak()}
+        title="Line Break"
+      >
+        <SvgIcon name="break-marks" size={20} strokeWidth={3} />
+      </Button>
     </>
   );
 };
