@@ -7,6 +7,7 @@ import { EditorContent } from "@tiptap/react";
 import { BubbleMenus } from "./menubar/bubble-menu";
 import { Footer } from "./footer";
 import { PresentationControls } from "./PresentationControls";
+import ScrollbarWrapper from "./common/ScrollbarWrapper";
 
 export const EditorShell = () => {
 	const editorPageRef = useRef<HTMLDivElement>(null);
@@ -48,20 +49,21 @@ export const EditorShell = () => {
 					setPageConfig={setPageConfig}
 				/>
 			)}
-
-			<div className="flex-1 overflow-auto">
-				<div className="min-h-full w-fit min-w-full flex justify-center items-start p-4">
-					<div
-						className={`${editorConfig.enablePagination ? pageClass : ""} editor-content`}
-						ref={editorPageRef}
-					>
-						<EditorContent editor={editor} />
-						{isEditorEditable && (
-							<BubbleMenus editor={editor} />
-						)}
+			<ScrollbarWrapper>
+				<div className="flex-1 overflow-auto">
+					<div className="min-h-full w-fit min-w-full flex justify-center items-start p-4">
+						<div
+							className={`${editorConfig.enablePagination ? pageClass : ""} editor-content`}
+							ref={editorPageRef}
+						>
+							<EditorContent editor={editor} />
+							{isEditorEditable && (
+								<BubbleMenus editor={editor} />
+							)}
+						</div>
 					</div>
 				</div>
-			</div>
+			</ScrollbarWrapper>
 
 			{isEditorEditable && (
 				<Footer editor={editor} onPresentationModeToggle={onPresentationModeToggle} />
