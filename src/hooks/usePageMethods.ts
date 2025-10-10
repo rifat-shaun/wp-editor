@@ -1,7 +1,7 @@
 import type { PageConfig } from "@/components/toolbar/page/PageSizeSelector";
 import { PAGE_BACKGROUND_COLORS } from "@/constants/PageBackground";
 import { Editor } from "@tiptap/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const usePageMethods = (editor: Editor) => {
   const [selectedBGColor, setSelectedBGColor] = useState(PAGE_BACKGROUND_COLORS[0].value);
@@ -15,6 +15,11 @@ export const usePageMethods = (editor: Editor) => {
     size: "A4",
     orientation: "portrait",
   });
+
+  // Store orientation in data attribute for export
+  useEffect(() => {
+    document.body.setAttribute('data-page-orientation', pageConfig.orientation);
+  }, [pageConfig.orientation]);
 
   const getPageClass = (config: PageConfig) => {
     const { size, orientation } = config;

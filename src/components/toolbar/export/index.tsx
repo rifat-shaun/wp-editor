@@ -6,13 +6,13 @@ import { TOOLBAR_TYPES_ENUM } from "@/constants/Toolbar";
 import { useExport } from "@/hooks/useExport";
 
 export const ExportOptions = ({ editor }: { editor: Editor }) => {
-	const { downloadTextFile, downloadJsonFile, downloadMarkdownFile, downloadHtmlFile } = useExport(editor);
+	const { downloadTextFile, downloadJsonFile, downloadMarkdownFile, downloadHtmlFile, downloadPdfFile } = useExport(editor);
 	const { currentToolbar } = useToolbar();
 	const isClassicToolbar = currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC;
 
 	return (
 		<>
-			<Button title='Export PDF' onClick={() => { }}>
+			<Button title='Export PDF' onClick={downloadPdfFile}>
 				{isClassicToolbar ? (
 					<div className="relative flex items-center gap-1">
 						<SvgIcon name="pdf" strokeWidth={3.5} />
