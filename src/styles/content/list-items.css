@@ -39,6 +39,36 @@
     }
   }
 
+  /* Task list specific styles */
+  ul[data-type="taskList"] {
+    list-style: none;
+    margin-left: 0;
+    padding: 0;
+
+    li {
+      align-items: flex-start;
+      display: flex;
+
+      >label {
+        flex: 0 0 auto;
+        margin-right: 0.5rem;
+        user-select: none;
+      }
+
+      >div {
+        flex: 1 1 auto;
+      }
+    }
+
+    input[type="checkbox"] {
+      cursor: pointer;
+    }
+
+    ul[data-type="taskList"] {
+      margin: 0;
+    }
+  }
+
   /* Bullet list - default */
   ul:not([data-type="taskList"]) {
     li::marker {
@@ -540,7 +570,7 @@
   ol[data-list-type="decimal-nested"] {
     counter-reset: level1;
 
-    > li {
+    >li {
       counter-increment: level1;
 
       &::marker {
@@ -551,7 +581,7 @@
     ol {
       counter-reset: level2;
 
-      > li {
+      >li {
         counter-increment: level2;
 
         &::marker {
@@ -562,7 +592,7 @@
       ol {
         counter-reset: level3;
 
-        > li {
+        >li {
           counter-increment: level3;
 
           &::marker {
@@ -573,31 +603,29 @@
         ol {
           counter-reset: level4;
 
-          > li {
+          >li {
             counter-increment: level4;
 
             &::marker {
-              content: counter(level1) "." counter(level2) "." counter(level3)
-                "." counter(level4) " ";
+              content: counter(level1) "." counter(level2) "." counter(level3) "." counter(level4) " ";
             }
           }
 
           ol {
             counter-reset: level5;
 
-            > li {
+            >li {
               counter-increment: level5;
 
               &::marker {
-                content: counter(level1) "." counter(level2) "." counter(level3)
-                  "." counter(level4) "." counter(level5) " ";
+                content: counter(level1) "." counter(level2) "." counter(level3) "." counter(level4) "." counter(level5) " ";
               }
             }
 
             ol {
               counter-reset: level6;
 
-              > li {
+              >li {
                 counter-increment: level6;
 
                 &::marker {
@@ -610,26 +638,24 @@
               ol {
                 counter-reset: level7;
 
-                > li {
+                >li {
                   counter-increment: level7;
 
                   &::marker {
                     content: counter(level1) "." counter(level2) "."
-                      counter(level3) "." counter(level4) "." counter(level5)
-                      "." counter(level6) "." counter(level7) " ";
+                      counter(level3) "." counter(level4) "." counter(level5) "." counter(level6) "." counter(level7) " ";
                   }
                 }
 
                 ol {
                   counter-reset: level8;
 
-                  > li {
+                  >li {
                     counter-increment: level8;
 
                     &::marker {
                       content: counter(level1) "." counter(level2) "."
-                        counter(level3) "." counter(level4) "." counter(level5)
-                        "." counter(level6) "." counter(level7) "."
+                        counter(level3) "." counter(level4) "." counter(level5) "." counter(level6) "." counter(level7) "."
                         counter(level8) " ";
                     }
                   }
@@ -637,7 +663,7 @@
                   ol {
                     counter-reset: level9;
 
-                    > li {
+                    >li {
                       counter-increment: level9;
 
                       &::marker {
@@ -766,36 +792,6 @@
           }
         }
       }
-    }
-  }
-
-  /* Task list specific styles */
-  ul[data-type="taskList"] {
-    list-style: none;
-    margin-left: 0;
-    padding: 0;
-
-    li {
-      align-items: center;
-      display: flex;
-
-      > label {
-        flex: 0 0 auto;
-        margin-right: 0.5rem;
-        user-select: none;
-      }
-
-      > div {
-        flex: 1 1 auto;
-      }
-    }
-
-    input[type="checkbox"] {
-      cursor: pointer;
-    }
-
-    ul[data-type="taskList"] {
-      margin: 0;
     }
   }
 }
