@@ -5,6 +5,7 @@ import { defaultEditorConfig } from "@/config/editorConfig";
 import { EditorExtensions } from "@/extensions";
 import { EditorShellProvider } from "@/contexts/EditorShellContext";
 import { EditorShell } from "./EditorShell";
+import { ConfigProvider } from 'antd';
 
 export interface EditorProps {
   config?: EditorConfig;
@@ -40,7 +41,9 @@ const Editor = ({ config = {} }: EditorProps) => {
 
   return (
     <EditorShellProvider editor={editor} editorConfig={editorConfig}>
-      <EditorShell />
+      <ConfigProvider prefixCls="editor">
+        <EditorShell />
+      </ConfigProvider>
     </EditorShellProvider>
   );
 };
