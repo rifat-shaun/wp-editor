@@ -18,16 +18,17 @@
 	table td,
 	table th {
 		min-width: 1em;
-		border: 1px solid #626262;
-		padding: 3px 5px;
-		vertical-align: middle;
-		box-sizing: border-box;
-		position: relative;
+		border: 1px solid #626262 !important;
 	}
 
 	table td>*,
 	table th>* {
 		margin-bottom: 0;
+	}
+
+	table td p,
+	table th p {
+		padding: 4px;
 	}
 
 	table td[align='left-top'],
@@ -132,5 +133,35 @@
 
 	table p {
 		margin: 0;
+	}
+
+	@media print {
+		table {
+			border-collapse: collapse !important;
+			border: 1px solid #626262 !important;
+		}
+	}
+
+	@media print {
+
+		table td,
+		table th {
+			border: 1px solid #626262 !important;
+		}
+	}
+
+	@media print {
+		table th {
+			background-color: #e1e1e1 !important;
+			font-weight: bold !important;
+		}
+	}
+
+	@media print {
+
+		table td,
+		table th {
+			border: 1px solid #626262 !important;
+		}
 	}
 }
