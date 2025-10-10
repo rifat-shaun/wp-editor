@@ -36,7 +36,10 @@ export interface EditorConfig {
   /** Callback when content changes */
   onContentChange?: (editor: Editor) => void;
   /** Callback when editor is ready with helper methods */
-  onEditorReady?: (methods: { insertVariable: (key: string, value?: string) => void }) => void;
+  onEditorReady?: (methods: {
+    insertVariable: (key: string, value?: string) => void;
+    updateVariableValues: (values: Record<string, string>) => void;
+  }) => void;
 }
 
 export const defaultEditorConfig: EditorConfig = {

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo } from "react";
+import { createContext, useContext, useEffect } from "react";
 import type { ReactNode } from "react";
 import type { Editor } from "@tiptap/react";
 import type { EditorConfig } from "@/config/editorConfig";
@@ -17,12 +17,6 @@ interface EditorShellProviderProps {
 }
 
 export const EditorShellProvider = ({ children, editor, editorConfig }: EditorShellProviderProps) => {
-	// Serialize variableValues to detect deep changes
-	const serializedVariableValues = useMemo(
-		() => JSON.stringify(editorConfig?.variableValues),
-		[editorConfig?.variableValues]
-	);
-
 	useEffect(() => {
 		if (editor && editorConfig?.onEditorReady) {
 			const insertVariable = (key: string, value?: string) => {
@@ -32,15 +26,13 @@ export const EditorShellProvider = ({ children, editor, editorConfig }: EditorSh
 				editor.commands.insertVariable(key);
 			};
 
-			editorConfig.onEditorReady({ insertVariable });
+			const updateVariableValues = (values: Record<string, string>) => {
+				editor.commands.updateVariableValues(values);
+			};
+
+			editorConfig.onEditorReady({ insertVariable, updateVariableValues });
 		}
 	}, [editor, editorConfig]);
-
-	useEffect(() => {
-		if (editor && editorConfig?.variableValues) {
-			editor.commands.updateVariableValues(editorConfig.variableValues);
-		}
-	}, [editor, editorConfig?.variableValues, serializedVariableValues]);
 
 	return (
 		<EditorShellContext.Provider value={{ editor, editorConfig }}>
