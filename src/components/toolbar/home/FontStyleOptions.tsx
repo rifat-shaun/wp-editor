@@ -123,6 +123,7 @@ export const FontStyleOptions = () => {
 
         <HorizontalLayoutColorPicker
           id="selectionColor"
+          title="TextColor"
           showNone={false}
           value={selectionColor}
           icon={<TitleOutlined sx={{ fontSize: "15px" }} />}
@@ -132,6 +133,7 @@ export const FontStyleOptions = () => {
 
         <HorizontalLayoutColorPicker
           id="selectionBackgroundColor"
+          title="Background Color"
           showNone={false}
           value={selectionBackgroundColor}
           icon={<SvgIcon name="color-fill" />}
@@ -141,6 +143,7 @@ export const FontStyleOptions = () => {
 
         <HorizontalLayoutColorPicker
           id="selectionColor"
+          title="Highlight Color"
           showNone={false}
           value={highlightColor}
           icon={<EditOutlined sx={{ fontSize: "15px" }} />}

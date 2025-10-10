@@ -11,7 +11,7 @@ import { PresentationControls } from "./PresentationControls";
 export const EditorShell = () => {
 	const editorPageRef = useRef<HTMLDivElement>(null);
 	const { editor, editorConfig } = useEditorShell();
-	const { pageClass, pageConfig, setPageConfig } = usePageMethods(editor);
+	const { pageClass, pageConfig, setPageConfig } = usePageMethods();
 	const { isPresentationMode, isLaserActive, onPresentationModeToggle, handleLaserToggle } = usePresentationMode(editor);
 
 	const [isEditorEditable, setIsEditorEditable] = useState(editorConfig.editable && !editorConfig.asViewer && !isPresentationMode);
