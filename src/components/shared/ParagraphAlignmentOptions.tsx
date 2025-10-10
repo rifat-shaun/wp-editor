@@ -1,29 +1,23 @@
 import { useParagraphStyleMethods } from "@/hooks/useParagraphStyleMethods";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
-import type { Editor } from "@tiptap/react";
 import SvgIcon from "../common/SvgIcon";
 import { Button } from "../base";
 
-type TParagraphAlignmentOptionsProps = {
-	editor: Editor;
-};
 
-export const ParagraphAlignmentOptions = ({
-	editor,
-}: TParagraphAlignmentOptionsProps) => {
+export const ParagraphAlignmentOptions = () => {
 	const {
 		isTextAlignLeft,
 		isTextAlignCenter,
 		isTextAlignRight,
 		isTextAlignJustify,
-	} = useTiptapEditorState(editor);
+	} = useTiptapEditorState();
 
 	const {
 		handleTextAlignLeft,
 		handleTextAlignCenter,
 		handleTextAlignRight,
 		handleTextAlignJustify,
-	} = useParagraphStyleMethods(editor);
+	} = useParagraphStyleMethods();
 
 	return (
 		<>

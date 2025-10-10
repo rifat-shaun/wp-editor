@@ -1,5 +1,4 @@
 import SvgIcon from "@/components/common/SvgIcon";
-import { Editor } from "@tiptap/react";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
 import { Divider, ItemGroup } from "@/components/toolbar";
 import { Button } from "@/components/base/Button";
@@ -11,22 +10,18 @@ import { useToolbar } from "@/contexts/ToolbarContext";
 import { TOOLBAR_TYPES_ENUM } from "@/constants/Toolbar";
 import { ClearTextFormatButton } from "@/components/shared/ClearTextFormatButton";
 
-interface HomeOptionsProps {
-  editor: Editor;
-}
-
-export const HomeOptions = ({ editor }: HomeOptionsProps) => {
+export const HomeOptions = () => {
   const { currentToolbar } = useToolbar();
   const isClassicToolbar = currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC;
 
   const { canUndo, canRedo, isAIAutocompletionEnabled } =
-    useTiptapEditorState(editor);
+    useTiptapEditorState();
 
   const {
     handleUndo,
     handleRedo,
     handleToggleAIAutocompletion,
-  } = useHomeOptionMethods(editor);
+  } = useHomeOptionMethods();
 
   return (
     <>
@@ -71,23 +66,23 @@ export const HomeOptions = ({ editor }: HomeOptionsProps) => {
             )}
           </Button>
 
-          <ClearTextFormatButton editor={editor} />
+          <ClearTextFormatButton />
         </div>
       </ItemGroup>
 
       <Divider />
 
-      {isClassicToolbar && <HeadingOptions editor={editor} />}
+      {isClassicToolbar && <HeadingOptions />}
 
-      <FontStyleOptions editor={editor} />
-
-      <Divider />
-
-      <ParagraphStyleOptions editor={editor} />
+      <FontStyleOptions />
 
       <Divider />
 
-      {!isClassicToolbar && <HeadingOptions editor={editor} />}
+      <ParagraphStyleOptions />
+
+      <Divider />
+
+      {!isClassicToolbar && <HeadingOptions />}
     </>
   );
 };

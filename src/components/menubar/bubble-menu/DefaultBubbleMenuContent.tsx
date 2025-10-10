@@ -1,4 +1,4 @@
-import { Editor } from "@tiptap/core";
+
 import SvgIcon from "../../common/SvgIcon";
 import { Button } from "../../base/Button";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
@@ -10,26 +10,21 @@ import { FontSizeStepper } from "@/components/shared/FontSizeStepper";
 import { InsertLinkButton } from "@/components/shared/InsertLinkButton";
 import { ClearTextFormatButton } from "@/components/shared/ClearTextFormatButton";
 
-interface DefaultBubbleMenuContentProps {
-  editor: Editor;
-}
 
-export const DefaultBubbleMenuContent = ({
-  editor,
-}: DefaultBubbleMenuContentProps) => {
+export const DefaultBubbleMenuContent = () => {
   // Get current alignment for dynamic icon
   const { isTextAlignCenter, isTextAlignRight, isTextAlignJustify } =
-    useTiptapEditorState(editor);
+    useTiptapEditorState();
 
   return (
     <div className="flex tems-start gap-1 bg-white shadow-lg rounded-lg border border-neutral-200 p-1 space-x-1">
-      <FontSizeStepper editor={editor} />
-      <BasicFontStyleOptions editor={editor} />
-      <InsertLinkButton editor={editor} />
+      <FontSizeStepper />
+      <BasicFontStyleOptions />
+      <InsertLinkButton />
       <Popover
         content={
           <div className="flex items-center space-x-2 bg-white">
-            <ParagraphAlignmentOptions editor={editor} />
+            <ParagraphAlignmentOptions />
           </div>
         }
         trigger="click"
@@ -50,11 +45,11 @@ export const DefaultBubbleMenuContent = ({
             strokeWidth={1.5}
           />
           <ArrowDropDownOutlined
-            sx={{ fontSize: "16px", color: "inherit" }}
+            sx={{ fontSize: "14px", color: "inherit" }}
           />
         </Button>
       </Popover>
-      <ClearTextFormatButton editor={editor} />
+      <ClearTextFormatButton />
     </div>
   );
 };

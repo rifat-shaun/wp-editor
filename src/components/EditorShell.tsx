@@ -42,7 +42,7 @@ export const EditorShell = () => {
 			{isEditorEditable && (
 				<Toolbar
 					editorConfig={editorConfig}
-					editor={editor}
+					// editor={editor}
 					onPresentationModeToggle={onPresentationModeToggle}
 					pageConfig={pageConfig}
 					setPageConfig={setPageConfig}
@@ -63,8 +63,8 @@ export const EditorShell = () => {
 				</div>
 			</div>
 
-			{isEditorEditable && (
-				<Footer editor={editor} onPresentationModeToggle={onPresentationModeToggle} />
+			{!isPresentationMode && (
+				<Footer onPresentationModeToggle={onPresentationModeToggle} />
 			)}
 
 			{isPresentationMode && (

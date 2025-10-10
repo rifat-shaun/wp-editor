@@ -1,6 +1,7 @@
-import type { Editor } from "@tiptap/react";
+import { useEditorShell } from "@/contexts/EditorShellContext";
 
-export const useInsertOptionMethods = (editor: Editor) => {
+export const useInsertOptionMethods = () => {
+    const { editor } = useEditorShell();
     const handleInsertLineBreak = () => {
         editor.chain().focus().setHardBreak().run();
     }

@@ -1,8 +1,9 @@
-import { Editor } from "@tiptap/react";
+import { useEditorShell } from "@/contexts/EditorShellContext";
 import { useTiptapEditorState } from "./useTiptapEditorState";
 
-export const useFontStyleMethods = (editor: Editor) => {
-  const { fontSize, isSubscript, isSuperscript } = useTiptapEditorState(editor);
+export const useFontStyleMethods = () => {
+  const { editor } = useEditorShell();
+  const { fontSize, isSubscript, isSuperscript } = useTiptapEditorState();
 
   if (!editor) {
     return {
@@ -22,6 +23,7 @@ export const useFontStyleMethods = (editor: Editor) => {
       handleUnsetBackgroundColor: () => {},
       handleSetHighlightColor: (_color: string) => {},
       handleUnsetHighlightColor: () => {},
+      isEditable: false
     };
   }
 
@@ -130,6 +132,7 @@ export const useFontStyleMethods = (editor: Editor) => {
   const handleUnsetHighlightColor = () => {
     editor.chain().focus().unsetHighlight().run();
   };
+  const isEditable = editor.isEditable;
 
   return {
     handleFontFamilyChange,
@@ -148,5 +151,6 @@ export const useFontStyleMethods = (editor: Editor) => {
     handleUnsetBackgroundColor,
     handleSetHighlightColor,
     handleUnsetHighlightColor,
+    isEditable
   };
 };

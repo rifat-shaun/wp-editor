@@ -1,6 +1,7 @@
-import type { Editor } from "@tiptap/react";
+import { useEditorShell } from "@/contexts/EditorShellContext";
 
-export const useTableMethods = (editor: Editor) => {
+export const useTableMethods = () => {
+	const { editor } = useEditorShell();
 
 	const handleInsertTable = (rows: number, cols: number, withHeaderRow: boolean) => {
     if (!editor) return;

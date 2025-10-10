@@ -1,22 +1,19 @@
 import type { UnorderedListType } from "@/extensions/UnorderedListWithType";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
-import { Editor } from "@tiptap/react";
 import { SkeletonLine } from "@/components/common/SkeletonLine";
 import { useParagraphStyleMethods } from "@/hooks/useParagraphStyleMethods";
 import { BULLET_TYPE_OPTIONS } from "@/constants/Paragraphs";
 
 type UnorderedListTypeDropdownContentProps = {
-  editor: Editor;
   onClose: () => void;
 };
 
 export const UnorderedListTypeDropdownContent = ({
-  editor,
   onClose,
 }: UnorderedListTypeDropdownContentProps) => {
   const { isUnorderedList, currentUnorderedListType } =
-    useTiptapEditorState(editor);
-  const { handleUnorderedListTypeChange } = useParagraphStyleMethods(editor);
+    useTiptapEditorState();
+  const { handleUnorderedListTypeChange } = useParagraphStyleMethods();
 
   return (
     <div

@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import type { Editor } from "@tiptap/react";
+import { useEditorShell } from "@/contexts/EditorShellContext";
 import type { Mark } from "@tiptap/pm/model";
 
-export const useLinks = (editor?: Editor) => {
+export const useLinks = () => {
+	const { editor } = useEditorShell();
 	const [linkUrl, setLinkUrl] = useState('');
 	const [copied, setCopied] = useState(false);
 

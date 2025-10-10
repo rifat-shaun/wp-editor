@@ -1,4 +1,3 @@
-import { Editor } from '@tiptap/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -12,15 +11,11 @@ import { TOOLBAR_TYPES_ENUM } from '@/constants/Toolbar';
 import { Dropdown } from 'antd';
 import { ArrowDropDownOutlined } from '@mui/icons-material';
 
-type HeadingOptionsProps = {
-	editor: Editor;
-};
-
-export const HeadingOptions = ({ editor }: HeadingOptionsProps) => {
+export const HeadingOptions = () => {
 	const { currentToolbar } = useToolbar();
 
-	const { selectionHeadingLevel } = useTiptapEditorState(editor);
-	const { handleHeadingChange } = useHeadingStyleMethods(editor);
+	const { selectionHeadingLevel } = useTiptapEditorState();
+	const { handleHeadingChange } = useHeadingStyleMethods();
 
 	const headingsContainerRef = useRef<HTMLDivElement>(null);
 	const expandableContainerRef = useRef<HTMLDivElement>(null);

@@ -1,6 +1,5 @@
 import { TOOLBAR_TYPES_ENUM, type TToolbarType } from "@/constants/Toolbar";
 import { useLinks } from "@/hooks/useLinks";
-import type { Editor } from "@tiptap/react";
 import { Popover } from "antd";
 import { useCallback, useState } from "react";
 import { LinkForm } from "../toolbar/insert/LinkForm";
@@ -9,8 +8,8 @@ import { Button } from "../base";
 import SvgIcon from "../common/SvgIcon";
 import { ArrowDropDownOutlined } from "@mui/icons-material";
 
-export const InsertLinkButton = ({ editor, activeToolbarType }: { editor: Editor, activeToolbarType?: TToolbarType }) => {
-	const { getSelectionLinkValues } = useLinks(editor);
+export const InsertLinkButton = ({ activeToolbarType }: { activeToolbarType?: TToolbarType }) => {
+	const { getSelectionLinkValues } = useLinks();
 	const isProfessionalToolbarActive = activeToolbarType === TOOLBAR_TYPES_ENUM.PROFESSIONAL;
 	const isClassicToolbarActive = activeToolbarType === TOOLBAR_TYPES_ENUM.CLASSIC;
 
@@ -25,7 +24,6 @@ export const InsertLinkButton = ({ editor, activeToolbarType }: { editor: Editor
 		<Popover
 			content={
 				<LinkForm
-					editor={editor}
 					mode={LINK_FORM_MODES.INSERT}
 					{...getSelectionLinkValues()}
 					onSubmit={handleLinkFormClose}

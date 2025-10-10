@@ -1,6 +1,8 @@
-import type { Editor } from "@tiptap/react";
+import { useEditorShell } from "@/contexts/EditorShellContext";
 
-export const useExport = (editor: Editor) => {
+export const useExport = () => {
+	const { editor } = useEditorShell();
+
 	const downloadTextFile = () => {
 		if (!editor?.getText) return;
 
