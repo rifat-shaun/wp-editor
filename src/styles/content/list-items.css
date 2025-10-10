@@ -41,31 +41,49 @@
 
   /* Bullet list - default */
   ul:not([data-type="taskList"]) {
-    list-style-type: disc;
+    li::marker {
+      content: "⬤ ";
+    }
 
     ul {
-      list-style-type: circle;
+      li::marker {
+        content: "○ ";
+      }
 
       ul {
-        list-style-type: square;
+        li::marker {
+          content: "■ ";
+        }
 
         ul {
-          list-style-type: disc;
+          li::marker {
+            content: "⬤ ";
+          }
 
           ul {
-            list-style-type: circle;
+            li::marker {
+              content: "○ ";
+            }
 
             ul {
-              list-style-type: square;
+              li::marker {
+                content: "■ ";
+              }
 
               ul {
-                list-style-type: disc;
+                li::marker {
+                  content: "⬤ ";
+                }
 
                 ul {
-                  list-style-type: circle;
+                  li::marker {
+                    content: "○ ";
+                  }
 
                   ul {
-                    list-style-type: square;
+                    li::marker {
+                      content: "■ ";
+                    }
                   }
                 }
               }
@@ -77,32 +95,51 @@
   }
 
   /* Bullet list types with data-list-type attribute */
-  ul[data-list-type="disc"]:not([data-type="taskList"]) {
-    list-style-type: disc;
+  /* default: ⬤ → ○ → ■ */
+  ul[data-list-type="default"]:not([data-type="taskList"]) {
+    li::marker {
+      content: "⬤ ";
+    }
 
     ul {
-      list-style-type: circle;
+      li::marker {
+        content: "○ ";
+      }
 
       ul {
-        list-style-type: square;
+        li::marker {
+          content: "■ ";
+        }
 
         ul {
-          list-style-type: disc;
+          li::marker {
+            content: "⬤ ";
+          }
 
           ul {
-            list-style-type: circle;
+            li::marker {
+              content: "○ ";
+            }
 
             ul {
-              list-style-type: square;
+              li::marker {
+                content: "■ ";
+              }
 
               ul {
-                list-style-type: disc;
+                li::marker {
+                  content: "⬤ ";
+                }
 
                 ul {
-                  list-style-type: circle;
+                  li::marker {
+                    content: "○ ";
+                  }
 
                   ul {
-                    list-style-type: square;
+                    li::marker {
+                      content: "■ ";
+                    }
                   }
                 }
               }
@@ -113,32 +150,51 @@
     }
   }
 
-  ul[data-list-type="circle"]:not([data-type="taskList"]) {
-    list-style-type: circle;
+  /* diamondArrow: ❖ → ➤ → ■ */
+  ul[data-list-type="diamondArrow"]:not([data-type="taskList"]) {
+    li::marker {
+      content: "❖ ";
+    }
 
     ul {
-      list-style-type: square;
+      li::marker {
+        content: "➤ ";
+      }
 
       ul {
-        list-style-type: disc;
+        li::marker {
+          content: "■ ";
+        }
 
         ul {
-          list-style-type: circle;
+          li::marker {
+            content: "❖ ";
+          }
 
           ul {
-            list-style-type: square;
+            li::marker {
+              content: "➤ ";
+            }
 
             ul {
-              list-style-type: disc;
+              li::marker {
+                content: "■ ";
+              }
 
               ul {
-                list-style-type: circle;
+                li::marker {
+                  content: "❖ ";
+                }
 
                 ul {
-                  list-style-type: square;
+                  li::marker {
+                    content: "➤ ";
+                  }
 
                   ul {
-                    list-style-type: disc;
+                    li::marker {
+                      content: "■ ";
+                    }
                   }
                 }
               }
@@ -149,122 +205,51 @@
     }
   }
 
+  /* square: ☐ → ☐ → ☐ */
   ul[data-list-type="square"]:not([data-type="taskList"]) {
-    list-style-type: square;
-
-    ul {
-      list-style-type: disc;
-
-      ul {
-        list-style-type: circle;
-
-        ul {
-          list-style-type: square;
-
-          ul {
-            list-style-type: disc;
-
-            ul {
-              list-style-type: circle;
-
-              ul {
-                list-style-type: square;
-
-                ul {
-                  list-style-type: disc;
-
-                  ul {
-                    list-style-type: circle;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  ul[data-list-type="dash"]:not([data-type="taskList"]) {
     li::marker {
-      content: "– ";
-    }
-
-    ul {
-      list-style-type: disc;
-
-      ul {
-        list-style-type: circle;
-
-        ul {
-          li::marker {
-            content: "– ";
-          }
-
-          ul {
-            list-style-type: disc;
-
-            ul {
-              list-style-type: circle;
-
-              ul {
-                li::marker {
-                  content: "– ";
-                }
-
-                ul {
-                  list-style-type: disc;
-
-                  ul {
-                    list-style-type: circle;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  ul[data-list-type="arrow"]:not([data-type="taskList"]) {
-    li::marker {
-      content: "→ ";
+      content: "☐ ";
     }
 
     ul {
       li::marker {
-        content: "➔ ";
+        content: "☐ ";
       }
 
       ul {
-        list-style-type: disc;
+        li::marker {
+          content: "☐ ";
+        }
 
         ul {
           li::marker {
-            content: "→ ";
+            content: "☐ ";
           }
 
           ul {
             li::marker {
-              content: "➔ ";
+              content: "☐ ";
             }
 
             ul {
-              list-style-type: disc;
+              li::marker {
+                content: "☐ ";
+              }
 
               ul {
                 li::marker {
-                  content: "→ ";
+                  content: "☐ ";
                 }
 
                 ul {
                   li::marker {
-                    content: "➔ ";
+                    content: "☐ ";
                   }
 
                   ul {
-                    list-style-type: disc;
+                    li::marker {
+                      content: "☐ ";
+                    }
                   }
                 }
               }
@@ -275,44 +260,161 @@
     }
   }
 
-  ul[data-list-type="checkmark"]:not([data-type="taskList"]) {
+  /* arrowDiamond: ➔ → ◆ → ⬤ */
+  ul[data-list-type="arrowDiamond"]:not([data-type="taskList"]) {
     li::marker {
-      content: "✓ ";
+      content: "➔ ";
     }
 
     ul {
       li::marker {
-        content: "✔ ";
+        content: "◆ ";
       }
 
       ul {
-        list-style-type: disc;
+        li::marker {
+          content: "⬤ ";
+        }
 
         ul {
           li::marker {
-            content: "✓ ";
+            content: "➔ ";
           }
 
           ul {
             li::marker {
-              content: "✔ ";
+              content: "◆ ";
             }
 
             ul {
-              list-style-type: disc;
+              li::marker {
+                content: "⬤ ";
+              }
 
               ul {
                 li::marker {
-                  content: "✓ ";
+                  content: "➔ ";
                 }
 
                 ul {
                   li::marker {
-                    content: "✔ ";
+                    content: "◆ ";
                   }
 
                   ul {
-                    list-style-type: disc;
+                    li::marker {
+                      content: "⬤ ";
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* star: ★ → ○ → ■ */
+  ul[data-list-type="star"]:not([data-type="taskList"]) {
+    li::marker {
+      content: "★ ";
+    }
+
+    ul {
+      li::marker {
+        content: "○ ";
+      }
+
+      ul {
+        li::marker {
+          content: "■ ";
+        }
+
+        ul {
+          li::marker {
+            content: "★ ";
+          }
+
+          ul {
+            li::marker {
+              content: "○ ";
+            }
+
+            ul {
+              li::marker {
+                content: "■ ";
+              }
+
+              ul {
+                li::marker {
+                  content: "★ ";
+                }
+
+                ul {
+                  li::marker {
+                    content: "○ ";
+                  }
+
+                  ul {
+                    li::marker {
+                      content: "■ ";
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* arrowCircle: ➤ → ○ → ■ */
+  ul[data-list-type="arrowCircle"]:not([data-type="taskList"]) {
+    li::marker {
+      content: "➤ ";
+    }
+
+    ul {
+      li::marker {
+        content: "○ ";
+      }
+
+      ul {
+        li::marker {
+          content: "■ ";
+        }
+
+        ul {
+          li::marker {
+            content: "➤ ";
+          }
+
+          ul {
+            li::marker {
+              content: "○ ";
+            }
+
+            ul {
+              li::marker {
+                content: "■ ";
+              }
+
+              ul {
+                li::marker {
+                  content: "➤ ";
+                }
+
+                ul {
+                  li::marker {
+                    content: "○ ";
+                  }
+
+                  ul {
+                    li::marker {
+                      content: "■ ";
+                    }
                   }
                 }
               }

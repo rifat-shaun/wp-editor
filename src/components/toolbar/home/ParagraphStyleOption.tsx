@@ -55,9 +55,9 @@ export const ParagraphStyleOptions = () => {
         <Space.Compact
           className={`flex items-center ${isUnorderedList ? "bg-black-100" : ""
             }`}
+          title="Bullet list"
         >
           <Button
-            title="Bullet list"
             onClick={handleToggleUnorderedList}
             active={false}
             size="small"
@@ -66,13 +66,12 @@ export const ParagraphStyleOptions = () => {
           </Button>
 
           <Tooltip
-            title="Bullet list menu"
             placement="top"
             arrow={false}
             color="black"
             mouseEnterDelay={0.3}
           >
-            <Dropdown
+            <Dropdown            
               popupRender={() => (
                 <UnorderedListTypeDropdownContent
                   onClose={() => setUnorderedListDropdownOpen(false)}
@@ -92,9 +91,9 @@ export const ParagraphStyleOptions = () => {
 
         <Space.Compact
           className={`flex items-center ${isOrderedList ? "bg-black-100" : ""}`}
+          title="Numbered list"
         >
           <Button
-            title="Numbered list"
             onClick={handleToggleOrderedList}
             active={false}
             size="small"
@@ -103,7 +102,7 @@ export const ParagraphStyleOptions = () => {
           </Button>
 
           <Tooltip
-            title="Numbered list menu"
+            // title="Numbered list menu"
             placement="top"
             arrow={false}
             color="black"

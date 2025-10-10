@@ -83,6 +83,7 @@ export const PageBackgroundColorPicker: React.FC<PageBackgroundColorPickerProps>
     >
       <Button
         id={id}
+        title="Background Color"
         onClick={() => setOpen(true)}
         size={isClassicToolbar ? "small" : "medium"}
       >
