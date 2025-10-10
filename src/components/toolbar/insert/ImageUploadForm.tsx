@@ -1,6 +1,6 @@
-import { useState, useRef } from "react";
-import { Button, Input, message } from "antd";
+import { Button, Input } from "antd";
 import type { Editor } from "@tiptap/react";
+import { useImageUpload } from "../../../hooks/useImageUpload";
 
 interface ImageUploadFormProps {
   editor: Editor;
@@ -13,89 +13,18 @@ export const ImageUploadForm = ({
   onSubmit,
   onCancel,
 }: ImageUploadFormProps) => {
-  const [imageUrl, setImageUrl] = useState("");
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState("");
-  const [uploading, setUploading] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      // Validate file type
-      if (!file.type.startsWith("image/")) {
-        message.error("Please select an image file");
-        return;
-      }
-
-      // Validate file size (e.g., max 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        message.error("Image size should be less than 5MB");
-        return;
-      }
-
-      setSelectedFile(file);
-
-      // Create preview
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setPreviewUrl(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleUpload = async () => {
-    if (!selectedFile && !imageUrl) {
-      message.error("Please select an image or enter a URL");
-      return;
-    }
-
-    setUploading(true);
-
-    try {
-      let finalUrl = imageUrl;
-
-      // If a file is selected, use its preview URL (base64)
-      // In production, you should upload to your server/CDN and use that URL
-      if (selectedFile) {
-        finalUrl = previewUrl;
-        message.success("Image loaded successfully");
-      }
-
-      // Insert image into editor with default width and alignment
-      editor.chain().focus().setImage({ 
-        src: finalUrl, 
-        width: 300, 
-        align: "left" as "left" | "center" | "right"
-      } as { src: string; alt?: string; title?: string; width?: number; align?: "left" | "center" | "right" }).run();
-
-      // Clear form and close
-      clearForm();
-      onSubmit?.();
-    } catch (error) {
-      console.error("Upload failed:", error);
-      message.error("Failed to insert image");
-    } finally {
-      setUploading(false);
-    }
-  };
-
-  const clearForm = () => {
-    setImageUrl("");
-    setSelectedFile(null);
-    setPreviewUrl("");
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Escape") {
-      clearForm();
-      onCancel?.();
-    }
-  };
+  const {
+    imageUrl,
+    setImageUrl,
+    selectedFile,
+    previewUrl,
+    uploading,
+    fileInputRef,
+    handleFileSelect,
+    handleUpload,
+    clearForm,
+    handleKeyDown,
+  } = useImageUpload({ editor, onSubmit, onCancel });
 
   return (
     <div className="min-w-[320px]">
@@ -109,6 +38,7 @@ export const ImageUploadForm = ({
             ref={fileInputRef}
             type="file"
             accept="image/*"
+            disabled={!!imageUrl}
             onChange={handleFileSelect}
             className="block w-full text-sm text-gray-500
 							file:mr-4 file:py-2 file:px-4
@@ -118,21 +48,25 @@ export const ImageUploadForm = ({
 							hover:file:bg-blue-100
 							cursor-pointer"
           />
-          {selectedFile && (
-            <p className="text-xs text-gray-500 mt-1">
-              Selected: {selectedFile.name}
-            </p>
-          )}
         </div>
 
         {/* Preview */}
-        {previewUrl && (
-          <div className="border rounded p-2">
+        {(previewUrl || imageUrl) && (
+          <div className="border rounded p-2 relative">
             <img
-              src={previewUrl}
+              src={previewUrl || imageUrl}
               alt="Preview"
               className="max-w-full max-h-48 mx-auto"
             />
+            <Button
+              size="small"
+              type="text"
+              danger
+              onClick={clearForm}
+              className="absolute top-2 right-2 bg-gray-200"
+            >
+              ✕
+            </Button>
           </div>
         )}
 
@@ -154,6 +88,7 @@ export const ImageUploadForm = ({
           <Input
             placeholder="https://example.com/image.jpg"
             value={imageUrl}
+            disabled={!!selectedFile}
             onChange={(e) => setImageUrl(e.target.value)}
             onKeyDown={handleKeyDown}
           />

@@ -58,6 +58,7 @@
     "@tiptap/extension-character-count": "^3.6.2",
     "@tiptap/extension-code-block-lowlight": "^3.6.5",
     "@tiptap/extension-document": "^3.6.2",
+    "@tiptap/extension-hard-break": "^3.6.6",
     "@tiptap/extension-heading": "^3.6.5",
     "@tiptap/extension-highlight": "^3.6.2",
     "@tiptap/extension-horizontal-rule": "^3.6.5",
