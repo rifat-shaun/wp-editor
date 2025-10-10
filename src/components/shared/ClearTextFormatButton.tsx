@@ -1,10 +1,10 @@
-import type { Editor } from "@tiptap/react";
+
 import { Button } from "../base";
 import SvgIcon from "../common/SvgIcon";
 import { useHomeOptionMethods } from "@/hooks/useHomeOptionMethods";
 
-export const ClearTextFormatButton = ({ editor }: { editor: Editor }) => {
-	const { handleClearFormatting } = useHomeOptionMethods(editor);
+export const ClearTextFormatButton = () => {
+	const { handleClearFormatting } = useHomeOptionMethods();
 
 	return (
 		<Button

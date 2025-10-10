@@ -1,15 +1,12 @@
 import { Button, Input } from "antd";
-import type { Editor } from "@tiptap/react";
 import { useImageUpload } from "../../../hooks/useImageUpload";
 
 interface ImageUploadFormProps {
-  editor: Editor;
   onSubmit?: () => void;
   onCancel?: () => void;
 }
 
 export const ImageUploadForm = ({
-  editor,
   onSubmit,
   onCancel,
 }: ImageUploadFormProps) => {
@@ -24,7 +21,7 @@ export const ImageUploadForm = ({
     handleUpload,
     clearForm,
     handleKeyDown,
-  } = useImageUpload({ editor, onSubmit, onCancel });
+  } = useImageUpload({ onSubmit, onCancel });
 
   return (
     <div className="min-w-[320px]">
@@ -41,7 +38,7 @@ export const ImageUploadForm = ({
             disabled={!!imageUrl}
             onChange={handleFileSelect}
             className="block w-full text-sm text-gray-500
-							file:mr-4 file:py-2 file:px-4
+							file:mr-4 file:py-1 file:px-4
 							file:rounded file:border-0
 							file:text-sm file:font-semibold
 							file:bg-blue-50 file:text-blue-700

@@ -10,14 +10,13 @@ import { useToolbar } from "@/contexts/ToolbarContext";
 import { TOOLBAR_TYPES_ENUM } from "@/constants/Toolbar";
 import PageOrientationSelector from "./PageOrientationSelector";
 import { PageMarginPicker } from "./PageMarginPicker";
-import { Editor } from "@tiptap/react";
 import { PageBackgroundColorPicker } from "./PageBackgroundColorPicker";
 import { usePageMethods } from "@/hooks/usePageMethods";
 
-export const PageOptions = ({ editor }: { editor: Editor }) => {
+export const PageOptions = () => {
 	const { pageConfig, setPageConfig, currentToolbar, onPresentationModeToggle } = useToolbar();
 	const isClassicToolbar = currentToolbar === TOOLBAR_TYPES_ENUM.CLASSIC;
-	const { selectedBGColor, handleSetPageBackgroundColor, handleInsertPageBreak } = usePageMethods(editor);
+	const { selectedBGColor, handleSetPageBackgroundColor, handleInsertPageBreak } = usePageMethods();
 
 	const [isPageSizeOpen, setIsPageSizeOpen] = useState(false);
 	const [isPageOrientationOpen, setIsPageOrientationOpen] = useState(false);
@@ -29,7 +28,6 @@ export const PageOptions = ({ editor }: { editor: Editor }) => {
 				<Popover
 					content={
 						<PageMarginPicker
-							editor={editor}
 							onClose={() => setIsPageMarginsOpen(false)}
 							pageOrientation={pageConfig.orientation}
 							setPageOrientation={(orientation) => {

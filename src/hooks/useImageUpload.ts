@@ -1,18 +1,17 @@
 import { useState, useRef } from "react";
 import { message } from "antd";
-import type { Editor } from "@tiptap/react";
+import { useEditorShell } from "@/contexts/EditorShellContext";
 
 interface UseImageUploadProps {
-  editor: Editor;
   onSubmit?: () => void;
   onCancel?: () => void;
 }
 
 export const useImageUpload = ({
-  editor,
   onSubmit,
   onCancel,
 }: UseImageUploadProps) => {
+  const { editor } = useEditorShell();
   const [imageUrl, setImageUrl] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState("");

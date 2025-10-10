@@ -1,14 +1,13 @@
 import { useState } from "react";
 import SvgIcon from "@/components/common/SvgIcon";
-import type { Editor } from "@tiptap/react";
 import { Popover } from "antd";
 import { LinkForm } from "@/components/toolbar/insert/LinkForm";
 import { useLinks } from "@/hooks/useLinks";
 import { LINK_FORM_MODES } from "@/constants/LinkConstants";
 
-export const LinkMenuContent = ({ editor }: { editor: Editor }) => {
+export const LinkMenuContent = () => {
 	const [isEditPopoverOpen, setIsEditPopoverOpen] = useState(false);
-	const { linkUrl, copied, handleCopy, handleRemove } = useLinks(editor);
+	const { linkUrl, copied, handleCopy, handleRemove } = useLinks();
 
 	return (
 		<div className="flex items-center gap-1 bg-white shadow-lg rounded-lg border border-neutral-200 p-2">
@@ -35,7 +34,6 @@ export const LinkMenuContent = ({ editor }: { editor: Editor }) => {
 				<Popover
 					content={
 						<LinkForm
-							editor={editor}
 							mode={LINK_FORM_MODES.EDIT}
 							initialUrl={linkUrl}
 							onSubmit={() => setIsEditPopoverOpen(false)}

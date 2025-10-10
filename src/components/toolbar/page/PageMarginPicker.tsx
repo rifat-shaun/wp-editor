@@ -1,183 +1,24 @@
 import { CropLandscape, CropPortrait } from '@mui/icons-material';
-import { Editor } from '@tiptap/react';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { usePageMethods, PRESET_MARGINS } from '@/hooks/usePageMethods';
 
 interface PageMarginPickerProps {
-  editor: Editor;
   onClose?: () => void;
   pageOrientation: 'portrait' | 'landscape';
   setPageOrientation: (orientation: 'portrait' | 'landscape') => void;
 }
 
-interface MarginValues {
-  top: number;
-  right: number;
-  bottom: number;
-  left: number;
-}
-
-const DEFAULT_MARGINS: MarginValues = {
-  top: 1,
-  right: 1,
-  bottom: 1,
-  left: 1,
-};
-
-const PRESET_MARGINS = {
-  Normal: { top: 1, right: 1, bottom: 1, left: 1 },
-  Narrow: { top: 0.5, right: 0.5, bottom: 0.5, left: 0.5 },
-  Moderate: { top: 1.25, right: 1.25, bottom: 1.25, left: 1.25 },
-  Wide: { top: 1.75, right: 1.75, bottom: 1.75, left: 1.75 },
-  Mirrored: { top: 1.25, right: 1, bottom: 1.25, left: 2 },
-};
-
-export const PageMarginPicker: React.FC<PageMarginPickerProps> = ({ editor, onClose, pageOrientation, setPageOrientation }) => {
-  const [margins, setMargins] = useState<MarginValues>(DEFAULT_MARGINS);
-  const [inputValues, setInputValues] = useState<Record<keyof MarginValues, string>>({
-    top: '1',
-    right: '1',
-    bottom: '1',
-    left: '1',
-  });
-
-  useEffect(() => {
-    const marginsAttr = document.body.getAttribute('data-page-margins');
-    if (marginsAttr) {
-      try {
-        const currentMargins = JSON.parse(marginsAttr);
-        setMargins(currentMargins);
-        // Update input values when margins change
-        setInputValues({
-          top: currentMargins.top.toString(),
-          right: currentMargins.right.toString(),
-          bottom: currentMargins.bottom.toString(),
-          left: currentMargins.left.toString(),
-        });
-      } catch (e) {
-        console.error('Error parsing page margins data attribute:', e);
-      }
-    }
-  }, []);
-
-  const handleInputChange = (side: keyof MarginValues, value: string) => {
-    // Allow empty value for clearing
-    setInputValues((prev) => ({
-      ...prev,
-      [side]: value,
-    }));
-
-    // Only update margin values if the input is valid
-    if (value === '') return;
-
-    const numValue = Number(value);
-    if (isNaN(numValue)) return;
-
-    // Min and max margin values in inches
-    const MIN_MARGIN = 0;
-    const MAX_MARGIN = 3;
-
-    // Ensure value is not below min and doesn't exceed max
-    const validValue = Math.min(Math.max(MIN_MARGIN, numValue), MAX_MARGIN);
-
-    setMargins((prev) => ({
-      ...prev,
-      [side]: validValue,
-    }));
-  };
-
-  const handleBlur = (side: keyof MarginValues) => {
-    // If value is empty or invalid, set to minimum value (0)
-    const value = inputValues[side];
-    if (value === '' || isNaN(Number(value))) {
-      const newValue = '0';
-      setInputValues((prev) => ({
-        ...prev,
-        [side]: newValue,
-      }));
-      setMargins((prev) => ({
-        ...prev,
-        [side]: 0,
-      }));
-    }
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, side: keyof MarginValues) => {
-    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-      event.preventDefault();
-
-      // Get the current value from margins (which is guaranteed to be a number)
-      const currentValue = margins[side];
-      const step = 0.25;
-
-      let newValue: number;
-      if (event.key === 'ArrowUp') {
-        newValue = Math.min(currentValue + step, 3); // Max 3
-      } else {
-        newValue = Math.max(currentValue - step, 0); // Min 0
-      }
-
-      // Update both margins and input values
-      setMargins((prev) => ({
-        ...prev,
-        [side]: newValue,
-      }));
-
-      setInputValues((prev) => ({
-        ...prev,
-        [side]: newValue.toString(),
-      }));
-    }
-  };
-
-  const applyPresetMargins = (presetName: keyof typeof PRESET_MARGINS) => {
-    const presetMargins = PRESET_MARGINS[presetName];
-    setMargins({ ...presetMargins });
-
-    // Update input values when applying presets
-    setInputValues({
-      top: presetMargins.top.toString(),
-      right: presetMargins.right.toString(),
-      bottom: presetMargins.bottom.toString(),
-      left: presetMargins.left.toString(),
-    });
-
-    // Use the PageMargin extension command to apply preset margins
-    if (editor && editor.commands.setPresetMargins) {
-      editor.commands.setPresetMargins(presetName);
-    }
-  };
-
-  const resetToDefault = () => {
-    setMargins({ ...DEFAULT_MARGINS });
-
-    // Update input values when resetting
-    setInputValues({
-      top: DEFAULT_MARGINS.top.toString(),
-      right: DEFAULT_MARGINS.right.toString(),
-      bottom: DEFAULT_MARGINS.bottom.toString(),
-      left: DEFAULT_MARGINS.left.toString(),
-    });
-
-    setPageOrientation('portrait');
-
-    // Use the PageMargin extension command to reset margins
-    if (editor && editor.commands.resetPageMargins) {
-      editor.commands.resetPageMargins();
-    }
-  };
-
-  const applyMargins = () => {
-    // Use the PageMargin extension commands to apply margins
-    if (editor && editor.commands.setPageMargins) {
-      editor.commands.setPageMargins({
-        top: margins.top,
-        right: margins.right,
-        bottom: margins.bottom,
-        left: margins.left,
-      });
-    }
-    onClose?.();
-  };
+export const PageMarginPicker: React.FC<PageMarginPickerProps> = ({ onClose, pageOrientation, setPageOrientation }) => {
+  const {
+    margins,
+    inputValues,
+    handleMarginInputChange,
+    handleMarginInputBlur,
+    handleMarginKeyDown,
+    applyPresetMargins,
+    resetMarginsToDefault,
+    applyMargins: applyMarginsFromHook,
+  } = usePageMethods();
 
   return (
     <div className='bg-white w-[300px]'>
@@ -239,9 +80,9 @@ export const PageMarginPicker: React.FC<PageMarginPickerProps> = ({ editor, onCl
               <input
                 type='text'
                 value={inputValues.left}
-                onChange={(e) => handleInputChange('left', e.target.value)}
-                onKeyDown={(e) => handleKeyDown(e, 'left')}
-                onBlur={() => handleBlur('left')}
+                onChange={(e) => handleMarginInputChange('left', e.target.value)}
+                onKeyDown={(e) => handleMarginKeyDown(e, 'left')}
+                onBlur={() => handleMarginInputBlur('left')}
                 className='w-12 text-xs p-1 border border-gray-300 rounded'
               />
             </div>
@@ -254,9 +95,9 @@ export const PageMarginPicker: React.FC<PageMarginPickerProps> = ({ editor, onCl
                 <input
                   type='text'
                   value={inputValues.top}
-                  onChange={(e) => handleInputChange('top', e.target.value)}
-                  onKeyDown={(e) => handleKeyDown(e, 'top')}
-                  onBlur={() => handleBlur('top')}
+                  onChange={(e) => handleMarginInputChange('top', e.target.value)}
+                  onKeyDown={(e) => handleMarginKeyDown(e, 'top')}
+                  onBlur={() => handleMarginInputBlur('top')}
                   className='w-20 text-xs p-1 border border-gray-300 rounded'
                 />
               </div>
@@ -283,9 +124,9 @@ export const PageMarginPicker: React.FC<PageMarginPickerProps> = ({ editor, onCl
                 <input
                   type='text'
                   value={inputValues.bottom}
-                  onChange={(e) => handleInputChange('bottom', e.target.value)}
-                  onKeyDown={(e) => handleKeyDown(e, 'bottom')}
-                  onBlur={() => handleBlur('bottom')}
+                  onChange={(e) => handleMarginInputChange('bottom', e.target.value)}
+                  onKeyDown={(e) => handleMarginKeyDown(e, 'bottom')}
+                  onBlur={() => handleMarginInputBlur('bottom')}
                   className='w-20 text-xs p-1 border border-gray-300 rounded'
                 />
               </div>
@@ -298,9 +139,9 @@ export const PageMarginPicker: React.FC<PageMarginPickerProps> = ({ editor, onCl
               <input
                 type='text'
                 value={inputValues.right}
-                onChange={(e) => handleInputChange('right', e.target.value)}
-                onKeyDown={(e) => handleKeyDown(e, 'right')}
-                onBlur={() => handleBlur('right')}
+                onChange={(e) => handleMarginInputChange('right', e.target.value)}
+                onKeyDown={(e) => handleMarginKeyDown(e, 'right')}
+                onBlur={() => handleMarginInputBlur('right')}
                 className='w-12 text-xs p-1 border border-gray-300 rounded'
               />
             </div>
@@ -310,14 +151,14 @@ export const PageMarginPicker: React.FC<PageMarginPickerProps> = ({ editor, onCl
 
       {/* Buttons */}
       <div className='flex justify-between'>
-        <button className='text-sm text-blue-600 hover:underline' onClick={resetToDefault}>
+        <button className='text-sm text-blue-600 hover:underline' onClick={() => resetMarginsToDefault(setPageOrientation)}>
           Reset to Default
         </button>
         <div className='flex gap-2'>
           <button className='px-4 py-1 bg-gray-100 text-gray-700 rounded text-sm' onClick={onClose}>
             Cancel
           </button>
-          <button className='px-4 py-1 bg-blue-600 text-white rounded text-sm' onClick={applyMargins}>
+          <button className='px-4 py-1 bg-blue-600 text-white rounded text-sm' onClick={() => applyMarginsFromHook(onClose)}>
             Apply
           </button>
         </div>

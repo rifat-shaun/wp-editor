@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import { Input, Button } from "antd";
-import type { Editor } from "@tiptap/react";
 import { useLinks } from "@/hooks/useLinks";
 import { LINK_FORM_MODES } from "@/constants/LinkConstants";
 
 interface LinkFormProps {
-	editor: Editor;
 	mode: (typeof LINK_FORM_MODES)[keyof typeof LINK_FORM_MODES];
 	initialUrl?: string;
 	initialText?: string;
@@ -13,10 +11,10 @@ interface LinkFormProps {
 	onCancel?: () => void;
 }
 
-export const LinkForm = ({ editor, mode, initialUrl = "", initialText = "", onSubmit, onCancel }: LinkFormProps) => {
+export const LinkForm = ({ mode, initialUrl = "", initialText = "", onSubmit, onCancel }: LinkFormProps) => {
 	const [url, setUrl] = useState(initialUrl);
 	const [text, setText] = useState(initialText);
-	const { handleInsertLink, handleEditLink } = useLinks(editor);
+	const { handleInsertLink, handleEditLink } = useLinks();
 
 	const clearForm = () => {
 		setUrl("");
@@ -52,7 +50,7 @@ export const LinkForm = ({ editor, mode, initialUrl = "", initialText = "", onSu
 	}, [initialUrl, initialText]);
 
 	return (
-		<div className="min-w-[320px]">
+		<div className="min-w-[320px]" onClick={(e) => { e.stopPropagation(); e.preventDefault(); }}>
 			<div className="space-y-3">
 				<div>
 					<label className="block text-xs font-medium text-gray-700 mb-1">

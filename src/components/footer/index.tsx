@@ -1,17 +1,15 @@
 import { FOOTER_HEIGHT } from "@/constants";
-import { Editor } from "@tiptap/react";
 import { useTiptapEditorState } from "@/hooks/useTiptapEditorState";
 import { useZoom } from "@/hooks/useZoom";
 import SvgIcon from "@/components/common/SvgIcon";
 import { Button } from "@/components/base";
 
 interface FooterProps {
-  editor: Editor;
   onPresentationModeToggle: () => void;
 }
 
-export const Footer = ({ editor, onPresentationModeToggle }: FooterProps) => {
-  const { characterCount, wordCount } = useTiptapEditorState(editor);
+export const Footer = ({ onPresentationModeToggle }: FooterProps) => {
+  const { characterCount, wordCount } = useTiptapEditorState();
   const { zoomLevel, handleZoomIn, handleZoomOut, handleFitToScreen, handleSetZoom } = useZoom();
 
   return (

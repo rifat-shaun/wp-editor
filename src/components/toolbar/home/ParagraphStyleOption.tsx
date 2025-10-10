@@ -1,4 +1,4 @@
-import { Editor } from "@tiptap/react";
+
 import { ItemGroup } from "../ItemGroup";
 import { Button } from "@/components/base/Button";
 import SvgIcon from "@/components/common/SvgIcon";
@@ -11,13 +11,7 @@ import { UnorderedListTypeDropdownContent } from "./UnorderedListTypeDropdownCon
 import { OrderedListTypeDropdownContent } from "./OrderedListTypeDropdownContent";
 import { ParagraphAlignmentOptions } from "@/components/shared/ParagraphAlignmentOptions";
 
-type TParagraphStyleOptionsProps = {
-  editor: Editor;
-};
-
-export const ParagraphStyleOptions = ({
-  editor,
-}: TParagraphStyleOptionsProps) => {
+export const ParagraphStyleOptions = () => {
   const {
     isTaskList,
     canIndent,
@@ -26,7 +20,7 @@ export const ParagraphStyleOptions = ({
     isUnorderedList,
     isBlockquote,
     canBlockquote,
-  } = useTiptapEditorState(editor);
+  } = useTiptapEditorState();
 
   const {
     handleToggleTaskList,
@@ -35,7 +29,7 @@ export const ParagraphStyleOptions = ({
     handleToggleOrderedList,
     handleToggleUnorderedList,
     handleToggleBlockquote,
-  } = useParagraphStyleMethods(editor);
+  } = useParagraphStyleMethods();
 
   const [orderedListDropdownOpen, setOrderedListDropdownOpen] = useState(false);
   const [unorderedListDropdownOpen, setUnorderedListDropdownOpen] =
@@ -81,7 +75,6 @@ export const ParagraphStyleOptions = ({
             <Dropdown
               popupRender={() => (
                 <UnorderedListTypeDropdownContent
-                  editor={editor}
                   onClose={() => setUnorderedListDropdownOpen(false)}
                 />
               )}
@@ -119,7 +112,6 @@ export const ParagraphStyleOptions = ({
             <Dropdown
               popupRender={() => (
                 <OrderedListTypeDropdownContent
-                  editor={editor}
                   onClose={() => setOrderedListDropdownOpen(false)}
                 />
               )}
@@ -166,7 +158,7 @@ export const ParagraphStyleOptions = ({
         </Button>
       </div>
       <div className="flex items-center space-x-2">
-        <ParagraphAlignmentOptions editor={editor} />
+        <ParagraphAlignmentOptions />
         <Button
           title="Blockquote"
           onClick={handleToggleBlockquote}
