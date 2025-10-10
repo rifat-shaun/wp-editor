@@ -1601,6 +1601,11 @@
   resolved "https://registry.npmjs.org/@tiptap/extension-hard-break/-/extension-hard-break-3.6.5.tgz"
   integrity sha512-6iMS6SzIn7+X95okRX8y3l/4f1G3lTrq24sbcAX4MHITncDC6g3TrdAxdA67Tqn5NI/OQx0LwF3kFJDO8QTAUg==
 
+"@tiptap/extension-hard-break@^3.6.6":
+  version "3.6.6"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-hard-break/-/extension-hard-break-3.6.6.tgz#793622ace03f5e05b8082be17d606ce40e0565e9"
+  integrity sha512-U6huFh4xQ9ml4YdJETl2lANyybJYucXgF9UFrPkAOrZF9jcwLJ5Ndejc9YJoH1WjuIB/y44//CPonXvxfP94aQ==
+
 "@tiptap/extension-heading@^3.6.5":
   version "3.6.5"
   resolved "https://registry.npmjs.org/@tiptap/extension-heading/-/extension-heading-3.6.5.tgz"
