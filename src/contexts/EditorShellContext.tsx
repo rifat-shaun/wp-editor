@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect } from "react";
+import { createContext, useContext, useEffect, useCallback, useMemo } from "react";
 import type { ReactNode } from "react";
 import type { Editor } from "@tiptap/react";
 import type { EditorConfig } from "@/config/editorConfig";
@@ -17,25 +17,36 @@ interface EditorShellProviderProps {
 }
 
 export const EditorShellProvider = ({ children, editor, editorConfig }: EditorShellProviderProps) => {
+	const insertVariable = useCallback(
+		(key: string, value?: string) => {
+			if (value && editorConfig.variableValues) {
+				editor.commands.updateVariableValues({ [key]: value });
+			}
+			editor.commands.insertVariable(key);
+		},
+		[editor, editorConfig.variableValues]
+	);
+
+	const updateVariableValues = useCallback(
+		(values: Record<string, string>) => {
+			editor.commands.updateVariableValues(values);
+		},
+		[editor]
+	);
+
 	useEffect(() => {
 		if (editor && editorConfig?.onEditorReady) {
-			const insertVariable = (key: string, value?: string) => {
-				if (value && editorConfig.variableValues) {
-					editor.commands.updateVariableValues({ [key]: value });
-				}
-				editor.commands.insertVariable(key);
-			};
-
-			const updateVariableValues = (values: Record<string, string>) => {
-				editor.commands.updateVariableValues(values);
-			};
-
 			editorConfig.onEditorReady({ insertVariable, updateVariableValues });
 		}
-	}, [editor, editorConfig]);
+	}, [editor, editorConfig, insertVariable, updateVariableValues]);
+
+	const providerValue = useMemo(
+		() => ({ editor, editorConfig }),
+		[editor, editorConfig]
+	);
 
 	return (
-		<EditorShellContext.Provider value={{ editor, editorConfig }}>
+		<EditorShellContext.Provider value={providerValue}>
 			{children}
 		</EditorShellContext.Provider>
 	);

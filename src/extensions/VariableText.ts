@@ -1,22 +1,54 @@
 import { Node, InputRule } from '@tiptap/core';
-import { Plugin, PluginKey } from '@tiptap/pm/state';
+import type { NodeViewRenderer } from '@tiptap/core';
+import type { Node as ProseMirrorNode } from '@tiptap/pm/model';
 
 export interface VariableOptions {
   enabled: boolean;
   variableValues: Record<string, string>;
 }
 
+interface VariableAttributes {
+  variableName: string;
+  value: string;
+}
+
+// Regex pattern for matching {{variableName}} syntax
+const VARIABLE_PATTERN = /\{\{([a-zA-Z0-9_-]+)\}\}$/;
+
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     variable: {
+      /**
+       * Insert a variable node at the current cursor position
+       * @param variableName - The name/key of the variable
+       */
       insertVariable: (variableName: string) => ReturnType;
+      /**
+       * Update all variable nodes with new values
+       * @param values - Record mapping variable names to their new values
+       */
       updateVariableValues: (values: Record<string, string>) => ReturnType;
     };
   }
 }
 
-const variableTextPluginKey = new PluginKey('variableText');
-
+/**
+ * VariableText Extension
+ * 
+ * Allows insertion and management of variable text nodes that can be dynamically updated.
+ * Variables are displayed as {{variableName}} when no value is set, or as their actual value when set.
+ * 
+ * Features:
+ * - Auto-conversion of {{variableName}} syntax when enabled
+ * - Dynamic value updates via updateVariableValues command
+ * - Inline, atomic nodes that can be deleted with backspace
+ * 
+ * @example
+ * ```ts
+ * editor.commands.insertVariable('userName');
+ * editor.commands.updateVariableValues({ userName: 'John Doe' });
+ * ```
+ */
 export const VariableText = Node.create<VariableOptions>({
   name: 'variableText',
   group: 'inline',
@@ -40,6 +72,13 @@ export const VariableText = Node.create<VariableOptions>({
           'data-variable-name': attributes.variableName,
         }),
       },
+      value: {
+        default: '',
+        parseHTML: (element) => element.getAttribute('data-value') || '',
+        renderHTML: (attributes) => ({
+          'data-value': attributes.value,
+        }),
+      },
     };
   },
 
@@ -52,14 +91,14 @@ export const VariableText = Node.create<VariableOptions>({
   },
 
   renderHTML({ node }) {
-    const variableName = node.attrs.variableName;
-    const variableValue = this.options.variableValues[variableName];
-    const displayText = variableValue || `{{${variableName}}}`;
+    const { variableName, value } = node.attrs as VariableAttributes;
+    const displayText = value || `{{${variableName}}}`;
 
     return [
       'span',
       {
         'data-variable-name': variableName,
+        'data-value': value,
         class: 'variable-text',
         contenteditable: 'false',
       },
@@ -67,30 +106,91 @@ export const VariableText = Node.create<VariableOptions>({
     ];
   },
 
+  addNodeView(): NodeViewRenderer {
+    return ({ node }) => {
+      const { variableName, value } = node.attrs as VariableAttributes;
+      
+      const dom = document.createElement('span');
+      dom.className = 'variable-text';
+      dom.contentEditable = 'false';
+      dom.setAttribute('data-variable-name', variableName);
+      dom.setAttribute('data-value', value);
+      dom.textContent = value || `{{${variableName}}}`;
+
+      return {
+        dom,
+        update: (updatedNode: ProseMirrorNode) => {
+          if (updatedNode.type.name !== 'variableText') return false;
+          
+          const { variableName: newName, value: newValue } = updatedNode.attrs as VariableAttributes;
+          
+          // Update DOM only if values changed
+          if (dom.getAttribute('data-value') !== newValue || dom.getAttribute('data-variable-name') !== newName) {
+            dom.setAttribute('data-variable-name', newName);
+            dom.setAttribute('data-value', newValue);
+            dom.textContent = newValue || `{{${newName}}}`;
+          }
+          
+          return true;
+        },
+      };
+    };
+  },
+
   addCommands() {
     return {
       insertVariable:
         (variableName: string) =>
         ({ commands }) => {
+          // Get initial value from options if available
+          const initialValue = this.options.variableValues[variableName] || '';
+          
           return commands.insertContent({
             type: this.name,
-            attrs: { variableName },
+            attrs: { 
+              variableName,
+              value: initialValue,
+            },
           });
         },
 
       updateVariableValues:
         (values: Record<string, string>) =>
-        ({ tr, dispatch }) => {
-          this.options.variableValues = { ...this.options.variableValues, ...values };
+        ({ tr, state, dispatch }) => {
+          if (!dispatch) return false;
 
-          if (dispatch) {
-            const updatedTransaction = tr.setMeta(variableTextPluginKey, {
-              type: 'update-values',
-              values,
-            });
-            dispatch(updatedTransaction);
-          }
+          let transaction = tr;
+          let hasChanges = false;
 
+          // Collect all positions that need updates (reverse order for correct position handling)
+          const positions: number[] = [];
+          state.doc.descendants((node, pos) => {
+            if (node.type.name === 'variableText') {
+              const { variableName, value: currentValue } = node.attrs as VariableAttributes;
+              const newValue = values[variableName];
+
+              if (newValue !== undefined && newValue !== currentValue) {
+                positions.unshift(pos); // Add to front for reverse order
+              }
+            }
+          });
+
+          // Update nodes in reverse order to maintain correct positions
+          positions.forEach((pos) => {
+            const node = state.doc.nodeAt(pos);
+            if (node) {
+              const { variableName } = node.attrs as VariableAttributes;
+              transaction = transaction.setNodeMarkup(pos, undefined, {
+                ...node.attrs,
+                value: values[variableName],
+              });
+              hasChanges = true;
+            }
+          });
+
+          if (!hasChanges) return false;
+
+          dispatch(transaction);
           return true;
         },
     };
@@ -99,15 +199,14 @@ export const VariableText = Node.create<VariableOptions>({
   addInputRules() {
     if (!this.options.enabled) return [];
 
-    const variablePattern = /\{\{([a-zA-Z0-9_-]+)\}\}$/;
-
     return [
       new InputRule({
-        find: variablePattern,
+        find: VARIABLE_PATTERN,
         handler: ({ range, match, commands }) => {
           const variableName = match[1];
           if (!variableName) return;
 
+          // Replace the matched text with a variable node
           commands.deleteRange(range);
           commands.insertVariable(variableName);
         },
@@ -133,39 +232,5 @@ export const VariableText = Node.create<VariableOptions>({
         return false;
       },
     };
-  },
-
-  addProseMirrorPlugins() {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const extension = this;
-
-    return [
-      new Plugin({
-        key: variableTextPluginKey,
-
-        appendTransaction(transactions, _oldState, newState) {
-          const meta = transactions[0]?.getMeta(variableTextPluginKey);
-          if (!meta || meta.type !== 'update-values') return null;
-
-          const updatedTransaction = newState.tr;
-          let hasChanges = false;
-
-        newState.doc.descendants((node, pos) => {
-          if (node.type.name === 'variableText') {
-              const variableName = node.attrs.variableName;
-              const newValue = extension.options.variableValues[variableName];
-              
-              // Force re-render by updating node markup
-              if (newValue !== undefined) {
-                updatedTransaction.setNodeMarkup(pos, undefined, node.attrs);
-                hasChanges = true;
-              }
-            }
-          });
-
-          return hasChanges ? updatedTransaction : null;
-        },
-      }),
-    ];
   },
 });

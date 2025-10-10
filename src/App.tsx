@@ -1,9 +1,11 @@
-/* eslint-disable */
 import Editor from "./components/Editor";
-import { useState } from "react";
+import { useEffect, useRef } from "react";
 
 function App() {
-  const [_insertVariable, setInsertVariable] = useState<((key: string, value?: string) => void) | null>(null);
+
+
+  const insertVariableRef = useRef<((key: string, value?: string) => void) | null>(null);
+  const updateVariableValuesRef = useRef<((values: { [key: string]: string }) => void) | null>(null);
 
   const fetchAICompletion = async (text: string): Promise<string> => {
     try {
@@ -37,6 +39,25 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      // Also update the editor
+      updateVariableValuesRef.current?.({
+        name: 'John Doe updated',
+        age: '25',
+        email: 'john.doe@example.com',
+        company: 'Cognitus Consulting LLC',
+      });
+    }, 5000);
+  }, []);
+
+
+  const handleEditorReady = ({ insertVariable, updateVariableValues }: { insertVariable: (key: string, value?: string) => void, updateVariableValues: (values: { [key: string]: string }) => void }) => {
+    insertVariableRef.current = insertVariable;
+    updateVariableValuesRef.current = updateVariableValues;
+  };
+
+
   const content = '<p style="text-align: left;">Hello there, we are here to help you<span> </span>and this is very much needed <span data-variable-name="name" class="variable-text" contenteditable="false"></span><span data-variable-name="name_no_value" class="variable-text" contenteditable="false">John Doe</span><img class="ProseMirror-separator" alt=""><br class="ProseMirror-trailingBreak"></p>';
 
   return (
@@ -52,17 +73,11 @@ function App() {
             fetchCompletion: fetchAICompletion,
           },
           enableVariableText: true,
-          variableValues: {
-            name: 'John Doe',
-            age: '25',
-            email: 'john.doe@example.com',
-          },
+          variableValues: {},
           onShare: () => {
             console.log('Share');
           },
-          onEditorReady: ({ insertVariable }) => {
-            setInsertVariable(() => insertVariable);
-          },
+          onEditorReady: handleEditorReady,
         }} />
       </div>
     </div>
