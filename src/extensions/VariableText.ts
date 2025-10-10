@@ -22,7 +22,7 @@ declare module '@tiptap/core' {
        * Insert a variable node at the current cursor position
        * @param variableName - The name/key of the variable
        */
-      insertVariable: (variableName: string) => ReturnType;
+      insertVariable: (variableName: string, value?: string) => ReturnType;
       /**
        * Update all variable nodes with new values
        * @param values - Record mapping variable names to their new values
@@ -60,6 +60,12 @@ export const VariableText = Node.create<VariableOptions>({
     return {
       enabled: false,
       variableValues: {},
+    };
+  },
+
+  addStorage() {
+    return {
+      variableValues: this.options.variableValues,
     };
   },
 
@@ -140,16 +146,16 @@ export const VariableText = Node.create<VariableOptions>({
   addCommands() {
     return {
       insertVariable:
-        (variableName: string) =>
+        (variableName: string, _value?: string) =>
         ({ commands }) => {
-          // Get initial value from options if available
-          const initialValue = this.options.variableValues[variableName] || '';
+          // Get value from storage
+          const value = _value || this.storage.variableValues[variableName] || '';
           
           return commands.insertContent({
             type: this.name,
             attrs: { 
               variableName,
-              value: initialValue,
+              value,
             },
           });
         },
@@ -158,6 +164,9 @@ export const VariableText = Node.create<VariableOptions>({
         (values: Record<string, string>) =>
         ({ tr, state, dispatch }) => {
           if (!dispatch) return false;
+
+          // Update storage
+          this.storage.variableValues = { ...this.storage.variableValues, ...values };
 
           let transaction = tr;
           let hasChanges = false;
@@ -190,6 +199,9 @@ export const VariableText = Node.create<VariableOptions>({
 
           if (!hasChanges) return false;
 
+          // Don't add to undo history
+          transaction = transaction.setMeta('addToHistory', false);
+          
           dispatch(transaction);
           return true;
         },

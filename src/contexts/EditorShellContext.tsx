@@ -19,12 +19,13 @@ interface EditorShellProviderProps {
 export const EditorShellProvider = ({ children, editor, editorConfig }: EditorShellProviderProps) => {
 	const insertVariable = useCallback(
 		(key: string, value?: string) => {
-			if (value && editorConfig.variableValues) {
-				editor.commands.updateVariableValues({ [key]: value });
+			if (value) {
+				editor.commands.insertVariable(key, value);
+			} else {
+				editor.commands.insertVariable(key);
 			}
-			editor.commands.insertVariable(key);
 		},
-		[editor, editorConfig.variableValues]
+		[editor]
 	);
 
 	const updateVariableValues = useCallback(
