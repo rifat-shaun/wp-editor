@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import SvgIcon from "./common/SvgIcon";
-import { useZoom } from "../hooks/useZoom";
-import { Button } from "./base/Button";
+import SvgIcon from "@/components/common/SvgIcon";
+import { useZoom } from "@/hooks/useZoom";
+import { usePresentationControl } from "@/hooks/usePresentationControl";
+import { Button } from "@/components/base/Button";
 
 interface PresentationControlsProps {
   onPresentationModeToggle: () => void;
@@ -10,29 +10,25 @@ interface PresentationControlsProps {
 
 export const PresentationControls = ({ onPresentationModeToggle, onLaserToggle }: PresentationControlsProps) => {
   const { zoomLevel, handleZoomIn, handleZoomOut, handleFitToScreen } = useZoom();
-  const [isLaserActive, setIsLaserActive] = useState(false);
-  const [laserPosition, setLaserPosition] = useState({ x: 0, y: 0 });
-
-  const handleToggleLaser = () => {
-    const newLaserState = !isLaserActive;
-    setIsLaserActive(newLaserState);
-    onLaserToggle?.(newLaserState);
-  };
-
-  useEffect(() => {
-    if (!isLaserActive) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      setLaserPosition({ x: e.clientX, y: e.clientY });
-    };
-
-    document.addEventListener("mousemove", handleMouseMove);
-    return () => document.removeEventListener("mousemove", handleMouseMove);
-  }, [isLaserActive]);
+  const {
+    isLaserActive,
+    laserPosition,
+    isControlsVisible,
+    handleToggleLaser,
+    showControls,
+  } = usePresentationControl({ onLaserToggle });
 
   return (
     <>
-      <div className="bg-black-700 flex items-center justify-between p-2 rounded-lg absolute w-80 h-12 bottom-2 left-1/2 transform -translate-x-1/2 z-50">
+      <div
+        className="bg-black-700 flex items-center justify-between p-2 rounded-lg absolute w-80 h-12 bottom-2 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300 ease-in-out"
+        style={{
+          opacity: isControlsVisible ? 1 : 0,
+          transform: `translate(-50%, ${isControlsVisible ? '0' : '100%'})`,
+          pointerEvents: isControlsVisible ? 'auto' : 'none'
+        }}
+        onMouseEnter={showControls}
+      >
         <Button onClick={handleZoomOut} className="flex items-center justify-center !p-2 !bg-transparent hover:!bg-white/10 !text-white" title="Zoom Out">
           <SvgIcon name="minus" size={20} className="text-white" strokeWidth={3.5} />
         </Button>

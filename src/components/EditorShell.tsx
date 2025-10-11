@@ -1,13 +1,13 @@
 import { useEditorShell } from "@/contexts/EditorShellContext";
 import { usePageMethods } from "@/hooks/usePageMethods";
 import { usePresentationMode } from "@/hooks/usePresentationMode";
-import { Toolbar } from "./toolbar";
+import { Toolbar } from "@/components/toolbar";
 import { useEffect, useRef, useState } from "react";
 import { EditorContent } from "@tiptap/react";
-import { BubbleMenus } from "./menubar/bubble-menu";
-import { Footer } from "./footer";
-import { PresentationControls } from "./PresentationControls";
-import ScrollbarWrapper from "./common/ScrollbarWrapper";
+import { BubbleMenus } from "@/components/menubar/bubble-menu";
+import { Footer } from "@/components/footer";
+import { PresentationControls } from "@/components/presentation/PresentationControls";
+import ScrollbarWrapper from "@/components/common/ScrollbarWrapper";
 
 export const EditorShell = () => {
 	const editorPageRef = useRef<HTMLDivElement>(null);
