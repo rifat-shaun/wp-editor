@@ -37,7 +37,7 @@ const ToolbarContent = () => {
     case HIDE_TOOLBAR:
     default:
       return (
-        <div className="fixed top-1 right-6 z-50">
+        <div className="absolute top-1 right-6 z-50">
           <Button
             id="show-toolbar"
             onClick={handleShowToolbar}
