@@ -12,7 +12,7 @@ import ImageStyles from "@/styles/content/image.css?inline";
 import { useEditorShell } from "@/contexts/EditorShellContext";
 
 export const useExport = () => {
-	const { editor } = useEditorShell();
+	const { editor, editorConfig } = useEditorShell();
 
 	const downloadTextFile = () => {
 		if (!editor?.getText) return;
@@ -20,7 +20,7 @@ export const useExport = () => {
 		const text = editor.getText();
 		const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
 
-		const filename = 'Untitled document';
+		const filename = editorConfig?.file?.name || 'Untitled document';
 
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement('a');
@@ -36,7 +36,7 @@ export const useExport = () => {
 		if (!editor?.getJSON) return;
 
 		const json = editor.getJSON();
-		const filename = 'Untitled document';
+		const filename = editorConfig?.file?.name || 'Untitled document';
 		const blob = new Blob([JSON.stringify(json, null, 2)], { type: 'application/json' });
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement('a');
@@ -54,7 +54,7 @@ export const useExport = () => {
 		const text = editor.getText();
 		const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
 
-		const filename = 'Untitled document';
+		const filename = editorConfig?.file?.name || 'Untitled document';
 
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement('a');
@@ -72,7 +72,7 @@ export const useExport = () => {
 		const html = editor.getHTML();
 		const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
 
-		const filename = 'Untitled document';
+		const filename = editorConfig?.file?.name || 'Untitled document';
 
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement('a');
@@ -86,6 +86,9 @@ export const useExport = () => {
 
 	const downloadPdfFile = useCallback(() => {
 		try {
+		// Get filename from config
+		const filename = editorConfig?.file?.name || 'Untitled document';
+
 		// Get content
 		const content = document.querySelector('.editor-content')?.outerHTML || '';
 
@@ -146,7 +149,7 @@ export const useExport = () => {
 			<!DOCTYPE html>
 			<html>
 			  <head>
-				<title>Print Document</title>
+				<title>${filename}</title>
 				<style>
 				  * { 
 					overflow: visible !important;
@@ -201,6 +204,26 @@ export const useExport = () => {
 		  `);
 			iframeDoc.close();
 
+			// Store the original main document title
+			const originalTitle = document.title;
+
+			// Explicitly set the document title for the print dialog
+			if (iframe.contentWindow) {
+				iframe.contentWindow.document.title = filename;
+			}
+			
+			// Also temporarily change the main document title (some browsers use this)
+			document.title = filename;
+
+			// Add a short delay to ensure the title is set before printing
+			setTimeout(() => {
+				// Set title again just before printing
+				if (iframe.contentWindow) {
+					iframe.contentWindow.document.title = filename;
+				}
+				document.title = filename;
+			}, 100);
+
 			// Print after a short delay
 			setTimeout(() => {
 				try {
@@ -212,32 +235,37 @@ export const useExport = () => {
 							mediaQueryList.addEventListener('change', function (mql) {
 								if (!mql.matches) {
 									// Print dialog was closed
+									document.title = originalTitle;
 									document.body.removeChild(iframe);
 								}
 							});
 						}
 
+						iframe.contentWindow.document.title = filename || 'Untitled document';
 						iframe.contentWindow.focus();
 						iframe.contentWindow.print();
 
-						// Fallback cleanup method if event listener doesn't work
-						setTimeout(() => {
-							if (document.body.contains(iframe)) {
-								document.body.removeChild(iframe);
-							}
-						}, 1000);
+					// Fallback cleanup method if event listener doesn't work
+					setTimeout(() => {
+						if (document.body.contains(iframe)) {
+							document.body.removeChild(iframe);
+						}
+						// Restore original title
+						document.title = originalTitle;
+					}, 1000);
 					} else {
 						throw new Error('Cannot access iframe content window');
 					}
-				} catch (err) {
-					document.body.removeChild(iframe);
-					message.error('Failed to export: ' + String(err));
-				}
-			}, 1000);
-		} catch (error) {
-			message.error('Failed to export: ' + String(error));
-		}
-	}, []);
+			} catch (err) {
+				document.body.removeChild(iframe);
+				document.title = originalTitle;
+				message.error('Failed to export: ' + String(err));
+			}
+		}, 1000);
+	} catch (error) {
+		message.error('Failed to export: ' + String(error));
+	}
+}, [editorConfig]);
 
 
 	return {

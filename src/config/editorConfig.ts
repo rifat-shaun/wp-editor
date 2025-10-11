@@ -15,6 +15,11 @@ export interface AIAutocompletionConfig {
 }
 
 export interface EditorConfig {
+  /** File name and id */
+  file?: {
+    name?: string;
+    id?: string | null;
+  }
   /** Enable/disable the page size selector */
   showPageSizeSelector?: boolean;
   /** Initial content for the editor */
@@ -47,6 +52,10 @@ export interface EditorConfig {
 }
 
 export const defaultEditorConfig: EditorConfig = {
+  file: {
+    name: "Untitled Document",
+    id: null,
+  },
   showPageSizeSelector: true,
   content: "",
   enablePagination: true,
