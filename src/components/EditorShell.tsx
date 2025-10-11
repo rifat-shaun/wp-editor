@@ -11,9 +11,10 @@ import ScrollbarWrapper from "./common/ScrollbarWrapper";
 
 export const EditorShell = () => {
 	const editorPageRef = useRef<HTMLDivElement>(null);
+	const editorContainerRef = useRef<HTMLDivElement>(null);
 	const { editor, editorConfig } = useEditorShell();
 	const { pageClass, pageConfig, setPageConfig } = usePageMethods();
-	const { isPresentationMode, isLaserActive, onPresentationModeToggle, handleLaserToggle } = usePresentationMode(editor);
+	const { isPresentationMode, isLaserActive, onPresentationModeToggle, handleLaserToggle } = usePresentationMode(editor, editorContainerRef);
 
 	const [isEditorEditable, setIsEditorEditable] = useState(editorConfig.editable && !editorConfig.asViewer && !isPresentationMode);
 
@@ -39,7 +40,7 @@ export const EditorShell = () => {
 	}, [editorConfig.editable, editorConfig.asViewer, isPresentationMode]);
 
 	return (
-		<div className={`h-full relative flex flex-col bg-neutral-200 editor-container ${isPresentationMode ? "editor-presentation-mode" : ""} ${isLaserActive ? "laser-active" : ""}`}>
+		<div ref={editorContainerRef} className={`h-full relative flex flex-col bg-neutral-200 editor-container ${isPresentationMode ? "editor-presentation-mode" : ""} ${isLaserActive ? "laser-active" : ""}`}>
 			{isEditorEditable && (
 				<Toolbar
 					editorConfig={editorConfig}
