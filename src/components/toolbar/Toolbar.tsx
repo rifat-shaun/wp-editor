@@ -3,21 +3,11 @@ import { Button } from "../base/Button";
 import SvgIcon from "../common/SvgIcon";
 import { ProfessionalToolbar } from "./ProfessionalToolbar";
 import { TOOLBAR_TYPES_ENUM } from "../../constants/Toolbar";
-import { ToolbarProvider, useToolbar } from "@/contexts/ToolbarContext";
+import { useToolbar } from "@/contexts/ToolbarContext";
 import { useState } from "react";
 import { TABS, type TTabKey } from "@/constants/Toolbar";
 
-import type { PageConfig } from "@/components/toolbar/page/PageSizeSelector";
-import type { EditorConfig } from "@/config/editorConfig";
-
-interface ToolbarProps {
-  editorConfig: EditorConfig;
-  onPresentationModeToggle: () => void;
-  pageConfig: PageConfig;
-  setPageConfig: (config: PageConfig) => void;
-}
-
-const ToolbarContent = () => {
+export const Toolbar = () => {
   const [activeTab, setActiveTab] = useState<TTabKey>(TABS[0]);
   const { CLASSIC, PROFESSIONAL, HIDE_TOOLBAR } = TOOLBAR_TYPES_ENUM;
   const { currentToolbar, handleToolbarChange, handleShowToolbar } =
@@ -48,23 +38,4 @@ const ToolbarContent = () => {
         </div>
       );
   }
-};
-
-export const Toolbar = ({
-  editorConfig,
-  onPresentationModeToggle,
-  pageConfig,
-  setPageConfig
-}: ToolbarProps) => {
-
-  return (
-    <ToolbarProvider
-      editorConfig={editorConfig}
-      onPresentationModeToggle={onPresentationModeToggle}
-      pageConfig={pageConfig}
-      setPageConfig={setPageConfig}
-    >
-      <ToolbarContent />
-    </ToolbarProvider>
-  );
 };

@@ -8,6 +8,7 @@ import { BubbleMenus } from "@/components/menubar/bubble-menu";
 import { Footer } from "@/components/footer";
 import { PresentationControls } from "@/components/presentation/PresentationControls";
 import ScrollbarWrapper from "@/components/common/ScrollbarWrapper";
+import { ToolbarProvider } from "@/contexts/ToolbarContext";
 
 export const EditorShell = () => {
 	const editorPageRef = useRef<HTMLDivElement>(null);
@@ -40,38 +41,38 @@ export const EditorShell = () => {
 	}, [editorConfig.editable, editorConfig.asViewer, isPresentationMode]);
 
 	return (
-		<div ref={editorContainerRef} className={`h-full relative flex flex-col bg-neutral-200 editor-container ${isPresentationMode ? "editor-presentation-mode" : ""} ${isLaserActive ? "laser-active" : ""}`}>
-			{isEditorEditable && (
-				<Toolbar
-					editorConfig={editorConfig}
-					onPresentationModeToggle={onPresentationModeToggle}
-					pageConfig={pageConfig}
-					setPageConfig={setPageConfig}
-				/>
-			)}
-			<ScrollbarWrapper>
-				<div className="flex-1 overflow-auto">
-					<div className="min-h-full w-fit min-w-full flex justify-center items-start p-4">
-						<div
-							className={`${editorConfig.enablePagination ? pageClass : ""} editor-content`}
-							ref={editorPageRef}
-						>
-							<EditorContent editor={editor} />
-							{isEditorEditable && (
-								<BubbleMenus editor={editor} />
-							)}
+		<ToolbarProvider
+			editorConfig={editorConfig}
+			onPresentationModeToggle={onPresentationModeToggle}
+			pageConfig={pageConfig}
+			setPageConfig={setPageConfig}
+		>
+			<div ref={editorContainerRef} className={`h-full relative flex flex-col bg-neutral-200 editor-container ${isPresentationMode ? "editor-presentation-mode" : ""} ${isLaserActive ? "laser-active" : ""}`}>
+				{isEditorEditable && <Toolbar />}
+				<ScrollbarWrapper>
+					<div className="flex-1 overflow-auto">
+						<div className="min-h-full w-fit min-w-full flex justify-center items-start p-4">
+							<div
+								className={`${editorConfig.enablePagination ? pageClass : ""} editor-content`}
+								ref={editorPageRef}
+							>
+								<EditorContent editor={editor} />
+								{isEditorEditable && (
+									<BubbleMenus editor={editor} />
+								)}
+							</div>
 						</div>
 					</div>
-				</div>
-			</ScrollbarWrapper>
+				</ScrollbarWrapper>
 
-			{!isPresentationMode && (
-				<Footer onPresentationModeToggle={onPresentationModeToggle} />
-			)}
+				{!isPresentationMode && (
+					<Footer onPresentationModeToggle={onPresentationModeToggle} />
+				)}
 
-			{isPresentationMode && (
-				<PresentationControls onPresentationModeToggle={onPresentationModeToggle} onLaserToggle={handleLaserToggle} />
-			)}
-		</div>
+				{isPresentationMode && (
+					<PresentationControls onPresentationModeToggle={onPresentationModeToggle} onLaserToggle={handleLaserToggle} />
+				)}
+			</div>
+		</ToolbarProvider>
 	)
 };
