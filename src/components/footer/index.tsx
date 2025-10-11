@@ -15,7 +15,7 @@ export const Footer = ({ onPresentationModeToggle }: FooterProps) => {
   return (
     <>
       <div
-        className="flex items-center gap-2 bg-white w-full justify-between px-4 py-0.5 editor-footer"
+        className="flex items-center gap-2 bg-white w-full justify-between px-4 py-0.5 editor-footer shadow-md z-[9999]"
         style={{ height: `${FOOTER_HEIGHT}px` }}
       >
         <div className="flex gap-4 text-sm text-neutral-600">

@@ -31,7 +31,7 @@ export const ProfessionalToolbar = ({
 
   return (
     <div
-      className="flex flex-col gap-0.5 bg-white w-full px-4 pt-1 pb-2"
+      className="flex flex-col gap-0.5 bg-white w-full px-4 pt-1 pb-2 shadow-md z-[9999]"
       style={{ height: `${PROFESSIONAL.height}px` }}
     >
       <div className="flex items-center justify-between gap-2 mb-0.5">
