@@ -12,7 +12,7 @@ interface NodeViewProps {
   deleteNode: () => void;
 }
 
-export const CodeBlockToolbar = ({ node, updateAttributes, deleteNode}: NodeViewProps) => {
+export const CodeBlockToolbar = ({ node, updateAttributes, deleteNode }: NodeViewProps) => {
   const {
     selectedLanguage,
     selectedTheme,
@@ -27,7 +27,7 @@ export const CodeBlockToolbar = ({ node, updateAttributes, deleteNode}: NodeView
 
   return (
     <NodeViewWrapper className="code-block-wrapper">
-      <div 
+      <div
         className={`code-block-toolbar theme-${selectedTheme}`}
         contentEditable={false}
       >
@@ -38,6 +38,14 @@ export const CodeBlockToolbar = ({ node, updateAttributes, deleteNode}: NodeView
             options={LANGUAGES}
             className="code-block-language-select"
             style={{ width: 150 }}
+            styles={{
+              popup: {
+                root: {
+                  backgroundColor: selectedTheme === 'dark' ? '#2d2d2d' : '#ffffff',
+                  border: selectedTheme === 'dark' ? '1px solid #3d3d3d' : '1px solid #e0e0e0',
+                }
+              }
+            }}
             size="small"
             showSearch
             placeholder="Select language"
@@ -46,6 +54,13 @@ export const CodeBlockToolbar = ({ node, updateAttributes, deleteNode}: NodeView
             }
             getPopupContainer={() => document.body}
             onOpenChange={handleEditorEditableState}
+            optionRender={(option) => (
+              <div style={{
+                color: selectedTheme === 'dark' && selectedLanguage !== option.value ? '#e0e0e0' : '#333333',
+              }}>
+                {option.label}
+              </div>
+            )}
           />
           <Select
             value={selectedTheme}
@@ -53,10 +68,25 @@ export const CodeBlockToolbar = ({ node, updateAttributes, deleteNode}: NodeView
             options={THEMES}
             className="code-block-theme-select"
             style={{ width: 150 }}
+            styles={{
+              popup: {
+                root: {
+                  backgroundColor: selectedTheme === 'dark' ? '#2d2d2d' : '#ffffff',
+                  border: selectedTheme === 'dark' ? '1px solid #3d3d3d' : '1px solid #e0e0e0',
+                }
+              }
+            }}
             size="small"
             placeholder="Select theme"
             getPopupContainer={() => document.body}
             onOpenChange={handleEditorEditableState}
+            optionRender={(option) => (
+              <div style={{
+                color: selectedTheme === 'dark' && selectedTheme !== option.value ? '#e0e0e0' : '#333333',
+              }}>
+                {option.label}
+              </div>
+            )}
           />
         </div>
         <div className="code-block-toolbar-actions">
@@ -66,11 +96,11 @@ export const CodeBlockToolbar = ({ node, updateAttributes, deleteNode}: NodeView
             className="code-block-action-btn"
             title={isCodeCopied ? "Copied!" : "Copy Code"}
           >
-            <SvgIcon 
-              name={isCodeCopied ? "check" : "copy"} 
-              size={18} 
-              className={isCodeCopied ? "text-green-400" : ""} 
-              strokeWidth={3} 
+            <SvgIcon
+              name={isCodeCopied ? "check" : "copy"}
+              size={18}
+              className={isCodeCopied ? "text-green-400" : ""}
+              strokeWidth={3}
             />
           </button>
           <button
@@ -84,21 +114,21 @@ export const CodeBlockToolbar = ({ node, updateAttributes, deleteNode}: NodeView
         </div>
       </div>
       <pre className={`code-block-content theme-${selectedTheme} wrapped`}>
-        <code 
+        <code
           className="hljs"
           dangerouslySetInnerHTML={{ __html: syntaxHighlightedCode }}
-          style={{ 
-            position: 'absolute', 
-            pointerEvents: 'none', 
-            top: 0, 
-            left: 0, 
+          style={{
+            position: 'absolute',
+            pointerEvents: 'none',
+            top: 0,
+            left: 0,
             padding: '16px',
             whiteSpace: 'pre-wrap',
             wordBreak: 'break-word'
           }}
         />
-        <code style={{ 
-          color: 'transparent', 
+        <code style={{
+          color: 'transparent',
           caretColor: '#d4d4d4',
           whiteSpace: 'pre-wrap',
           wordBreak: 'break-word'
