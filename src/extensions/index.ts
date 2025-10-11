@@ -1,5 +1,5 @@
 import CharacterCount from "@tiptap/extension-character-count";
-import { Placeholder, UndoRedo } from "@tiptap/extensions";
+import { Placeholder, TrailingNode, UndoRedo } from "@tiptap/extensions";
 import Typography from "@tiptap/extension-typography";
 import Document from "@tiptap/extension-document";
 import Text from "@tiptap/extension-text";
@@ -145,6 +145,10 @@ const getEditorExtensions = (config?: EditorConfig) => [
   Strike,
   Underline,
   HardBreak,
+  TrailingNode.configure({
+    node: 'paragraph',
+    notAfter: ['paragraph'],
+  }),
 ];
 
 // Backward compatibility - default extensions without config
