@@ -86,16 +86,23 @@ export const useExport = () => {
 
 	const downloadPdfFile = useCallback(() => {
 		try {
-		// Get filename from config
-		const filename = editorConfig?.file?.name || 'Untitled document';
+			// Get filename from config
+			const filename = editorConfig?.file?.name || 'Untitled document';
 
-		// Get content
-		const content = document.querySelector('.editor-content')?.outerHTML || '';
+			// Get content
+			const content = document.querySelector('.editor-content')?.innerHTML || '';
 
-		// Get page configuration
-		let orientation = 'portrait';
-		let size = { width: 210, height: 297 };
-		let backgroundColor = 'white';
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const pageMarginStorage = (editor?.storage as Record<string, any>)?.pageMargin as { margins: { top: number; right: number; bottom: number; left: number }; unit: string } | undefined;
+			const margins = pageMarginStorage?.margins || { top: 1, right: 1, bottom: 1, left: 1 };
+			const unit = pageMarginStorage?.unit || 'in';
+
+			console.log('this is the content', margins, unit);
+
+			// Get page configuration
+			let orientation = 'portrait';
+			let size = { width: 210, height: 297 };
+			let backgroundColor = 'white';
 
 			const editorContainer = document.querySelector('.editor-content');
 
@@ -117,15 +124,15 @@ export const useExport = () => {
 				}
 			}
 
-		try {
-			const orientationAttr = document.body.getAttribute('data-page-orientation');
+			try {
+				const orientationAttr = document.body.getAttribute('data-page-orientation');
 
-			if (orientationAttr) {
-				orientation = orientationAttr;
+				if (orientationAttr) {
+					orientation = orientationAttr;
+				}
+			} catch (error) {
+				console.error('Error parsing page orientation:', error);
 			}
-		} catch (error) {
-			console.error('Error parsing page orientation:', error);
-		}
 
 			// Create a hidden iframe for printing
 			const iframe = document.createElement('iframe');
@@ -151,39 +158,34 @@ export const useExport = () => {
 			  <head>
 				<title>${filename}</title>
 				<style>
-				  * { 
-					overflow: visible !important;
-					max-height: none !important;
-				  }
-				  
-				  body {
-					background-color: ${backgroundColor};
-					margin: 0;
-					padding: 0;
-				  }
-				  
-				  @page {
-					 size: ${orientation === 'landscape' ? `${size?.height}mm ${size?.width}mm` : `${size?.width}mm ${size?.height}mm`}; 
-					 margin: 0;
+					* {
+						background-color: ${backgroundColor};
 					}
-				  
-				  @media print {
-					body, html {
-						height: auto;
-						overflow: visible;
+
+					@page {
+						size: ${orientation === 'landscape' ? `${size?.height}mm ${size?.width}mm` : `${size?.width}mm ${size?.height}mm`}; 
+						margin: 0 !important;
+						padding: ${margins.top}${unit} ${margins.right}${unit} ${margins.bottom}${unit} ${margins.left}${unit} !important;
 					}
+		
 					.editor-page-break {
 						page-break-after: always;
 						break-after: always;
 					}
+
 					.editor-page-break-line {
 						display: none;
 					}
+
 					.variable-text:not([data-value]),
 					.variable-text[data-value=""] {
 						display: none;
 					}
-				  }
+
+					.ProseMirror {
+						padding: 0 !important;
+					}
+
 					${PageSizesStyles}
 					${ListItemsStyles}
 					${QuoteStyles}
@@ -211,7 +213,7 @@ export const useExport = () => {
 			if (iframe.contentWindow) {
 				iframe.contentWindow.document.title = filename;
 			}
-			
+
 			// Also temporarily change the main document title (some browsers use this)
 			document.title = filename;
 
@@ -245,27 +247,27 @@ export const useExport = () => {
 						iframe.contentWindow.focus();
 						iframe.contentWindow.print();
 
-					// Fallback cleanup method if event listener doesn't work
-					setTimeout(() => {
-						if (document.body.contains(iframe)) {
-							document.body.removeChild(iframe);
-						}
-						// Restore original title
-						document.title = originalTitle;
-					}, 1000);
+						// Fallback cleanup method if event listener doesn't work
+						setTimeout(() => {
+							if (document.body.contains(iframe)) {
+								document.body.removeChild(iframe);
+							}
+							// Restore original title
+							document.title = originalTitle;
+						}, 1000);
 					} else {
 						throw new Error('Cannot access iframe content window');
 					}
-			} catch (err) {
-				document.body.removeChild(iframe);
-				document.title = originalTitle;
-				message.error('Failed to export: ' + String(err));
-			}
-		}, 1000);
-	} catch (error) {
-		message.error('Failed to export: ' + String(error));
-	}
-}, [editorConfig]);
+				} catch (err) {
+					document.body.removeChild(iframe);
+					document.title = originalTitle;
+					message.error('Failed to export: ' + String(err));
+				}
+			}, 1000);
+		} catch (error) {
+			message.error('Failed to export: ' + String(error));
+		}
+	}, [editorConfig]);
 
 
 	return {

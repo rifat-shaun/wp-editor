@@ -71,16 +71,16 @@ const applyMargins = (margins: MarginValues, unit: string = 'in') => {
   }
 
   // Target the editor's content area
-  const editorContents = document.querySelectorAll('.ProseMirror');
+  const editorContents = document.querySelectorAll('.editor-content');
 
   // Apply to all matching elements (usually just one)
   editorContents.forEach((editorContent) => {
     if (editorContent instanceof HTMLElement) {
       // Apply margins
-      editorContent.style.setProperty('padding-top', `${margins.top}${unit}`, 'important');
-      editorContent.style.setProperty('padding-right', `${margins.right}${unit}`, 'important');
-      editorContent.style.setProperty('padding-bottom', `${margins.bottom}${unit}`, 'important');
-      editorContent.style.setProperty('padding-left', `${margins.left}${unit}`, 'important');
+      editorContent.style.setProperty('padding-top', `${margins.top}${unit}`);
+      editorContent.style.setProperty('padding-right', `${margins.right}${unit}`);
+      editorContent.style.setProperty('padding-bottom', `${margins.bottom}${unit}`);
+      editorContent.style.setProperty('padding-left', `${margins.left}${unit}`);
     }
   });
 
