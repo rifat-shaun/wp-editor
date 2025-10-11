@@ -3,7 +3,6 @@ export * from "./ProfessionalToolbar";
 export * from "./ClassicToolbar";
 export * from "./home";
 export * from "./ItemGroup";
-export * from "./ToolbarButtonItem";
 export * from "./Divider";
 export * from "./table";
 export * from "./page";

@@ -38,7 +38,7 @@ export const ClassicToolbar = ({
 
   return (
     <div
-      className="flex items-center gap-2 bg-white w-full justify-between px-4 py-2 shadow-md z-[9999]"
+      className="flex items-center gap-2 bg-white w-full justify-between px-4 py-2 shadow-md z-50"
       style={{ height: `${CLASSIC.height}px` }}
     >
       <div className="flex flex-grow items-center gap-2">
