@@ -1,0 +1,80 @@
+.tiptap {
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    page-break-inside: avoid;
+  }
+
+  /* NodeViewWrapper for images */
+  [data-node-view-wrapper] {
+    position: relative;
+    display: block;
+  }
+
+  /* Ensure images don't overflow their containers */
+  [data-node-view-wrapper] img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* Image alignment - left (default) */
+  [data-node-view-wrapper].w-fit {
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  /* Image alignment - center */
+  [data-node-view-wrapper].mx-auto {
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Image alignment - right */
+  [data-node-view-wrapper].ml-auto {
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+  }
+
+  @media print {
+    img {
+      max-width: 100% !important;
+      page-break-inside: avoid;
+      page-break-after: auto;
+      border: none !important;
+    }
+
+    /* Preserve alignment in print */
+    [data-node-view-wrapper].w-fit {
+      margin-left: 0 !important;
+      margin-right: auto !important;
+    }
+
+    [data-node-view-wrapper].mx-auto {
+      display: block !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    [data-node-view-wrapper].ml-auto {
+      display: block !important;
+      margin-left: auto !important;
+      margin-right: 0 !important;
+    }
+
+    /* Hide resize handles in print */
+    [data-node-view-wrapper] > div > div > div {
+      display: none !important;
+    }
+
+    /* Remove selection borders in print */
+    [data-node-view-wrapper] img {
+      border: none !important;
+    }
+  }
+}
+

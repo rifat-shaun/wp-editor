@@ -8,6 +8,7 @@ import TableStyles from "@/styles/content/table.css?inline";
 import LinkStyles from "@/styles/content/link.css?inline";
 import DividerStyles from "@/styles/content/divider.css?inline";
 import CodeblockStyles from "@/styles/content/codeblock.css?inline";
+import ImageStyles from "@/styles/content/image.css?inline";
 import { useEditorShell } from "@/contexts/EditorShellContext";
 
 export const useExport = () => {
@@ -188,6 +189,7 @@ export const useExport = () => {
 					${LinkStyles}
 					${DividerStyles}
 					${CodeblockStyles}
+					${ImageStyles}
 				</style>
 			  </head>
 			  <body>
