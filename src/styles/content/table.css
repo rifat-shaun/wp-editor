@@ -3,6 +3,7 @@
 		border-collapse: collapse;
 		table-layout: fixed;
 		width: 100%;
+		max-width: 100%;
 		margin: 0;
 		overflow: hidden;
 		page-break-inside: auto;
@@ -121,14 +122,23 @@
 		pointer-events: none;
 	}
 
-	table .column-resize-handle {
+	/* Show resize cursor on column borders */
+	table td,
+	table th {
+		position: relative;
+	}
+
+	/* Add resize cursor on the right edge of cells */
+	table td::after,
+	table th::after {
+		content: '';
 		position: absolute;
-		right: -1px;
+		right: -2px;
 		top: 0;
-		bottom: -1px;
-		width: 3px;
-		background-color: #3757fb;
-		pointer-events: none;
+		bottom: 0;
+		width: 4px;
+		cursor: col-resize;
+		z-index: 1;
 	}
 
 	table p {
